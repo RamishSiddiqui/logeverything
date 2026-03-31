@@ -1,0 +1,3 @@
+[submodule "logeverything-dashboard"]
+	path = logeverything-dashboard
+	url = ./logeverything-dashboard

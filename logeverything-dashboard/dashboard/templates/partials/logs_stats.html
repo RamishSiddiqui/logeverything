@@ -1,0 +1,43 @@
+<h2 class="card-title">Logs</h2>
+
+{% if stats %}
+<div class="card-grid">
+    <div class="stat-item">
+        <span class="stat-item__label">Total Logs</span>
+        <span class="stat-item__value">{{ stats.total_count }}</span>
+    </div>
+
+    <div class="stat-item">
+        <span class="stat-item__label">Errors</span>
+        <span class="stat-item__value card-value--error">{{ stats.error_count }}</span>
+    </div>
+
+    <div class="stat-item">
+        <span class="stat-item__label">Sources</span>
+        <span class="stat-item__value">{{ stats.source_count }}</span>
+    </div>
+
+    <div class="stat-item">
+        <span class="stat-item__label">Active Sources</span>
+        <div class="mt-sm">
+            {% if stats.sources %}
+                {% for src in stats.sources[:3] %}
+                <span class="badge badge--outline badge--sm">{{ src }}</span>
+                {% endfor %}
+                {% if stats.sources | length > 3 %}
+                <span class="text-tertiary text-xs">+{{ stats.sources | length - 3 }} more</span>
+                {% endif %}
+            {% else %}
+            <span class="text-tertiary">&mdash;</span>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<div class="card-footer">
+    <a href="#logs" class="btn btn-primary btn-sm">View All</a>
+</div>
+{% else %}
+<div class="empty-state">
+    <p>No log data available</p>
+</div>
+{% endif %}

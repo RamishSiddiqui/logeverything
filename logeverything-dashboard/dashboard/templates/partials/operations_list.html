@@ -1,0 +1,40 @@
+{% if operations %}
+<table class="data-table">
+    <thead>
+        <tr>
+            <th>Operation</th>
+            <th>Status</th>
+            <th>Duration</th>
+            <th>Error</th>
+            <th>Timestamp</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for op in operations %}
+        <tr>
+            <td class="font-mono">{{ op.operation_name }}</td>
+            <td>
+                {% if op.success %}
+                <span class="badge badge--success">Success</span>
+                {% else %}
+                <span class="badge badge--error">Failed</span>
+                {% endif %}
+            </td>
+            <td>{{ op.duration_seconds | round(3) }}s</td>
+            <td>
+                {% if not op.success and op.error_message %}
+                <span class="text-sm" style="color: var(--color-error);">{{ op.error_message | truncate(80, True) }}</span>
+                {% else %}
+                <span class="text-tertiary">&mdash;</span>
+                {% endif %}
+            </td>
+            <td class="text-tertiary">{{ op.timestamp | replace("T", " ") | truncate(19, True, "") }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<div class="empty-state">
+    <p>No operations data available</p>
+</div>
+{% endif %}

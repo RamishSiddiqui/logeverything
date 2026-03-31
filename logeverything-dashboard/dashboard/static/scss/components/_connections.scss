@@ -1,0 +1,49 @@
+// ============================================================
+// Connections List
+// ============================================================
+
+.connections-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.connection-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  transition: border-color var(--transition-fast);
+
+  &--active {
+    border-color: var(--accent-primary);
+    background: var(--accent-primary-dim);
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+
+    strong {
+      font-size: 0.875rem;
+      color: var(--text-primary);
+    }
+
+    small {
+      font-size: 0.75rem;
+      color: var(--text-tertiary);
+    }
+  }
+
+  &__actions {
+    display: flex;
+    gap: var(--space-xs);
+    flex-shrink: 0;
+  }
+}

@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block title %}Logs - LogEverything Dashboard{% endblock %}
+
+{% block content %}
+<!-- Logs Stats Card -->
+<div class="grid grid-cols-2">
+    <div class="card">
+        <div class="card-body" hx-get="/partials/logs-stats" hx-trigger="load, every 10s" hx-swap="innerHTML">
+            <div class="loading-placeholder"><div class="loading-spinner"></div></div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title">Log Distribution</h2>
+            <div class="chart-container">
+                <canvas id="log-level-chart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Logs Table Section -->
+<div id="logs">
+    <div class="section-header">
+        <h2>Log Entries</h2>
+        <span id="logs-realtime-indicator" class="realtime-indicator" style="display:none;"></span>
+
+        <!-- View mode toggle -->
+        <div class="view-toggle" id="log-view-toggle">
+            <button class="view-toggle__btn view-toggle__btn--active" data-mode="flat" onclick="toggleLogView('flat')">Flat</button>
+            <button class="view-toggle__btn" data-mode="tree" onclick="toggleLogView('tree')">Tree</button>
+        </div>
+    </div>
+
+    <!-- Persistent filter bar -->
+    <div class="filter-bar" id="logs-filter-bar">
+        <div class="filter-bar__form">
+            <div class="filter-bar__fields">
+                <!-- Level multi-select pills -->
+                <div class="level-pills" id="level-pills">
+                    <button type="button" class="level-pill level-pill--debug" data-level="DEBUG" onclick="toggleLevelPill(this)">DEBUG</button>
+                    <button type="button" class="level-pill level-pill--info" data-level="INFO" onclick="toggleLevelPill(this)">INFO</button>
+                    <button type="button" class="level-pill level-pill--warning" data-level="WARNING" onclick="toggleLevelPill(this)">WARNING</button>
+                    <button type="button" class="level-pill level-pill--error" data-level="ERROR" onclick="toggleLevelPill(this)">ERROR</button>
+                    <button type="button" class="level-pill level-pill--critical" data-level="CRITICAL" onclick="toggleLevelPill(this)">CRITICAL</button>
+                </div>
+
+                <input type="text" id="filter-source" class="form-input form-input--sm" placeholder="Source...">
+                <input type="text" id="filter-correlation" class="form-input form-input--sm" placeholder="Correlation ID...">
+                <input type="text" id="filter-search" class="form-input form-input--sm" placeholder="Search messages... (/)">
+            </div>
+            <div class="filter-bar__actions">
+                <button type="button" class="btn btn-primary btn-sm" onclick="applyLogFilters()">Apply</button>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="clearLogFilters()">Clear</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Persistent pagination / page-size controls -->
+    <div class="pagination-controls" id="pagination-controls">
+        <div class="page-size-selector">
+            <span class="page-size-label">Rows:</span>
+            <button class="page-size-btn" data-size="5" onclick="setPageSize(5)">5</button>
+            <button class="page-size-btn page-size-btn--active" data-size="25" onclick="setPageSize(25)">25</button>
+            <button class="page-size-btn" data-size="50" onclick="setPageSize(50)">50</button>
+            <button class="page-size-btn" data-size="100" onclick="setPageSize(100)">100</button>
+            <button class="page-size-btn" data-size="0" onclick="setPageSize(0)">ALL</button>
+            <div class="page-size-custom">
+                <input type="number" id="custom-page-size" class="form-input form-input--sm" placeholder="Custom" min="1" max="10000" style="width: 70px;">
+                <button class="btn btn-secondary btn-xs" onclick="setCustomPageSize()">Go</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Flat view (default) — only the table gets auto-refreshed -->
+    <div id="logs-flat-view">
+        <div id="logs-content" hx-get="/partials/logs" hx-trigger="load, every 10s" hx-swap="innerHTML">
+            <div class="loading-placeholder"><div class="loading-spinner"></div></div>
+        </div>
+    </div>
+
+    <!-- Tree view (hidden by default) -->
+    <div id="logs-tree-view" style="display: none;">
+        <div id="logs-tree-content">
+            <div class="loading-placeholder"><div class="loading-spinner"></div></div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', path='js/tree.js') }}"></script>
+{% endblock %}

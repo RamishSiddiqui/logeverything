@@ -1,0 +1,73 @@
+{% if logs %}
+<table class="data-table">
+    <thead>
+        <tr>
+            <th>Level</th>
+            <th>Source</th>
+            <th>Message</th>
+            <th>Logger</th>
+            <th>Correlation ID</th>
+            <th>Timestamp</th>
+        </tr>
+    </thead>
+    <tbody id="logs-table-body">
+        {% for log in logs %}
+        <tr class="{{ 'log-row--error' if log.level == 'ERROR' or log.level == 'CRITICAL' else 'log-row--warning' if log.level == 'WARNING' else '' }}">
+            <td>
+                <span class="badge badge--{{ log.level | lower if log.level in ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'] else 'debug' }}">
+                    {{ log.level }}
+                </span>
+            </td>
+            <td>
+                {% if log.source %}
+                <span class="badge badge--outline badge--sm">{{ log.source }}</span>
+                {% else %}
+                <span class="text-tertiary">&mdash;</span>
+                {% endif %}
+            </td>
+            <td class="font-mono text-sm">{{ log.message }}</td>
+            <td>{{ log.logger }}</td>
+            <td>
+                {% if log.correlation_id %}
+                <a href="#"
+                   class="correlation-link"
+                   hx-get="/partials/trace/{{ log.correlation_id }}"
+                   hx-target="#trace-modal-body"
+                   hx-swap="innerHTML"
+                   onclick="openTraceModal()">
+                    {{ log.correlation_id[:12] }}...
+                </a>
+                {% else %}
+                <span class="text-tertiary">&mdash;</span>
+                {% endif %}
+            </td>
+            <td class="text-tertiary">{{ log.timestamp | replace("T", " ") | truncate(19, True, "") }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Pagination footer -->
+<div class="pagination" id="pagination-bar"
+     data-total="{{ total_count }}" data-limit="{{ limit }}" data-offset="{{ offset }}">
+    <div class="pagination__info">
+        {% if limit > 0 %}
+        Showing {{ offset + 1 }}–{{ [offset + limit, total_count] | min }} of {{ total_count }}
+        {% else %}
+        Showing all {{ total_count }} entries
+        {% endif %}
+    </div>
+    <div class="pagination__nav">
+        {% if limit > 0 and offset > 0 %}
+        <button class="btn btn-secondary btn-xs" onclick="paginateLogs({{ offset - limit }})">Prev</button>
+        {% endif %}
+        {% if limit > 0 and offset + limit < total_count %}
+        <button class="btn btn-secondary btn-xs" onclick="paginateLogs({{ offset + limit }})">Next</button>
+        {% endif %}
+    </div>
+</div>
+{% else %}
+<div class="empty-state">
+    <p>No log entries match the current filters</p>
+</div>
+{% endif %}

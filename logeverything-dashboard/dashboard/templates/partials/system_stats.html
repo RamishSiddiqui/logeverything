@@ -1,0 +1,48 @@
+<h2 class="card-title">System Stats</h2>
+
+{% if stats %}
+<div class="card-grid">
+    <div class="stat-item">
+        <span class="stat-item__label">CPU</span>
+        <span class="stat-item__value">{{ stats.cpu_usage }}%</span>
+        <div class="progress-bar">
+            <div class="progress-bar__fill {{ 'progress-bar__fill--error' if stats.cpu_usage > 90 else 'progress-bar__fill--warning' if stats.cpu_usage > 70 else '' }}"
+                 style="width: {{ stats.cpu_usage }}%"></div>
+        </div>
+    </div>
+
+    <div class="stat-item">
+        <span class="stat-item__label">Memory</span>
+        <span class="stat-item__value">{{ stats.memory_usage }}%</span>
+        <div class="progress-bar">
+            <div class="progress-bar__fill {{ 'progress-bar__fill--error' if stats.memory_usage > 90 else 'progress-bar__fill--warning' if stats.memory_usage > 70 else '' }}"
+                 style="width: {{ stats.memory_usage }}%"></div>
+        </div>
+    </div>
+
+    <div class="stat-item">
+        <span class="stat-item__label">Disk</span>
+        <span class="stat-item__value">{{ stats.disk_usage }}%</span>
+        <div class="progress-bar">
+            <div class="progress-bar__fill {{ 'progress-bar__fill--error' if stats.disk_usage > 90 else 'progress-bar__fill--warning' if stats.disk_usage > 70 else '' }}"
+                 style="width: {{ stats.disk_usage }}%"></div>
+        </div>
+    </div>
+
+    <div class="stat-item">
+        <span class="stat-item__label">Network In</span>
+        <span class="stat-item__value">{{ stats.network_in | filesizeformat }}</span>
+    </div>
+</div>
+<div class="card-footer">
+    <button class="btn btn-secondary btn-sm"
+            hx-get="/partials/system-detail"
+            hx-target="#system-detail-modal-body"
+            hx-swap="innerHTML"
+            onclick="openSystemDetailModal()">Details</button>
+</div>
+{% else %}
+<div class="empty-state">
+    <p>No system metrics available</p>
+</div>
+{% endif %}

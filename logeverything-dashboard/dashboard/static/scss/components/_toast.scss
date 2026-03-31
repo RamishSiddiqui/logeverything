@@ -1,0 +1,67 @@
+// ============================================================
+// Toast Notifications
+// ============================================================
+
+.toast-container {
+  position: fixed;
+  bottom: var(--space-lg);
+  right: var(--space-lg);
+  z-index: var(--z-toast);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  pointer-events: none;
+}
+
+.toast {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  min-width: 280px;
+  max-width: 420px;
+  overflow: hidden;
+  pointer-events: auto;
+  animation: slideInRight 0.3s ease forwards;
+
+  &--success { border-left: 3px solid var(--color-success); }
+  &--error   { border-left: 3px solid var(--color-error); }
+  &--info    { border-left: 3px solid var(--color-info); }
+  &--warning { border-left: 3px solid var(--color-warning); }
+
+  &--leaving {
+    animation: slideOutRight 0.3s ease forwards;
+  }
+
+  &__message {
+    flex: 1;
+    font-size: 0.8125rem;
+    color: var(--text-primary);
+  }
+
+  &__close {
+    background: none;
+    border: none;
+    color: var(--text-tertiary);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: var(--radius-sm);
+    transition: color var(--transition-fast);
+
+    &:hover { color: var(--text-primary); }
+  }
+
+  &__progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    background: var(--accent-primary);
+    animation: progressShrink linear forwards;
+  }
+}

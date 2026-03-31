@@ -1,0 +1,87 @@
+/* LogEverything Documentation - Furo Theme with Manrope Light Font
+   Custom styles to enhance the Furo theme */
+
+/* Import Manrope Light font */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&display=swap');
+
+/* Override Furo's font settings to use Manrope Light */
+:root {
+    --font-stack: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --font-stack--monospace: 'JetBrains Mono', 'Consolas', 'Monaco', 'Courier New', monospace;
+}
+
+/* Apply Manrope Light font globally */
+body, .content, .sidebar, .header-links {
+    font-family: var(--font-stack);
+    font-weight: 300; /* Light weight for body text */
+    line-height: 1.6;
+}
+
+/* Headers with appropriate weights */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-stack);
+    font-weight: 500; /* Medium weight for headers */
+    letter-spacing: -0.025em;
+}
+
+h1 {
+    font-weight: 600; /* Slightly bolder for main headings */
+}
+
+/* Enhanced copy button styles for Furo theme */
+.copy-code-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: var(--color-background-primary, rgba(255, 255, 255, 0.95));
+    border: 1px solid var(--color-background-border, #e1e4e8);
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 12px;
+    font-family: var(--font-stack);
+    font-weight: 400;
+    cursor: pointer;
+    z-index: 10;
+    opacity: 0;
+    transition: all 0.2s ease;
+    color: var(--color-foreground-secondary, #656d76);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.copy-code-btn:hover {
+    background: var(--color-background-secondary, #f6f8fa);
+    border-color: var(--color-brand-primary, #2563eb);
+    color: var(--color-brand-primary, #2563eb);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Show copy button on hover */
+.highlight:hover .copy-code-btn,
+.executable-code:hover .copy-code-btn,
+.copy-code-btn:focus {
+    opacity: 1;
+}
+
+/* Furo dark theme support */
+[data-theme="dark"] .copy-code-btn {
+    background: var(--color-background-primary, rgba(33, 37, 41, 0.95));
+    border-color: var(--color-background-border, #444950);
+    color: var(--color-foreground-secondary, #8b949e);
+}
+
+[data-theme="dark"] .copy-code-btn:hover {
+    background: var(--color-background-secondary, #21262d);
+    border-color: var(--color-brand-primary, #60a5fa);
+    color: var(--color-brand-primary, #60a5fa);
+}
+
+/* Improve code block containers for better button placement */
+.highlight, .executable-code {
+    position: relative;
+}
+
+.highlight pre, .executable-code pre {
+    padding-right: 60px; /* Make space for copy button */
+}

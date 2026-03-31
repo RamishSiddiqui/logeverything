@@ -1,0 +1,122 @@
+// ============================================================
+// Logs — Level Pills, Correlation Links, Real-time Indicator
+// ============================================================
+
+// Level multi-select pills
+.level-pills {
+  display: flex;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.level-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  line-height: 1.5;
+  border: 1.5px solid transparent;
+  background: transparent;
+
+  // Inactive: show muted level color so they're always recognizable
+  &--debug {
+    color: var(--color-debug);
+    border-color: var(--color-debug);
+    opacity: 0.4;
+  }
+  &--info {
+    color: var(--color-info);
+    border-color: var(--color-info);
+    opacity: 0.4;
+  }
+  &--warning {
+    color: var(--color-warning);
+    border-color: var(--color-warning);
+    opacity: 0.4;
+  }
+  &--error {
+    color: var(--color-error);
+    border-color: var(--color-error);
+    opacity: 0.4;
+  }
+  &--critical {
+    color: var(--color-critical);
+    border-color: var(--color-critical);
+    opacity: 0.4;
+  }
+
+  // Hover — brighten
+  &:hover {
+    opacity: 0.7;
+  }
+
+  // Active — full color + background fill
+  &--active {
+    opacity: 1 !important;
+    box-shadow: 0 0 8px rgba(0,0,0,0.15);
+
+    &.level-pill--debug {
+      background: var(--color-debug-dim);
+    }
+    &.level-pill--info {
+      background: var(--color-info-dim);
+    }
+    &.level-pill--warning {
+      background: var(--color-warning-dim);
+    }
+    &.level-pill--error {
+      background: var(--color-error-dim);
+    }
+    &.level-pill--critical {
+      background: var(--color-critical-dim);
+    }
+  }
+}
+
+// Correlation links
+.correlation-link {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--accent-live);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+
+  &:hover {
+    color: var(--accent-primary);
+    text-decoration: underline;
+  }
+}
+
+.realtime-indicator {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--accent-live);
+  background: var(--accent-live-dim);
+  border-radius: 20px;
+  animation: fadeIn 0.3s ease;
+}
+
+// New log row glow animation
+.log-row--new {
+  animation: glowFade 1.5s ease forwards;
+  border-left: 2px solid var(--accent-live);
+}
+
+// Level tinting on table rows
+.log-row--error {
+  background: var(--color-error-dim);
+}
+
+.log-row--warning {
+  background: var(--color-warning-dim);
+}

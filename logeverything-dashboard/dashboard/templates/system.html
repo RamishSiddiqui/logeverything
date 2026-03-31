@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}System - LogEverything Dashboard{% endblock %}
+
+{% block content %}
+<!-- System Stats Card -->
+<div class="grid grid-cols-2">
+    <div class="card">
+        <div class="card-body" hx-get="/partials/system-stats" hx-trigger="load, every 5s" hx-swap="innerHTML">
+            <div class="loading-placeholder"><div class="loading-spinner"></div></div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body" hx-get="/partials/monitoring-stats" hx-trigger="load, every 5s" hx-swap="innerHTML">
+            <div class="loading-placeholder"><div class="loading-spinner"></div></div>
+        </div>
+    </div>
+</div>
+
+<!-- System Trends Chart (full width) -->
+<div class="card">
+    <div class="card-body">
+        <h2 class="card-title">System Trends</h2>
+        <div class="chart-container chart-container--large">
+            <canvas id="cpu-memory-chart"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- System Detail -->
+<div class="card">
+    <div class="card-body" id="system-detail-content"
+         hx-get="/partials/system-detail"
+         hx-trigger="load, every 10s"
+         hx-swap="innerHTML">
+        <div class="loading-placeholder"><div class="loading-spinner"></div></div>
+    </div>
+</div>
+{% endblock %}

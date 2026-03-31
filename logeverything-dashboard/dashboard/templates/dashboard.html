@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='css/styles.css') }}">
+    <script src="https://unpkg.com/htmx.org@1.9.0"></script>
+    <script src="https://unpkg.com/hyperscript.org@0.9.7"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3"></script>
+</head>
+<body class="theme-dark">
+
+    <!-- Header -->
+    <header class="dashboard-header">
+        <div class="dashboard-header__inner">
+            <div class="dashboard-header__brand">LogEverything</div>
+            <div class="dashboard-header__controls">
+                <!-- Time-range selector -->
+                <div class="time-range-selector" id="time-range-selector">
+                    <button class="time-range-btn" data-hours="1">1h</button>
+                    <button class="time-range-btn" data-hours="6">6h</button>
+                    <button class="time-range-btn time-range-btn--active" data-hours="24">24h</button>
+                    <button class="time-range-btn" data-hours="168">7d</button>
+                </div>
+
+                <!-- Auto-refresh toggle -->
+                <button class="btn-icon btn-icon--active" id="auto-refresh-toggle" onclick="toggleAutoRefresh()" title="Toggle Auto-Refresh (r)">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182M2.985 19.644l3.181-3.182" />
+                    </svg>
+                </button>
+
+                <!-- Export button -->
+                <button class="btn-icon" id="export-button" onclick="exportData()" title="Export Data (e)">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                    </svg>
+                </button>
+
+                <div class="connection-badge" id="connection-status">
+                    <span class="status-dot {{ 'status-dot--active' if active_connection else 'status-dot--inactive' }}"></span>
+                    {{ active_connection.name if active_connection else "No Connection" }}
+                </div>
+                <button class="btn-icon" id="connection-button" title="Manage Connections">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
+                    </svg>
+                </button>
+                <button class="btn-icon" id="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container page-content">
+
+        <!-- Summary Cards -->
+        <div class="grid grid-cols-4">
+            <!-- System Stats -->
+            <div class="card">
+                <div class="card-body" hx-get="/partials/system-stats" hx-trigger="load, every 5s" hx-swap="innerHTML">
+                    <div class="loading-placeholder"><div class="loading-spinner"></div></div>
+                </div>
+            </div>
+
+            <!-- Monitoring Stats -->
+            <div class="card">
+                <div class="card-body" hx-get="/partials/monitoring-stats" hx-trigger="load, every 5s" hx-swap="innerHTML">
+                    <div class="loading-placeholder"><div class="loading-spinner"></div></div>
+                </div>
+            </div>
+
+            <!-- Logs Stats -->
+            <div class="card">
+                <div class="card-body" hx-get="/partials/logs-stats" hx-trigger="load, every 10s" hx-swap="innerHTML">
+                    <div class="loading-placeholder"><div class="loading-spinner"></div></div>
+                </div>
+            </div>
+
+            <!-- Operations Summary -->
+            <div class="card">
+                <div class="card-body" hx-get="/partials/operations-summary-card" hx-trigger="load, every 10s" hx-swap="innerHTML">
+                    <div class="loading-placeholder"><div class="loading-spinner"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="grid grid-cols-2" style="gap: var(--space-lg);">
+            <!-- CPU / Memory Trend Chart -->
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">System Trends</h2>
+                    <div class="chart-container">
+                        <canvas id="cpu-memory-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Log Level Distribution Chart -->
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">Log Distribution</h2>
+                    <div class="chart-container">
+                        <canvas id="log-level-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Operation Analytics -->
+        <div id="operation-analytics">
+            <div class="card">
+                <div class="card-body" id="operation-analytics-content"
+                     hx-get="/partials/operation-analytics?hours=24"
+                     hx-trigger="load, every 30s"
+                     hx-swap="innerHTML">
+                    <div class="loading-placeholder"><div class="loading-spinner"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Operations Table -->
+        <div id="operations">
+            <div class="section-header">
+                <h2>Recent Operations</h2>
+            </div>
+            <div class="overflow-x-auto" id="operations-content"
+                 hx-get="/partials/operations" hx-trigger="load, every 10s" hx-swap="innerHTML">
+                <div class="loading-placeholder"><div class="loading-spinner"></div></div>
+            </div>
+        </div>
+
+        <!-- Logs Table -->
+        <div id="logs">
+            <div class="section-header">
+                <h2>Recent Logs</h2>
+                <span id="logs-realtime-indicator" class="realtime-indicator" style="display:none;"></span>
+            </div>
+            <div id="logs-content" hx-get="/partials/logs" hx-trigger="load, every 10s" hx-swap="innerHTML">
+                <div class="loading-placeholder"><div class="loading-spinner"></div></div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Trace Modal -->
+    <div class="modal" id="trace-modal">
+        <div class="modal__backdrop" onclick="closeTraceModal()"></div>
+        <div class="modal__content">
+            <div class="modal__header">
+                <h3>Request Trace</h3>
+                <button class="btn-icon" onclick="closeTraceModal()">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="modal__body" id="trace-modal-body">
+                <div class="loading-placeholder"><div class="loading-spinner"></div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- System Detail Modal -->
+    <div class="modal" id="system-detail-modal">
+        <div class="modal__backdrop" onclick="closeSystemDetailModal()"></div>
+        <div class="modal__content">
+            <div class="modal__header">
+                <h3>System Details</h3>
+                <button class="btn-icon" onclick="closeSystemDetailModal()">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="modal__body" id="system-detail-modal-body">
+                <div class="loading-placeholder"><div class="loading-spinner"></div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Connection Modal -->
+    {% include "partials/connection_modal.html" %}
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', path='js/main.js') }}"></script>
+    <script src="{{ url_for('static', path='js/connections.js') }}"></script>
+    <script src="{{ url_for('static', path='js/charts.js') }}"></script>
+    <script src="{{ url_for('static', path='js/dashboard.js') }}"></script>
+</body>
+</html>

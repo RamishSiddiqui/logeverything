@@ -1,0 +1,57 @@
+{% macro render_node(node, depth=0) %}
+<div class="tree-node {% if node.is_call %}tree-node--call{% endif %}" style="--depth: {{ depth }}">
+  {% if node.is_call %}
+    <div class="tree-header" onclick="toggleTreeNode(this)">
+      <button class="tree-toggle">&#9654;</button>
+      <span class="badge badge--{{ node.log.level|lower if node.log.level in ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'] else 'debug' }}">
+        {{ node.log.level }}
+      </span>
+      <span class="tree-message font-mono text-sm">{{ node.log.message }}</span>
+      {% if node.duration_ms is not none %}
+        <span class="tree-duration">{{ node.duration_ms }}ms</span>
+      {% endif %}
+      <span class="tree-timestamp text-tertiary">{{ node.log.timestamp|replace("T", " ")|truncate(19, True, "") }}</span>
+    </div>
+    <div class="tree-children" style="display: none;">
+      {% for child in node.children %}
+        {{ render_node(child, depth + 1) }}
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="tree-leaf">
+      <span class="badge badge--{{ node.log.level|lower if node.log.level in ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'] else 'debug' }}">
+        {{ node.log.level }}
+      </span>
+      <span class="tree-message font-mono text-sm">{{ node.log.message }}</span>
+      {% if node.log.correlation_id %}
+        <a href="#"
+           class="correlation-link"
+           hx-get="/partials/trace/{{ node.log.correlation_id }}"
+           hx-target="#trace-modal-body"
+           hx-swap="innerHTML"
+           onclick="openTraceModal()">
+          {{ node.log.correlation_id[:12] }}...
+        </a>
+      {% endif %}
+      <span class="tree-timestamp text-tertiary">{{ node.log.timestamp|replace("T", " ")|truncate(19, True, "") }}</span>
+    </div>
+  {% endif %}
+</div>
+{% endmacro %}
+
+{% if tree %}
+<div class="tree-controls">
+  <button class="btn btn-secondary btn-sm" onclick="expandAllTreeNodes()">Expand All</button>
+  <button class="btn btn-secondary btn-sm" onclick="collapseAllTreeNodes()">Collapse All</button>
+</div>
+<div class="tree-container">
+  {% for node in tree %}
+    {{ render_node(node, 0) }}
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+  <p>No hierarchical log data available</p>
+  <p class="text-tertiary text-sm">Hierarchy data is populated when using the <code>@log</code> decorator with a JSONHandler</p>
+</div>
+{% endif %}

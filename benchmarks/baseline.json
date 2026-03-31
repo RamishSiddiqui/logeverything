@@ -1,0 +1,21 @@
+{
+    "_description": "Minimum operations/second thresholds for CI regression checks.",
+    "_updated": "2026-02-23",
+    "core_logging": {
+        "simple_info_message": 50000,
+        "formatted_message": 30000
+    },
+    "decorators": {
+        "decorated_function_call": 1000,
+        "class_decoration": 1000
+    },
+    "context_managers": {
+        "logging_context": 20000
+    },
+    "async_logging": {
+        "async_log_message": 10000
+    },
+    "print_capture": {
+        "captured_print": 10000
+    }
+}

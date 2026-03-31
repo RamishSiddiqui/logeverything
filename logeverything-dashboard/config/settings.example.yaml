@@ -1,0 +1,105 @@
+# LogEverything Dashboard Configuration Example
+# Copy this file to settings.yaml and customize for your environment
+
+# Server Configuration
+server:
+  host: "127.0.0.1"
+  port: 8000
+  workers: 1
+  reload: false
+  debug: false
+  access_log: true
+
+# Dashboard Settings
+dashboard:
+  title: "LogEverything Dashboard"
+  refresh_interval: 5           # Seconds between auto-refresh
+  max_operations: 1000          # Maximum operations to display
+  retention_days: 30            # Data retention period
+  theme: "auto"                 # auto, light, dark
+  timezone: "UTC"
+
+# LogEverything Integration
+logeverything:
+  api_url: "http://localhost:8080/api/v1"
+  api_key: ""                   # Set via LOGEVERYTHING_API_KEY env var
+  timeout: 30                   # Request timeout in seconds
+  retry_attempts: 3             # Number of retry attempts
+  retry_delay: 1.0             # Delay between retries in seconds
+  verify_ssl: true             # SSL certificate verification
+
+# Monitoring and Observability
+monitoring:
+  prometheus_enabled: true
+  prometheus_port: 9090
+  health_checks_enabled: true
+  health_check_interval: 30    # Health check interval in seconds
+  metrics_prefix: "dashboard"  # Prometheus metrics prefix
+
+# Structured Logging
+logging:
+  level: "INFO"                # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  format: "json"               # json, text, structured
+  correlation_id_header: "X-Correlation-ID"
+  include_request_body: false
+  include_response_body: false
+  max_body_size: 1024         # Maximum body size to log
+
+# Security Configuration
+security:
+  secret_key: ""              # Set via SECRET_KEY env var (auto-generated if empty)
+  cors_origins:               # CORS allowed origins
+    - "*"
+  cors_allow_credentials: true
+  cors_allow_methods:
+    - "*"
+  cors_allow_headers:
+    - "*"
+  rate_limit_enabled: true
+  rate_limit_requests: 100    # Requests per window
+  rate_limit_window: 60       # Window size in seconds
+
+# Database Configuration (for caching/sessions)
+database:
+  url: "sqlite:///dashboard.db"
+  pool_size: 5
+  max_overflow: 10
+  pool_timeout: 30
+  pool_recycle: 3600
+  echo: false
+
+# Redis Configuration (for real-time features)
+redis:
+  url: "redis://localhost:6379/0"
+  max_connections: 10
+  retry_on_timeout: true
+  health_check_interval: 30
+
+# Feature Flags
+features:
+  real_time_updates: true
+  websocket_support: true
+  prometheus_metrics: true
+  health_checks: true
+  rate_limiting: true
+  request_logging: true
+
+# UI Configuration
+ui:
+  default_theme: "auto"
+  themes:
+    - "light"
+    - "dark" 
+    - "auto"
+  refresh_intervals:           # Available refresh intervals (seconds)
+    - 1
+    - 5
+    - 10
+    - 30
+    - 60
+  max_operations_options:      # Available max operations options
+    - 100
+    - 500
+    - 1000
+    - 2000
+    - 5000

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Operations - LogEverything Dashboard{% endblock %}
+
+{% block content %}
+<!-- Operations Summary Card -->
+<div class="grid grid-cols-2">
+    <div class="card">
+        <div class="card-body" hx-get="/partials/operations-summary-card" hx-trigger="load, every 10s" hx-swap="innerHTML">
+            <div class="loading-placeholder"><div class="loading-spinner"></div></div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body" hx-get="/partials/monitoring-stats" hx-trigger="load, every 5s" hx-swap="innerHTML">
+            <div class="loading-placeholder"><div class="loading-spinner"></div></div>
+        </div>
+    </div>
+</div>
+
+<!-- Operation Analytics -->
+<div id="operation-analytics">
+    <div class="card">
+        <div class="card-body" id="operation-analytics-content"
+             hx-get="/partials/operation-analytics?hours=24"
+             hx-trigger="load, every 30s"
+             hx-swap="innerHTML">
+            <div class="loading-placeholder"><div class="loading-spinner"></div></div>
+        </div>
+    </div>
+</div>
+
+<!-- Operations Table -->
+<div id="operations">
+    <div class="section-header">
+        <h2>Recent Operations</h2>
+    </div>
+    <div class="overflow-x-auto" id="operations-content"
+         hx-get="/partials/operations" hx-trigger="load, every 10s" hx-swap="innerHTML">
+        <div class="loading-placeholder"><div class="loading-spinner"></div></div>
+    </div>
+</div>
+{% endblock %}

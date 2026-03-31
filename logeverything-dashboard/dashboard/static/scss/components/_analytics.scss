@@ -1,0 +1,25 @@
+// ============================================================
+// Analytics Components
+// ============================================================
+
+.analytics-stats-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-md);
+}
+
+.data-table--compact {
+  thead th {
+    padding: var(--space-xs) var(--space-sm);
+    font-size: 0.625rem;
+  }
+
+  tbody td {
+    padding: var(--space-xs) var(--space-sm);
+    font-size: 0.75rem;
+  }
+}
+
+.btn-icon--active {
+  color: var(--accent-live);
+}

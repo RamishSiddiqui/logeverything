@@ -1,0 +1,35 @@
+<h2 class="card-title">Monitoring</h2>
+
+{% if stats %}
+<div class="card-grid">
+    <div class="stat-item">
+        <span class="stat-item__label">Operations</span>
+        <span class="stat-item__value">{{ stats.total_operations }}</span>
+    </div>
+
+    <div class="stat-item">
+        <span class="stat-item__label">Success Rate</span>
+        <span class="stat-item__value">
+            {% if stats.total_operations > 0 %}
+                {{ (stats.successful_operations / stats.total_operations * 100) | int }}%
+            {% else %}
+                0%
+            {% endif %}
+        </span>
+    </div>
+
+    <div class="stat-item">
+        <span class="stat-item__label">Successful</span>
+        <span class="stat-item__value card-value--success">{{ stats.successful_operations }}</span>
+    </div>
+
+    <div class="stat-item">
+        <span class="stat-item__label">Failed</span>
+        <span class="stat-item__value card-value--error">{{ stats.failed_operations }}</span>
+    </div>
+</div>
+{% else %}
+<div class="empty-state">
+    <p>No monitoring stats available</p>
+</div>
+{% endif %}

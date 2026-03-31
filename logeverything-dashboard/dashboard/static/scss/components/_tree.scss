@@ -1,0 +1,157 @@
+// ============================================================
+// Tree View — Hierarchical Log Display
+// ============================================================
+
+.tree-controls {
+  display: flex;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.tree-container {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  padding: var(--space-md);
+  overflow-x: auto;
+}
+
+.tree-node {
+  padding-left: calc(var(--depth, 0) * 20px);
+
+  &--call {
+    > .tree-header {
+      background: var(--bg-elevated);
+      border-left: 3px solid var(--accent-primary);
+      border-radius: var(--radius-sm);
+      padding: var(--space-xs) var(--space-sm);
+      margin-bottom: 2px;
+      cursor: pointer;
+      transition: background var(--transition-fast);
+
+      &:hover {
+        background: var(--bg-hover);
+      }
+    }
+  }
+}
+
+.tree-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+}
+
+.tree-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border: none;
+  background: none;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  font-size: 0.625rem;
+  padding: 0;
+  transition: transform var(--transition-fast);
+  flex-shrink: 0;
+
+  &--open {
+    transform: rotate(90deg);
+  }
+}
+
+.tree-children {
+  margin-left: 8px;
+  padding-left: 12px;
+  border-left: 1px solid var(--border-subtle);
+}
+
+.tree-leaf {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 2px var(--space-sm);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+}
+
+.tree-message {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tree-duration {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  background: var(--accent-primary-dim);
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+.tree-timestamp {
+  font-size: 0.75rem;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+// --- View Toggle (Flat / Tree pill buttons) ---
+
+.view-toggle {
+  display: inline-flex;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-left: auto;
+
+  &__btn {
+    padding: 4px 14px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+
+    &:hover {
+      background: var(--bg-hover);
+      color: var(--text-primary);
+    }
+
+    &--active {
+      background: var(--accent-primary);
+      color: #fff;
+
+      &:hover {
+        background: var(--accent-primary);
+        color: #fff;
+      }
+    }
+
+    & + & {
+      border-left: 1px solid var(--border-subtle);
+    }
+  }
+}
+
+// --- Real-time indicator ---
+
+.realtime-indicator {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--accent-live);
+  background: var(--accent-live-dim);
+  border-radius: var(--radius-sm);
+  animation: fadeIn var(--transition-base);
+}

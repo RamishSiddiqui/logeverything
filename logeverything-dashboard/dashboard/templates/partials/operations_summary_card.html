@@ -1,0 +1,43 @@
+<h2 class="card-title">Operations</h2>
+
+{% if summary and summary.total > 0 %}
+<div class="card-grid">
+    <div class="stat-item">
+        <span class="stat-item__label">Total (24h)</span>
+        <span class="stat-item__value">{{ summary.total }}</span>
+    </div>
+
+    <div class="stat-item">
+        <span class="stat-item__label">Failure Rate</span>
+        <span class="stat-item__value {{ 'card-value--error' if summary.failed > 0 else '' }}">
+            {% if summary.total > 0 %}
+                {{ ((summary.failed / summary.total) * 100) | round(1) }}%
+            {% else %}
+                0%
+            {% endif %}
+        </span>
+    </div>
+
+    <div class="stat-item">
+        <span class="stat-item__label">Avg Duration</span>
+        <span class="stat-item__value">{{ summary.avg_duration }}s</span>
+    </div>
+
+    <div class="stat-item">
+        <span class="stat-item__label">Max Duration</span>
+        <span class="stat-item__value">{{ summary.max_duration }}s</span>
+    </div>
+</div>
+{% else %}
+<div class="card-grid">
+    <div class="stat-item">
+        <span class="stat-item__label">Total (24h)</span>
+        <span class="stat-item__value">0</span>
+    </div>
+
+    <div class="stat-item">
+        <span class="stat-item__label">Failure Rate</span>
+        <span class="stat-item__value">0%</span>
+    </div>
+</div>
+{% endif %}

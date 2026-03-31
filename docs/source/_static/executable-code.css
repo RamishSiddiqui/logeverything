@@ -1,0 +1,76 @@
+/* Styles for executable code blocks */
+
+.executable-code-container {
+    margin: 1em 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.executable-code {
+    margin: 0 !important;
+    border-radius: 4px 4px 0 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.executable-output {
+    background-color: #f8f9fa;
+    border-radius: 0 0 4px 4px;
+    padding: 0;
+}
+
+.executable-output p {
+    margin: 0;
+    padding: 8px 12px 4px 12px;
+    background-color: #e9ecef;
+    border-bottom: 1px solid #dee2e6;
+    font-size: 0.9em;
+    color: #495057;
+}
+
+.executable-output .output-content {
+    margin: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    background-color: #f8f9fa !important;
+    padding: 12px;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 0.85em;
+    line-height: 1.4;
+    color: #2c3e50;
+}
+
+/* Dark theme support */
+@media (prefers-color-scheme: dark) {
+    .executable-output {
+        background-color: #2b2b2b;
+    }
+
+    .executable-output p {
+        background-color: #3c3c3c;
+        border-bottom: 1px solid #555;
+        color: #ccc;
+    }
+
+    .executable-output .output-content {
+        background-color: #2b2b2b !important;
+        color: #e6e6e6;
+    }
+}
+
+/* Syntax highlighting improvements */
+.executable-code .highlight {
+    background: none !important;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .executable-code-container {
+        margin: 0.5em 0;
+    }
+
+    .executable-output .output-content {
+        font-size: 0.8em;
+        padding: 8px;
+    }
+}

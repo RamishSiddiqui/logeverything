@@ -1,0 +1,205 @@
+<!-- Connection Management Modal -->
+<div class="modal" id="connection-modal">
+    <div class="modal__backdrop" onclick="closeConnectionModal()"></div>
+    <div class="modal__content" style="max-width: 680px;">
+        <div class="modal__header">
+            <h3 id="connection-modal-title">Manage Connections</h3>
+            <button class="btn-icon" onclick="closeConnectionModal()">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <div class="modal__body" id="connection-modal-body">
+            <!-- Tabs -->
+            <div class="flex gap-sm mb-lg" style="border-bottom: 1px solid var(--border-subtle); padding-bottom: var(--space-sm);">
+                <button class="btn btn-ghost btn-sm" id="tab-connections-list" onclick="showConnectionsList()">Connections</button>
+                <button class="btn btn-ghost btn-sm" id="tab-add-connection" onclick="showAddConnection()">Add New</button>
+                <button class="btn btn-ghost btn-sm" id="tab-edit-connection" onclick="showEditConnection()" style="display: none;">Edit</button>
+            </div>
+
+            <!-- Connections List View -->
+            <div id="connections-list-view">
+                <div class="flex justify-between items-center mb-md">
+                    <h4>Configured Connections</h4>
+                    <button class="btn btn-primary btn-sm" onclick="showAddConnection()">New Connection</button>
+                </div>
+
+                <div id="connections-table-container">
+                    <table class="data-table" id="connections-table">
+                        <thead>
+                            <tr>
+                                <th>Connection</th>
+                                <th>Details</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="connections-table-body">
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="no-connections" class="empty-state" style="display: none;">
+                    <p>No connections configured yet.</p>
+                    <button class="btn btn-primary btn-sm mt-md" onclick="showAddConnection()">Add First Connection</button>
+                </div>
+            </div>
+
+            <!-- Add Connection Form -->
+            <div id="add-connection-view" style="display: none;">
+                <h4 class="mb-sm">Create New Connection</h4>
+                <p class="text-tertiary text-sm mb-lg">Configure a connection to your LogEverything data source</p>
+
+                <form id="add-connection-form" onsubmit="saveNewConnection(event)">
+                    <div class="form-section">
+                        <div class="form-group">
+                            <label for="connection-name" class="form-label">Connection Name *</label>
+                            <input type="text" id="connection-name" name="name" class="form-input" placeholder="My Application Logs" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Connection Type *</label>
+                            <div class="type-selector">
+                                <label class="type-selector__option">
+                                    <input type="radio" name="type" value="local" checked onchange="toggleConnectionFields()">
+                                    Local Files
+                                </label>
+                                <label class="type-selector__option">
+                                    <input type="radio" name="type" value="api" onchange="toggleConnectionFields()">
+                                    Remote API
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="connection-description" class="form-label">Description</label>
+                            <textarea id="connection-description" name="description" class="form-input" rows="2" placeholder="Additional details about this connection..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <!-- Local Connection Fields -->
+                        <div id="local-connection-fields">
+                            <div class="form-group">
+                                <label for="connection-data-dir" class="form-label">Data Directory *</label>
+                                <input type="text" id="connection-data-dir" name="data_dir" class="form-input" placeholder="/path/to/logs" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="connection-db-file" class="form-label">Database File</label>
+                                <input type="text" id="connection-db-file" name="database_file" class="form-input" placeholder="monitoring.db">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="connection-logs-pattern" class="form-label">Log Files Pattern</label>
+                                <input type="text" id="connection-logs-pattern" name="logs_pattern" class="form-input" placeholder="*.jsonl" value="*.jsonl">
+                            </div>
+                        </div>
+
+                        <!-- API Connection Fields -->
+                        <div id="api-connection-fields" style="display: none;">
+                            <div class="form-group">
+                                <label for="connection-api-url" class="form-label">API URL *</label>
+                                <input type="url" id="connection-api-url" name="base_url" class="form-input" placeholder="https://example.com/api">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="connection-api-key" class="form-label">API Key</label>
+                                <input type="password" id="connection-api-key" name="api_key" class="form-input" placeholder="Enter API key">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="flex items-center gap-sm">
+                                    <input type="checkbox" id="connection-verify-ssl" name="verify_ssl" checked>
+                                    <span class="text-sm">Verify SSL</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="btn-group justify-end">
+                        <button type="button" class="btn btn-secondary" onclick="showConnectionsList()">Cancel</button>
+                        <button type="button" class="btn btn-secondary" onclick="testConnection('add')">Test</button>
+                        <button type="submit" class="btn btn-primary">Save Connection</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Edit Connection View -->
+            <div id="edit-connection-view" style="display: none;">
+                <h4 class="mb-sm">Edit Connection</h4>
+                <p class="text-tertiary text-sm mb-lg">Modify your existing connection settings</p>
+
+                <form id="edit-connection-form" onsubmit="saveEditedConnection(event)">
+                    <input type="hidden" id="edit-connection-id" name="id">
+
+                    <div class="form-section">
+                        <div class="form-group">
+                            <label for="edit-connection-name" class="form-label">Connection Name *</label>
+                            <input type="text" id="edit-connection-name" name="name" class="form-input" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="edit-connection-type" class="form-label">Connection Type</label>
+                            <input type="text" id="edit-connection-type" class="form-input" readonly disabled style="opacity: 0.6;">
+                            <input type="hidden" id="edit-connection-type-hidden" name="type">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="edit-connection-description" class="form-label">Description</label>
+                            <textarea id="edit-connection-description" name="description" class="form-input" rows="2" placeholder="Additional details..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <!-- Local Connection Fields -->
+                        <div id="edit-local-connection-fields">
+                            <div class="form-group">
+                                <label for="edit-connection-data-dir" class="form-label">Data Directory *</label>
+                                <input type="text" id="edit-connection-data-dir" name="data_dir" class="form-input" placeholder="/path/to/logs" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="edit-connection-db-file" class="form-label">Database File</label>
+                                <input type="text" id="edit-connection-db-file" name="database_file" class="form-input" placeholder="monitoring.db">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="edit-connection-logs-pattern" class="form-label">Log Files Pattern</label>
+                                <input type="text" id="edit-connection-logs-pattern" name="logs_pattern" class="form-input" placeholder="*.jsonl">
+                            </div>
+                        </div>
+
+                        <!-- API Connection Fields -->
+                        <div id="edit-api-connection-fields" style="display: none;">
+                            <div class="form-group">
+                                <label for="edit-connection-api-url" class="form-label">API URL *</label>
+                                <input type="url" id="edit-connection-api-url" name="base_url" class="form-input" placeholder="https://example.com/api">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="edit-connection-api-key" class="form-label">API Key</label>
+                                <input type="password" id="edit-connection-api-key" name="api_key" class="form-input" placeholder="Leave empty to keep existing">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="flex items-center gap-sm">
+                                    <input type="checkbox" id="edit-connection-verify-ssl" name="verify_ssl">
+                                    <span class="text-sm">Verify SSL</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="btn-group justify-end">
+                        <button type="button" class="btn btn-secondary" onclick="showConnectionsList()">Cancel</button>
+                        <button type="button" class="btn btn-danger" onclick="deleteConnection()">Delete</button>
+                        <button type="button" class="btn btn-secondary" onclick="testConnection('edit')">Test</button>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

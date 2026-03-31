@@ -1,0 +1,73 @@
+<h2 class="card-title">Operation Analytics</h2>
+
+{% if summary and summary.total > 0 %}
+<div class="analytics-stats-row">
+    <div class="stat-item">
+        <span class="stat-item__label">Total</span>
+        <span class="stat-item__value">{{ summary.total }}</span>
+    </div>
+    <div class="stat-item">
+        <span class="stat-item__label">Successful</span>
+        <span class="stat-item__value card-value--success">{{ summary.successful }}</span>
+    </div>
+    <div class="stat-item">
+        <span class="stat-item__label">Failed</span>
+        <span class="stat-item__value card-value--error">{{ summary.failed }}</span>
+    </div>
+    <div class="stat-item">
+        <span class="stat-item__label">Avg Duration</span>
+        <span class="stat-item__value">{{ summary.avg_duration }}s</span>
+    </div>
+    <div class="stat-item">
+        <span class="stat-item__label">Max Duration</span>
+        <span class="stat-item__value">{{ summary.max_duration }}s</span>
+    </div>
+</div>
+
+{% if summary.top_operations %}
+<table class="data-table data-table--compact" style="margin-top: var(--space-md);">
+    <thead>
+        <tr>
+            <th>Operation</th>
+            <th>Count</th>
+            <th>Avg Duration</th>
+            <th>Failures</th>
+            <th>Failure Rate</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for op in summary.top_operations %}
+        <tr>
+            <td class="font-mono">{{ op.name if op.name is defined else op.operation_name }}</td>
+            <td>{{ op.count }}</td>
+            <td>{{ (op.avg_duration | round(4)) }}s</td>
+            <td>
+                {% if op.failures > 0 %}
+                <span style="color: var(--color-error);">{{ op.failures }}</span>
+                {% else %}
+                0
+                {% endif %}
+            </td>
+            <td>
+                {% if op.count > 0 %}
+                    {% set rate = (op.failures / op.count * 100) | round(1) %}
+                    {% if rate > 0 %}
+                    <span style="color: var(--color-error);">{{ rate }}%</span>
+                    {% else %}
+                    0%
+                    {% endif %}
+                {% else %}
+                0%
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
+{% else %}
+<div class="empty-state">
+    <p>No operation data available for this time range</p>
+</div>
+{% endif %}

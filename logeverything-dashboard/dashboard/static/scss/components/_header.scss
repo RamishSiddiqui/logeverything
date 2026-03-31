@@ -1,0 +1,104 @@
+// ============================================================
+// Header (sits within main-wrapper, to the right of sidebar)
+// ============================================================
+
+.dashboard-header {
+  position: fixed;
+  top: 0;
+  left: 240px; // sidebar width
+  right: 0;
+  height: 56px;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle);
+  z-index: var(--z-header);
+  backdrop-filter: blur(12px);
+  transition: left var(--transition-base);
+
+  &__inner {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 var(--space-lg);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--space-sm);
+  }
+
+  &__controls {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+}
+
+// When sidebar is collapsed, header spans full width
+body.sidebar-collapsed .dashboard-header {
+  left: 0;
+}
+
+@media (max-width: 1024px) {
+  .dashboard-header {
+    left: 0;
+  }
+
+  .dashboard-header__inner {
+    justify-content: space-between;
+  }
+}
+
+.connection-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-tertiary);
+  flex-shrink: 0;
+
+  &--active {
+    background: var(--color-success);
+    box-shadow: 0 0 6px var(--color-success);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  &--inactive {
+    background: var(--text-tertiary);
+  }
+}
+
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  &:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+    border-color: var(--border-default);
+  }
+}

@@ -1,0 +1,66 @@
+<div class="trace-header">
+    <h3>Request Trace</h3>
+    <span class="badge badge--outline">{{ correlation_id }}</span>
+</div>
+
+{% if logs %}
+{% set first = logs[0] %}
+{% if first.request_method or first.request_path or first.duration_ms %}
+<div class="trace-summary">
+    {% if first.request_method %}
+    <div class="trace-summary__item">
+        <span class="trace-summary__label">Method</span>
+        <span class="trace-summary__value badge badge--info badge--sm">{{ first.request_method }}</span>
+    </div>
+    {% endif %}
+    {% if first.request_path %}
+    <div class="trace-summary__item">
+        <span class="trace-summary__label">Path</span>
+        <span class="trace-summary__value font-mono text-sm">{{ first.request_path }}</span>
+    </div>
+    {% endif %}
+    {% if first.duration_ms %}
+    <div class="trace-summary__item">
+        <span class="trace-summary__label">Duration</span>
+        <span class="trace-summary__value">{{ first.duration_ms }}ms</span>
+    </div>
+    {% endif %}
+    <div class="trace-summary__item">
+        <span class="trace-summary__label">Entries</span>
+        <span class="trace-summary__value">{{ logs | length }}</span>
+    </div>
+</div>
+{% endif %}
+
+<div class="trace-timeline">
+    {% for log in logs %}
+    <div class="trace-entry trace-entry--{{ log.level | lower if log.level else 'debug' }}">
+        <div class="trace-entry__dot"></div>
+        <div class="trace-entry__content">
+            <div class="trace-entry__header">
+                <span class="badge badge--{{ log.level | lower if log.level in ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'] else 'debug' }} badge--sm">
+                    {{ log.level }}
+                </span>
+                {% if log.source %}
+                <span class="badge badge--outline badge--sm">{{ log.source }}</span>
+                {% endif %}
+                <span class="trace-entry__time">
+                    {{ log.timestamp | replace("T", " ") | truncate(19, True, "") }}
+                </span>
+            </div>
+            <div class="trace-entry__message">{{ log.message }}</div>
+            {% if log.logger %}
+            <div class="trace-entry__meta">{{ log.logger }}</div>
+            {% endif %}
+            {% if log.duration_ms %}
+            <div class="trace-entry__meta">+{{ log.duration_ms }}ms</div>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+    <p>No log entries found for this correlation ID</p>
+</div>
+{% endif %}

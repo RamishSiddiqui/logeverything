@@ -1,0 +1,105 @@
+<h2 class="card-title">System Detail</h2>
+
+{% if detail %}
+<div class="grid grid-cols-2" style="gap: var(--space-md); margin-top: var(--space-md);">
+    <!-- Process Info -->
+    <div>
+        <h3 class="text-sm" style="color: var(--text-tertiary); margin-bottom: var(--space-sm); text-transform: uppercase; letter-spacing: 0.06em;">Process</h3>
+        <table class="data-table data-table--compact">
+            <tbody>
+                <tr>
+                    <td class="text-tertiary">Memory RSS</td>
+                    <td>{{ ((detail.process_memory_rss or 0) / 1048576) | round(1) }} MB</td>
+                </tr>
+                <tr>
+                    <td class="text-tertiary">Memory VMS</td>
+                    <td>{{ ((detail.process_memory_vms or detail.get('process_memory_vms', 0) or 0) / 1048576) | round(1) }} MB</td>
+                </tr>
+                <tr>
+                    <td class="text-tertiary">Threads</td>
+                    <td>{{ detail.process_num_threads or detail.get('process_num_threads', '—') }}</td>
+                </tr>
+                <tr>
+                    <td class="text-tertiary">CPU %</td>
+                    <td>{{ detail.cpu_percent or 0 }}%</td>
+                </tr>
+                <tr>
+                    <td class="text-tertiary">File Descriptors</td>
+                    <td>{{ detail.process_num_fds or detail.get('process_num_fds', '—') }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- System Resources -->
+    <div>
+        <h3 class="text-sm" style="color: var(--text-tertiary); margin-bottom: var(--space-sm); text-transform: uppercase; letter-spacing: 0.06em;">Resources</h3>
+        <table class="data-table data-table--compact">
+            <tbody>
+                <tr>
+                    <td class="text-tertiary">Swap Used</td>
+                    <td>{{ ((detail.swap_used or detail.get('swap_used', 0) or 0) / 1048576) | round(0) }} MB</td>
+                </tr>
+                <tr>
+                    <td class="text-tertiary">Swap Total</td>
+                    <td>{{ ((detail.swap_total or detail.get('swap_total', 0) or 0) / 1048576) | round(0) }} MB</td>
+                </tr>
+                <tr>
+                    <td class="text-tertiary">Swap %</td>
+                    <td>{{ detail.swap_percent or detail.get('swap_percent', 0) or 0 }}%</td>
+                </tr>
+                <tr>
+                    <td class="text-tertiary">Disk Read</td>
+                    <td>{{ ((detail.disk_read_bytes or detail.get('disk_read_bytes', 0) or 0) / 1048576) | round(1) }} MB</td>
+                </tr>
+                <tr>
+                    <td class="text-tertiary">Disk Write</td>
+                    <td>{{ ((detail.disk_write_bytes or detail.get('disk_write_bytes', 0) or 0) / 1048576) | round(1) }} MB</td>
+                </tr>
+                <tr>
+                    <td class="text-tertiary">Network Recv</td>
+                    <td>{{ ((detail.network_bytes_recv or 0) / 1048576) | round(1) }} MB</td>
+                </tr>
+                <tr>
+                    <td class="text-tertiary">Network Sent</td>
+                    <td>{{ ((detail.network_bytes_sent or 0) / 1048576) | round(1) }} MB</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% if detail.uptime_seconds or detail.get('uptime_seconds') %}
+<div style="margin-top: var(--space-md); color: var(--text-secondary); font-size: 0.8125rem;">
+    {% set up = (detail.uptime_seconds or detail.get('uptime_seconds', 0)) | int %}
+    Uptime: {{ (up // 86400) }}d {{ ((up % 86400) // 3600) }}h {{ ((up % 3600) // 60) }}m
+</div>
+{% endif %}
+
+{% if session %}
+<div style="margin-top: var(--space-md); padding-top: var(--space-md); border-top: 1px solid var(--border-subtle);">
+    <h3 class="text-sm" style="color: var(--text-tertiary); margin-bottom: var(--space-sm); text-transform: uppercase; letter-spacing: 0.06em;">Session</h3>
+    <table class="data-table data-table--compact">
+        <tbody>
+            <tr>
+                <td class="text-tertiary">Session ID</td>
+                <td class="font-mono text-sm">{{ session.session_id }}</td>
+            </tr>
+            <tr>
+                <td class="text-tertiary">Start Time</td>
+                <td>{{ session.start_time | replace("T", " ") | truncate(19, True, "") }}</td>
+            </tr>
+            <tr>
+                <td class="text-tertiary">Working Dir</td>
+                <td class="font-mono text-sm">{{ session.working_directory }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+{% else %}
+<div class="empty-state">
+    <p>No detailed system data available</p>
+</div>
+{% endif %}
