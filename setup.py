@@ -31,15 +31,14 @@ setup(
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.7",
-        "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
         "Topic :: Software Development :: Libraries :: Python Modules",
         "Topic :: System :: Logging",
     ],
-    python_requires=">=3.7",
+    python_requires=">=3.9",
     install_requires=[
         "colorama>=0.4.4",  # Minimal dependency for cross-platform color support
     ],
@@ -56,9 +55,9 @@ setup(
             "mypy>=0.971",
             "bandit>=1.7.0",
             "sphinx>=5.0.0",
-            "sphinx-rtd-theme>=1.0.0",
+            "furo>=2023.5.20",
             "sphinx-autodoc-typehints>=1.18.0",
-            "myst-parser>=1.0.0",  # Added from requirements.txt
+            "myst-parser>=2.0.0",
             "build>=0.8.0",
             "twine>=4.0.0",
             "wheel>=0.38.0",
@@ -71,9 +70,9 @@ setup(
         ],
         "docs": [
             "sphinx>=5.0.0",
-            "sphinx-rtd-theme>=1.0.0",
+            "furo>=2023.5.20",
             "sphinx-autodoc-typehints>=1.18.0",
-            "myst-parser>=1.0.0",  # Added from requirements.txt
+            "myst-parser>=2.0.0",
         ],
         # Feature-specific dependencies
         "full": [  # All features (except dev tools)
