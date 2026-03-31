@@ -9,12 +9,12 @@ LogEverything Documentation
    :target: https://pypi.org/project/logeverything/
    :alt: Python versions
 
-.. image:: https://img.shields.io/github/actions/workflow/status/logeverything/logeverything/ci.yml?branch=master
-   :target: https://github.com/logeverything/logeverything/actions
+.. image:: https://img.shields.io/github/actions/workflow/status/RamishSiddiqui/logeverything/python-ci.yml?branch=main
+   :target: https://github.com/RamishSiddiqui/logeverything/actions
    :alt: Build Status
 
-.. image:: https://codecov.io/gh/logeverything/logeverything/branch/master/graph/badge.svg
-   :target: https://codecov.io/gh/logeverything/logeverything
+.. image:: https://codecov.io/gh/RamishSiddiqui/logeverything/branch/main/graph/badge.svg
+   :target: https://codecov.io/gh/RamishSiddiqui/logeverything
    :alt: Coverage
 
 .. image:: https://img.shields.io/badge/License-MIT-yellow.svg
