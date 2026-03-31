@@ -6,12 +6,12 @@
   <p align="center">
     <a href="https://pypi.org/project/logeverything/"><img src="https://img.shields.io/pypi/v/logeverything.svg" alt="PyPI"></a>
     <a href="https://pypi.org/project/logeverything/"><img src="https://img.shields.io/pypi/pyversions/logeverything.svg" alt="Python"></a>
-    <a href="https://github.com/RamishSiddiqui/logeverything/actions"><img src="https://img.shields.io/github/actions/workflow/status/RamishSiddiqui/logeverything/python-ci.yml?branch=master" alt="Build"></a>
-    <a href="https://codecov.io/gh/RamishSiddiqui/logeverything"><img src="https://codecov.io/gh/RamishSiddiqui/logeverything/branch/master/graph/badge.svg" alt="Coverage"></a>
+    <a href="https://github.com/RamishSiddiqui/logeverything/actions"><img src="https://img.shields.io/github/actions/workflow/status/RamishSiddiqui/logeverything/python-ci.yml?branch=main" alt="Build"></a>
+    <a href="https://codecov.io/gh/RamishSiddiqui/logeverything"><img src="https://codecov.io/gh/RamishSiddiqui/logeverything/branch/main/graph/badge.svg" alt="Coverage"></a>
     <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License"></a>
     <a href="https://pypi.org/project/logeverything/"><img src="https://img.shields.io/pypi/dm/logeverything.svg?label=downloads" alt="Downloads"></a>
     <a href="https://github.com/RamishSiddiqui/logeverything"><img src="https://img.shields.io/github/repo-size/RamishSiddiqui/logeverything?label=code%20size" alt="Code Size"></a>
-    <a href="https://github.com/RamishSiddiqui/logeverything/commits/master"><img src="https://img.shields.io/github/last-commit/RamishSiddiqui/logeverything" alt="Last Commit"></a>
+    <a href="https://github.com/RamishSiddiqui/logeverything/commits/main"><img src="https://img.shields.io/github/last-commit/RamishSiddiqui/logeverything" alt="Last Commit"></a>
     <a href="https://github.com/RamishSiddiqui/logeverything/issues"><img src="https://img.shields.io/github/issues/RamishSiddiqui/logeverything" alt="Issues"></a>
     <a href="https://github.com/RamishSiddiqui/logeverything/stargazers"><img src="https://img.shields.io/github/stars/RamishSiddiqui/logeverything?style=social" alt="Stars"></a>
   </p>
