@@ -5,6 +5,14 @@ All notable changes to LogEverything will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0](https://github.com/RamishSiddiqui/logeverything/compare/v0.1.3...v0.2.0) (2026-04-03)
+
+
+### Features
+
+* **release:** implement multi-component automation and switch to PAT ([9f11407](https://github.com/RamishSiddiqui/logeverything/commit/9f11407f2c6bbe4e0dbf435b52581d10b2a660e9))
+* **release:** implement multi-component automation and switch to PAT ([2c9cdff](https://github.com/RamishSiddiqui/logeverything/commit/2c9cdff3cb9139a0b6789299f557e6f6777d9b12))
+
 ## [0.1.3](https://github.com/RamishSiddiqui/logeverything/compare/v0.1.2...v0.1.3) (2026-04-03)
 
 
