@@ -9,6 +9,8 @@ on:
 
 jobs:
   test:
+    # Skip if it's a bot-created Release PR to avoid redundant runs
+    if: github.event.pull_request.user.login != 'github-actions[bot]'
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
