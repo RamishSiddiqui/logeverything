@@ -9,6 +9,11 @@ on:
     branches: [ master, main ]
     paths:
       - 'logeverything-dashboard/**'
+      - '.release-please-manifest.json'
+      - 'release-please-config.json'
+      - '.github/workflows/release.yml'
+      - '.github/workflows/dashboard-ci.yml'
+      - '.github/workflows/dashboard-release.yml'
   workflow_dispatch:
 
 jobs:

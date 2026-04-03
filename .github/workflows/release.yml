@@ -2,12 +2,12 @@ name: Release
 
 on:
   push:
-    tags:
-      - 'v*'
-      - '!dashboard-v*'
+    branches:
+      - main
 
 permissions:
   contents: write
+  pull-requests: write
   id-token: write
 
 jobs:
@@ -29,11 +29,20 @@ jobs:
     - name: Run tests
       run: pytest tests/ --tb=short -q
 
-  build:
+  release-please:
     needs: test
     runs-on: ubuntu-latest
     outputs:
-      tag: ${{ steps.changelog.outputs.tag }}
+      release_created: ${{ steps.release.outputs.release_created }}
+      tag_name: ${{ steps.release.outputs.tag_name }}
+    steps:
+      - uses: googleapis/release-please-action@v4
+        id: release
+
+  build:
+    needs: [release-please, test]
+    if: needs.release-please.outputs.release_created == 'true'
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
 
@@ -50,48 +59,17 @@ jobs:
     - name: Build package
       run: python -m build
 
-    - name: Extract changelog
-      id: changelog
-      run: |
-        TAG="${GITHUB_REF#refs/tags/}"
-        VERSION="${TAG#v}"
-        echo "tag=$TAG" >> "$GITHUB_OUTPUT"
-        echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-
-        # Extract the changelog section for this version
-        BODY=$(awk -v ver="$VERSION" '
-          /^## \[/ {
-            if (found) exit
-            if (index($0, "[" ver "]")) { found=1; next }
-          }
-          found { print }
-        ' CHANGELOG.md)
-
-        if [ -z "$BODY" ]; then
-          BODY="Release $TAG"
-        fi
-
-        # Write body to a file to preserve newlines
-        echo "$BODY" > release_body.md
-
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
         name: dist
         path: dist/
 
-    - name: Upload release notes
-      uses: actions/upload-artifact@v4
-      with:
-        name: release-notes
-        path: release_body.md
-
-  # This job requires manual approval via the 'release' environment.
-  # Configure required reviewers in: Settings > Environments > release
+  # Review requirement removed for automated continuous release
   publish:
-    needs: build
+    needs: [release-please, build]
+    if: needs.release-please.outputs.release_created == 'true'
     runs-on: ubuntu-latest
-    environment: release
 
     steps:
     - uses: actions/checkout@v4
@@ -102,19 +80,11 @@ jobs:
         name: dist
         path: dist/
 
-    - name: Download release notes
-      uses: actions/download-artifact@v4
-      with:
-        name: release-notes
-
-    - name: Create GitHub Release
+    - name: Upload assets to GitHub Release
       env:
         GH_TOKEN: ${{ github.token }}
       run: |
-        gh release create "${{ needs.build.outputs.tag }}" \
-          --title "${{ needs.build.outputs.tag }}" \
-          --notes-file release_body.md \
-          dist/*
+        gh release upload "${{ needs.release-please.outputs.tag_name }}" dist/*
 
     - name: Publish to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
