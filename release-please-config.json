@@ -5,6 +5,12 @@
       "extra-files": [
         "logeverything/__init__.py"
       ]
+    },
+    "logeverything-dashboard": {
+      "release-type": "python",
+      "extra-files": [
+        "logeverything-dashboard/pyproject.toml"
+      ]
     }
   }
 }
