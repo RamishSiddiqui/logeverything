@@ -38,10 +38,12 @@ jobs:
     steps:
       - uses: googleapis/release-please-action@v4
         id: release
+        with:
+          token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
 
   build:
     needs: [release-please, test]
-    if: needs.release-please.outputs.release_created == 'true'
+    if: needs.release-please.outputs.releases_created == 'true'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -56,21 +58,30 @@ jobs:
         python -m pip install --upgrade pip
         pip install build
 
-    - name: Build package
-      run: python -m build
+    - name: Build all packages
+      run: |
+        # Build core library
+        python -m build
+        # Build dashboard if it's part of the release
+        if [ -d "logeverything-dashboard" ]; then
+          cd logeverything-dashboard && python -m build && cd ..
+        fi
 
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
         name: dist
-        path: dist/
+        path: |
+          dist/
+          logeverything-dashboard/dist/
 
-  # Review requirement removed for automated continuous release
   publish:
     needs: [release-please, build]
-    if: needs.release-please.outputs.release_created == 'true'
+    if: needs.release-please.outputs.releases_created == 'true'
     runs-on: ubuntu-latest
     environment: release
+    permissions:
+      id-token: write
 
     steps:
     - uses: actions/checkout@v4
@@ -81,11 +92,7 @@ jobs:
         name: dist
         path: dist/
 
-    - name: Upload assets to GitHub Release
-      env:
-        GH_TOKEN: ${{ github.token }}
-      run: |
-        gh release upload "${{ needs.release-please.outputs.tag_name }}" dist/*
-
-    - name: Publish to PyPI
+    - name: Publish all released packages to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        packages-dir: dist/
