@@ -3,11 +3,6 @@ name: Dashboard CI
 on:
   push:
     branches: [ master, main, 'release-please--branches--main' ]
-    paths:
-      - 'logeverything-dashboard/**'
-      - '.release-please-manifest.json'
-      - 'release-please-config.json'
-      - '.github/workflows/**'
   pull_request:
     branches: [ master, main ]
   workflow_dispatch:
