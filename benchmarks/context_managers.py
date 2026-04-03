@@ -6,7 +6,7 @@ import os
 import sys
 import tempfile
 import time
-from typing import Any, Dict, List
+from typing import Any, Dict
 
 # Add parent directory to path to import logeverything
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))

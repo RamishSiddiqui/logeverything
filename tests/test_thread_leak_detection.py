@@ -1,4 +1,4 @@
-﻿"""
+"""
 Test thread leak detection in the test suite.
 
 This module verifies that our thread leak detection system works properly

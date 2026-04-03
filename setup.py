@@ -48,10 +48,8 @@ setup(
             "pytest>=7.0.0",
             "pytest-cov>=4.0.0",
             "pytest-xdist>=3.0.0",
-            "black>=22.0.0",
-            "flake8>=5.0.0",
-            "flake8-docstrings>=1.7.0",  # Added for better docstring checks
-            "isort>=5.10.0",
+            "pytest-asyncio>=0.21.0",
+            "ruff>=0.1.6",
             "mypy>=0.971",
             "bandit>=1.7.0",
             "sphinx>=5.0.0",

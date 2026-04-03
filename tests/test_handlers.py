@@ -1,4 +1,4 @@
-﻿"""
+"""
 Tests for the LogEverything handlers.
 
 This module contains tests for the different log handlers in the LogEverything library.
@@ -12,14 +12,13 @@ import sys
 import tempfile
 import time
 import unittest
-from unittest.mock import MagicMock, patch
 
 # Add the parent directory to the path to make imports work
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from logeverything import CRITICAL, DEBUG, ERROR, INFO, WARNING, Logger
+from logeverything import Logger
 from logeverything.core import get_logger
-from logeverything.handlers import ConsoleHandler, FileHandler, JSONHandler, PrettyFormatter
+from logeverything.handlers import ConsoleHandler, FileHandler, JSONHandler
 
 
 class TestConsoleHandler(unittest.TestCase):

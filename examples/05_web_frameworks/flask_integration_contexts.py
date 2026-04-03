@@ -41,7 +41,7 @@ from logeverything import (
     log_function,
     setup_logging,
 )
-from logeverything.handlers import FileHandler, JSONHandler
+from logeverything.handlers import JSONHandler
 
 
 # Flask imports (for a real application)

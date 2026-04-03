@@ -11,7 +11,6 @@ that represents limitations in Python's type system rather than actual issues.
 import inspect
 import logging
 import os
-import threading
 import time
 from functools import wraps
 from types import FrameType
@@ -96,7 +95,7 @@ def _get_cached_logger(name: str) -> logging.Logger:
     if cache_key not in _logger_cache:
         new_logger = get_logger(name)
         # Disable findCaller stack walking — our decorators provide source info
-        new_logger.findCaller = _noop_find_caller
+        new_logger.findCaller = _noop_find_caller  # type: ignore
         _logger_cache[cache_key] = new_logger
     return _logger_cache[cache_key]
 
@@ -299,10 +298,10 @@ def log_function(
         func_name = _get_qualified_name(func)
 
         # Cached logger resolution state (per decorated function)
-        _cached_logger = [None]  # [logeverything_logger]
-        _cached_stdlib_logger = [None]  # [stdlib logger]
+        _cached_logger: list = [None]  # [logeverything_logger]
+        _cached_stdlib_logger: list = [None]  # [stdlib logger]
         _cached_version = [-1]  # [version when cache was set]
-        _cached_visual = [None, None]  # [use_symbols, visual_mode]
+        _cached_visual: list = [None, None]  # [use_symbols, visual_mode]
 
         @wraps(func)
         def wrapper(*args: Any, **kwargs: Any) -> Any:
@@ -384,7 +383,9 @@ def log_function(
             # Performance optimization: pre-check if logging is enabled
             log_level = logging.INFO
             should_log = (
-                logger.isEnabledFor(log_level) and options.get("enabled", True) is not False
+                logger is not None
+                and logger.isEnabledFor(log_level)
+                and options.get("enabled", True) is not False
             )
 
             if not should_log:
@@ -438,7 +439,7 @@ def log_function(
                     if tracker:
                         monitoring_start_time = tracker.record_operation_start(func_name)
             except Exception:
-                pass
+                pass  # nosec B110 -- monitoring is best-effort, must not break decorated function
 
             result = None
 
@@ -466,7 +467,7 @@ def log_function(
                                     ),
                                 )
                     except Exception:
-                        pass
+                        pass  # nosec B110 -- monitoring is best-effort
                 return_str = ""
                 # Use decorator option if explicitly provided, otherwise use global config
                 should_log_returns = options.get("log_return_values", _config["log_return_values"])
@@ -499,7 +500,7 @@ def log_function(
                                     args_summary=arg_str if arg_str else None,
                                 )
                     except Exception:
-                        pass
+                        pass  # nosec B110 -- monitoring is best-effort
 
                 # Use dynamic visual formatting for errors - at same level as entry
                 logger.error(
@@ -695,7 +696,7 @@ def log_class(cls: Optional[Type] = None, using: Optional[str] = None, **options
             if hasattr(method, "_logeverything_decorated") and method._logeverything_decorated:
                 continue
             # Apply log_function decorator
-            decorated_method: Any = log_function(**options)(method)  # type: ignore[arg-type]
+            decorated_method: Any = log_function(**options)(cast(Any, method))
             setattr(cls, name, decorated_method)
             getattr(cls, name)._logeverything_decorated = True
 

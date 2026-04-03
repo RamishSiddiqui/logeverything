@@ -11,7 +11,6 @@ import os
 import sys
 import tempfile
 from pathlib import Path
-from typing import Any, Dict, List, Optional
 
 # Add parent directory to path to import modules
 sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
@@ -20,8 +19,6 @@ import compare
 import optimize
 
 # Import benchmark modules
-import run_benchmarks
-import utils
 import visualize
 
 

@@ -20,10 +20,9 @@ import time
 import traceback
 from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Optional
 
-from logeverything import AsyncLogger, Logger, get_logger
-from logeverything.decorators import log
+from logeverything import Logger
 from logeverything.handlers import (
     ConsoleHandler,
     FileHandler,
@@ -270,11 +269,11 @@ async def main():
         except Exception:
             pass  # Already handled by OperationContext
 
-    print(f"\nMonitoring demonstration complete!")
-    print(f"Check logs/ directory for structured monitoring data:")
-    print(f"   DemoService_app.jsonl     — Application logs (JSONL, daily rotation)")
-    print(f"   DemoService_metrics.jsonl — Metrics data (JSONL, daily rotation)")
-    print(f"   DemoService_errors.jsonl  — Errors and alerts (JSONL, size rotation)")
+    print("\nMonitoring demonstration complete!")
+    print("Check logs/ directory for structured monitoring data:")
+    print("   DemoService_app.jsonl     — Application logs (JSONL, daily rotation)")
+    print("   DemoService_metrics.jsonl — Metrics data (JSONL, daily rotation)")
+    print("   DemoService_errors.jsonl  — Errors and alerts (JSONL, size rotation)")
     print()
     print("All files are dashboard-compatible — point a Local Connection at logs/")
 

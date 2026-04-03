@@ -10,11 +10,9 @@ This module tests the enhanced decorator behavior including:
 """
 
 import io
-import logging
 import os
 import sys
-from contextlib import redirect_stderr, redirect_stdout
-from unittest.mock import MagicMock, patch
+from contextlib import redirect_stdout
 
 import pytest
 

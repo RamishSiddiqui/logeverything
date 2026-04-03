@@ -66,7 +66,7 @@ def pytest_sessionfinish(session, exitstatus):
     final_threads = set(threading.enumerate())
     final_thread_count = len(final_threads)
 
-    _safe_print(f"\nPYTEST SESSION END - Thread verification:")
+    _safe_print("\nPYTEST SESSION END - Thread verification:")
     _safe_print(f"   Initial threads: {_initial_thread_count}")
     _safe_print(f"   Final threads: {final_thread_count}")
 
@@ -109,13 +109,13 @@ def pytest_sessionfinish(session, exitstatus):
                     for thread in remaining_new:
                         print(f"     - {thread.name} (alive: {thread.is_alive()})")
                 else:
-                    _safe_print(f"   SUCCESS: All threads cleaned up successfully!")
+                    _safe_print("   SUCCESS: All threads cleaned up successfully!")
             else:
-                _safe_print(f"   FAILURE: No cleanup performed, threads may still be leaking!")
+                _safe_print("   FAILURE: No cleanup performed, threads may still be leaking!")
         else:
-            _safe_print(f"   INFO: New threads appear to be non-worker threads (likely OK)")
+            _safe_print("   INFO: New threads appear to be non-worker threads (likely OK)")
     else:
-        _safe_print(f"   SUCCESS: No thread leaks detected!")
+        _safe_print("   SUCCESS: No thread leaks detected!")
 
 
 @pytest.fixture(autouse=True, scope="function")

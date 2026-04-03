@@ -129,7 +129,7 @@ def error_handling_example():
 
         will_fail()
     except Exception as e:
-        print(f"\\n--- Error Example ---")
+        print("\\n--- Error Example ---")
         print(f"Error: {e}")
 
 

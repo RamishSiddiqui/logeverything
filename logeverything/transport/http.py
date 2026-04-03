@@ -16,7 +16,6 @@ import datetime
 import json
 import logging
 import os
-import threading
 import urllib.error
 import urllib.request
 from typing import Any, Dict, List, Optional
@@ -100,7 +99,7 @@ class HTTPTransportHandler(logging.Handler):
 
                 entry["correlation_id"] = get_correlation_id()
             except Exception:
-                pass
+                pass  # nosec B110 -- best-effort correlation lookup
         return entry
 
     def _send_batch(self, batch: List[Dict[str, Any]]) -> None:
@@ -115,4 +114,4 @@ class HTTPTransportHandler(logging.Handler):
         if self.api_key:
             req.add_header("Authorization", f"Bearer {self.api_key}")
 
-        urllib.request.urlopen(req, timeout=self.timeout)
+        urllib.request.urlopen(req, timeout=self.timeout)  # nosec B310 -- endpoint is configured, not user-controlled

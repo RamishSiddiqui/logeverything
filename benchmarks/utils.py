@@ -11,7 +11,7 @@ import platform
 import statistics
 import sys
 import time
-from typing import Any, Callable, Dict, List, Optional, Tuple, Union
+from typing import Any, Callable, Dict, Tuple
 
 import psutil
 

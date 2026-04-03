@@ -8,11 +8,13 @@ print statement capturing, and more, all in a beautifully formatted and easy-to-
 It also supports async-compatible logging for asyncio applications.
 """
 
+from typing import Any
+
 # Eager imports: always needed core functionality
 from . import core as core_module
 from .decorators import log, log_class, log_function, log_io
 from .logger import Logger
-from .utils import CRITICAL, DEBUG, ERROR, FATAL, INFO, WARN, WARNING
+from .utils import CRITICAL, DEBUG, ERROR, FATAL, INFO, WARN, WARNING  # noqa: F401
 
 __version__ = "0.1.0"
 
@@ -75,7 +77,7 @@ _LAZY_IMPORTS = {
 }
 
 
-def __getattr__(name):
+def __getattr__(name: str) -> Any:
     if name in _LAZY_IMPORTS:
         module_path, attr_name = _LAZY_IMPORTS[name]
         import importlib

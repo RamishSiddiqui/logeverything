@@ -9,26 +9,19 @@ async logging features.
 
 import asyncio
 import datetime
-import inspect
 import io
 import logging
 import os
 import sys
 import time
 from contextlib import redirect_stderr, redirect_stdout
-from pathlib import Path
 
 # Add parent directory to path so we can import logeverything from development
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from logeverything import configure, setup_logging
 from logeverything.async_logging import (
-    AsyncLoggingContext,
-    AsyncQueueHandler,
-    AsyncQuietLoggingContext,
     AsyncVerboseLoggingContext,
-    AsyncVisualLoggingContext,
-    async_log_class,
     async_log_function,
 )
 
@@ -146,7 +139,7 @@ async def example_basic_async_logging():
         return await asyncio.gather(*tasks)
 
     output = await capture_async_output(process_items())
-    print(f"Processed 3 items")
+    print("Processed 3 items")
 
     # Return the example details
     return {
@@ -301,11 +294,11 @@ async def example_async_performance():
         await intensive_logging_task(sync=False)
         async_time = time.time() - start_time
         print(f"Async logging time: {async_time:.4f}s")
-        print(f"Performance improvement: {(sync_time-async_time)/sync_time:.1%}")
+        print(f"Performance improvement: {(sync_time - async_time) / sync_time:.1%}")
 
         # Wait for async logs to flush
         await asyncio.sleep(1)
-        print(f"Performance improvement: {(sync_time-async_time)/sync_time:.1%}")
+        print(f"Performance improvement: {(sync_time - async_time) / sync_time:.1%}")
 
         # Wait for async logs to flush
         await asyncio.sleep(1)
@@ -353,7 +346,7 @@ async def main():
     ]
 
     with open(output_file, "w", encoding="utf-8") as f:
-        f.write(f"# Async Logging Examples\n\n")
+        f.write("# Async Logging Examples\n\n")
         f.write(f"Generated on {CURRENT_DATE}\n\n")
         f.write("These examples demonstrate how to use LogEverything with asynchronous code.\n\n")
 

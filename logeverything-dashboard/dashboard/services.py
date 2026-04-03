@@ -149,8 +149,6 @@ class MonitoringService:
         if self.connection_type == "api":
             # Close any active API sessions
             try:
-                import aiohttp
-
                 # Assuming we might have an active aiohttp session
                 # In a real implementation, we would store the session and close it here
                 pass
@@ -227,11 +225,13 @@ class MonitoringService:
                 cursor = conn.cursor()
 
                 # Get latest system metrics
-                cursor.execute("""
-                    SELECT * FROM system_metrics 
-                    ORDER BY timestamp DESC 
+                cursor.execute(
+                    """
+                    SELECT * FROM system_metrics
+                    ORDER BY timestamp DESC
                     LIMIT 1
-                """)
+                """
+                )
                 latest = cursor.fetchone()
 
                 if not latest:
@@ -272,13 +272,15 @@ class MonitoringService:
                     cursor = conn.cursor()
 
                     # Get operation counts
-                    cursor.execute("""
-                        SELECT 
+                    cursor.execute(
+                        """
+                        SELECT
                             COUNT(*) as total,
                             SUM(CASE WHEN success = 1 THEN 1 ELSE 0 END) as successful,
                             SUM(CASE WHEN success = 0 THEN 1 ELSE 0 END) as failed
                         FROM operation_metrics
-                    """)
+                    """
+                    )
                     row = cursor.fetchone()
 
                     if row:
@@ -293,7 +295,7 @@ class MonitoringService:
                     try:
                         with open(log_file, "r") as f:
                             log_count += sum(1 for _ in f)
-                    except:
+                    except Exception:
                         pass
 
             stats["total_logs"] = log_count
@@ -319,8 +321,8 @@ class MonitoringService:
 
                 cursor.execute(
                     """
-                    SELECT * FROM operation_metrics 
-                    ORDER BY timestamp DESC 
+                    SELECT * FROM operation_metrics
+                    ORDER BY timestamp DESC
                     LIMIT ?
                 """,
                     (limit,),
@@ -355,7 +357,7 @@ class MonitoringService:
                                 logs.append(log_entry)
                             except json.JSONDecodeError:
                                 continue
-                except:
+                except Exception:
                     continue
 
             # Sort by timestamp (most recent first)
@@ -508,7 +510,9 @@ class MonitoringService:
                             params_list: list = []
 
                             if level:
-                                levels = [l.strip().upper() for l in level.split(",") if l.strip()]
+                                levels = [
+                                    lvl.strip().upper() for lvl in level.split(",") if lvl.strip()
+                                ]
                                 if len(levels) == 1:
                                     where_clauses.append("UPPER(level) = ?")
                                     params_list.append(levels[0])
@@ -570,7 +574,9 @@ class MonitoringService:
                                 log_entry = json.loads(line.strip())
                                 if level:
                                     allowed = {
-                                        l.strip().upper() for l in level.split(",") if l.strip()
+                                        lvl.strip().upper()
+                                        for lvl in level.split(",")
+                                        if lvl.strip()
                                     }
                                     if log_entry.get("level", "").upper() not in allowed:
                                         continue
@@ -642,12 +648,14 @@ class MonitoringService:
                             total = cursor.fetchone()[0]
 
                             cursor.execute(
-                                "SELECT COUNT(*) FROM logs WHERE UPPER(level) IN ('ERROR', 'CRITICAL')"
+                                "SELECT COUNT(*) FROM logs WHERE UPPER(level) IN "
+                                "('ERROR', 'CRITICAL')"
                             )
                             errors = cursor.fetchone()[0]
 
                             cursor.execute(
-                                "SELECT DISTINCT source FROM logs WHERE source IS NOT NULL AND source != ''"
+                                "SELECT DISTINCT source FROM logs "
+                                "WHERE source IS NOT NULL AND source != ''"
                             )
                             sources = [row[0] for row in cursor.fetchall()]
 
@@ -745,7 +753,8 @@ class MonitoringService:
         try:
             with sqlite3.connect(self.db_path) as conn:
                 # Ensure the logs table exists
-                conn.execute("""
+                conn.execute(
+                    """
                     CREATE TABLE IF NOT EXISTS logs (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
                         session_id TEXT,
@@ -764,7 +773,8 @@ class MonitoringService:
                         log_type TEXT DEFAULT 'message',
                         execution_id TEXT DEFAULT ''
                     )
-                    """)
+                    """
+                )
                 conn.execute("CREATE INDEX IF NOT EXISTS idx_logs_timestamp ON logs(timestamp)")
                 conn.execute(
                     "CREATE INDEX IF NOT EXISTS idx_logs_correlation ON logs(correlation_id)"
@@ -914,7 +924,7 @@ class MonitoringService:
         logs.sort(key=lambda x: x.get("timestamp", ""))
 
         if execution_id:
-            logs = [l for l in logs if l.get("execution_id") == execution_id]
+            logs = [entry for entry in logs if entry.get("execution_id") == execution_id]
 
         # Index call_exit timestamps by call_id for duration calculation
         exit_times: Dict[str, str] = {}
@@ -1243,25 +1253,31 @@ class MonitoringService:
                         conn.close()
 
                         if not tables:
+                            logs_status = "Found" if logs_exist else "Not found"
                             return (
                                 True,
-                                f"Connected to database but no tables found. Logs directory: {'Found' if logs_exist else 'Not found'}",
+                                f"Connected to database but no tables found. "
+                                f"Logs directory: {logs_status}",
                             )
 
                         table_names = [t[0] for t in tables]
+                        logs_status = "Found" if logs_exist else "Not found"
                         return (
                             True,
-                            f"Connected to database ({len(table_names)} tables). Logs directory: {'Found' if logs_exist else 'Not found'}",
+                            f"Connected to database ({len(table_names)} tables). "
+                            f"Logs directory: {logs_status}",
                         )
                     except Exception as e:
                         if logs_exist:
                             return (
                                 True,
-                                f"Database exists but could not be opened: {e}. Using logs directory.",
+                                f"Database exists but could not be opened: {e}. "
+                                "Using logs directory.",
                             )
                         return (
                             False,
-                            f"Database exists but could not be opened: {e}. No logs directory found.",
+                            f"Database exists but could not be opened: {e}. "
+                            "No logs directory found.",
                         )
 
                 # If only logs directory exists
@@ -1315,7 +1331,8 @@ class MonitoringService:
                             else:
                                 return (
                                     False,
-                                    f"API returned status {response.status}: {await response.text()}",
+                                    f"API returned status {response.status}: "
+                                    f"{await response.text()}",
                                 )
                 except aiohttp.ClientConnectorError as e:
                     return False, f"Could not connect to API: {e}"
@@ -1368,7 +1385,7 @@ class WebSocketManager:
         for connection in self.active_connections:
             try:
                 await connection.send_text(message)
-            except:
+            except Exception:
                 disconnected.append(connection)
 
         # Remove disconnected connections

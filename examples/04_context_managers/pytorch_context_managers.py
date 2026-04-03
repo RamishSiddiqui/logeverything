@@ -11,7 +11,6 @@ import os
 import sys
 import time
 from datetime import datetime
-from typing import Any, Dict, List, Optional, Tuple
 
 import numpy as np
 
@@ -277,7 +276,7 @@ class PyTorchModel:
                         f"Epoch {epoch + 1}, Batch {i + 1}: "
                         f"Loss: {loss.item():.4f}, "
                         f"Acc: {batch_acc:.2f}%, "
-                        f"Time: {batch_time*1000:.1f}ms"
+                        f"Time: {batch_time * 1000:.1f}ms"
                     )
 
             # Calculate epoch statistics
@@ -292,7 +291,7 @@ class PyTorchModel:
                     f"Loss: {avg_loss:.4f}, "
                     f"Accuracy: {accuracy:.2f}%, "
                     f"Time: {sum(batch_times):.2f}s "
-                    f"({avg_batch_time*1000:.1f}ms/batch)"
+                    f"({avg_batch_time * 1000:.1f}ms/batch)"
                 )
 
             # Update metrics
@@ -352,9 +351,7 @@ class PyTorchModel:
             # Log validation results
             with VisualLoggingContext():
                 self.logger.info(
-                    f"Epoch {epoch + 1} Validation: "
-                    f"Loss: {avg_loss:.4f}, "
-                    f"Accuracy: {accuracy:.2f}%"
+                    f"Epoch {epoch + 1} Validation: Loss: {avg_loss:.4f}, Accuracy: {accuracy:.2f}%"
                 )
 
             # Update metrics
@@ -717,7 +714,7 @@ class PyTorchModel:
                 if "metrics_history" in checkpoint:
                     self.metrics.history = checkpoint["metrics_history"]
 
-                self.logger.info(f"Model loaded successfully")
+                self.logger.info("Model loaded successfully")
 
                 return self.model
         except Exception as e:
@@ -757,7 +754,7 @@ def run_pytorch_example(max_epochs=3, small_dataset=True):
                 val_loader = create_subset_loader(val_subset)
                 test_loader = create_subset_loader(test_subset)
 
-                torch_logger.info(f"Using smaller dataset for demonstration")
+                torch_logger.info("Using smaller dataset for demonstration")
 
             # Build model
             torch_model.build_model(num_classes=10)

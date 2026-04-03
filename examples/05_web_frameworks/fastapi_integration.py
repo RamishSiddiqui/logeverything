@@ -14,7 +14,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")
 import logging
 
 # Import FastAPI-specific types for type hinting and mock implementation
-from typing import Dict, List, Optional
+from typing import Optional
 
 import logeverything as le
 

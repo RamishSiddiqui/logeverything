@@ -33,18 +33,13 @@ jobs:
         python -m pip install --upgrade pip
         pip install -e "./logeverything-dashboard[dev]"
 
-    - name: Format check with black
+    - name: Lint with ruff
       run: |
-        black --check logeverything-dashboard/dashboard/
+        ruff check logeverything-dashboard/dashboard/
 
-    - name: Import sorting with isort
+    - name: Format check with ruff
       run: |
-        isort --check-only --profile black logeverything-dashboard/dashboard/
-
-    - name: Lint with flake8
-      run: |
-        flake8 logeverything-dashboard/dashboard/ --count --select=E9,F63,F7,F82 --show-source --statistics
-        flake8 logeverything-dashboard/dashboard/ --count --exit-zero --max-complexity=10 --max-line-length=100 --statistics
+        ruff format --check logeverything-dashboard/dashboard/
 
     - name: Build verification
       run: |

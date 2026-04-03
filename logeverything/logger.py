@@ -695,7 +695,7 @@ class Logger(BaseLogger):
 
             # Create a custom formatter that centers the level name
             class CenteredFormatter(logging.Formatter):
-                def format(self, record):
+                def format(self, record: logging.LogRecord) -> str:
                     # Center the levelname before formatting
                     original_levelname = record.levelname
                     record.levelname = f"{original_levelname:^8}"
@@ -722,7 +722,7 @@ class Logger(BaseLogger):
 
         if isinstance(handlers_config, list):
             for handler_spec in handlers_config:
-                handler = None
+                handler: Any = None
 
                 if isinstance(handler_spec, str):
                     if handler_spec == "console":

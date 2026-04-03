@@ -10,7 +10,7 @@ import json
 import os
 import sys
 from datetime import datetime
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List
 
 # Add parent directory to path to import utils
 sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))

@@ -12,8 +12,6 @@ import sys
 import time
 from pathlib import Path
 
-import numpy as np
-
 # Add the parent directory to the path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
@@ -388,7 +386,7 @@ class ExperimentTracker:
             model_type = exp_data["model_type"]
 
             self.logger.info(
-                f"  {i+1}. {exp_id} ({model_type}): {score:.4f}",
+                f"  {i + 1}. {exp_id} ({model_type}): {score:.4f}",
                 extra={
                     "rank": i + 1,
                     "experiment_id": exp_id,

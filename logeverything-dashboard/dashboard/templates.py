@@ -31,11 +31,11 @@ def get_base_template() -> str:
             <div class="badge badge-primary">Offline Mode</div>
         </div>
     </div>
-    
+
     <div class="container mx-auto p-4">
         {{ content }}
     </div>
-    
+
     <script>
         // Auto-refresh every 30 seconds in offline mode
         setInterval(() => {
@@ -64,7 +64,7 @@ def get_dashboard_template() -> str:
             </div>
         </div>
     </div>
-    
+
     <!-- Data Status -->
     <div class="card bg-base-200 shadow-xl">
         <div class="card-body">
@@ -87,7 +87,7 @@ def get_dashboard_template() -> str:
             </div>
         </div>
     </div>
-    
+
     <!-- Error Stats -->
     <div class="card bg-base-200 shadow-xl">
         <div class="card-body">
@@ -129,10 +129,10 @@ def get_dashboard_template() -> str:
                     <tr>
                         <td class="text-sm">{{ log.timestamp[:19] if log.timestamp else 'N/A' }}</td>
                         <td>
-                            <div class="badge 
-                                {{ 'badge-error' if log.level == 'ERROR' else 
-                                   'badge-warning' if log.level == 'WARNING' else 
-                                   'badge-info' if log.level == 'INFO' else 
+                            <div class="badge
+                                {{ 'badge-error' if log.level == 'ERROR' else
+                                   'badge-warning' if log.level == 'WARNING' else
+                                   'badge-info' if log.level == 'INFO' else
                                    'badge-ghost' }}">
                                 {{ log.level }}
                             </div>
@@ -180,10 +180,10 @@ def get_logs_template() -> str:
                 {% for level, count in analysis.levels.items() %}
                 <div class="flex justify-between">
                     <span>{{ level }}</span>
-                    <div class="badge 
-                        {{ 'badge-error' if level == 'ERROR' else 
-                           'badge-warning' if level == 'WARNING' else 
-                           'badge-info' if level == 'INFO' else 
+                    <div class="badge
+                        {{ 'badge-error' if level == 'ERROR' else
+                           'badge-warning' if level == 'WARNING' else
+                           'badge-info' if level == 'INFO' else
                            'badge-ghost' }}">
                         {{ count }}
                     </div>
@@ -192,7 +192,7 @@ def get_logs_template() -> str:
             </div>
         </div>
     </div>
-    
+
     <div class="card bg-base-200 shadow-xl">
         <div class="card-body">
             <h3 class="card-title">🏷️ Top Loggers</h3>
@@ -206,7 +206,7 @@ def get_logs_template() -> str:
             </div>
         </div>
     </div>
-    
+
     <div class="card bg-base-200 shadow-xl">
         <div class="card-body">
             <h3 class="card-title">⏰ Activity</h3>
@@ -238,10 +238,10 @@ def get_logs_template() -> str:
                     <tr class="hover">
                         <td class="text-xs">{{ log.timestamp if log.timestamp else 'N/A' }}</td>
                         <td>
-                            <div class="badge badge-sm 
-                                {{ 'badge-error' if log.level == 'ERROR' else 
-                                   'badge-warning' if log.level == 'WARNING' else 
-                                   'badge-info' if log.level == 'INFO' else 
+                            <div class="badge badge-sm
+                                {{ 'badge-error' if log.level == 'ERROR' else
+                                   'badge-warning' if log.level == 'WARNING' else
+                                   'badge-info' if log.level == 'INFO' else
                                    'badge-ghost' }}">
                                 {{ log.level }}
                             </div>

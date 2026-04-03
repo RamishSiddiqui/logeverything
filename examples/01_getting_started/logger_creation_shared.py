@@ -98,7 +98,7 @@ def demo_2_performance_comparison():
         mixed_logger.configure(async_mode=True)
         mixed_creation_time = (time.perf_counter() - start_time) * 1000
 
-        print(f"📊 Logger Creation Performance:")
+        print("📊 Logger Creation Performance:")
         print(f"   Pure Sync Logger:     {sync_creation_time:.2f}ms")
         print(f"   Pure Async Logger:    {async_creation_time:.2f}ms")
         print(f"   Sync + async_mode:    {mixed_creation_time:.2f}ms")
@@ -122,7 +122,9 @@ def demo_3_best_practices():
     # Create logger first (optimal timing)
     app_logger = Logger("best_practice_app")
     app_logger.configure(
-        async_mode=True, level="INFO", profile="production"  # Enable async compatibility
+        async_mode=True,
+        level="INFO",
+        profile="production",  # Enable async compatibility
     )
 
     # Then define decorated functions

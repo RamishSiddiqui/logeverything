@@ -76,13 +76,13 @@ _intercept_handler = None
 class _LogEverythingInterceptHandler(logging.Handler):
     """Handler that routes all stdlib log records through LogEverything formatting."""
 
-    def __init__(self, level=logging.NOTSET, use_pretty_formatter=True):
+    def __init__(self, level: int = logging.NOTSET, use_pretty_formatter: bool = True):
         super().__init__(level)
         self.use_pretty_formatter = use_pretty_formatter
         if use_pretty_formatter:
             self.setFormatter(PrettyFormatter())
 
-    def emit(self, record):
+    def emit(self, record: logging.LogRecord) -> None:
         try:
             msg = self.format(record)
             stream = sys.stderr if record.levelno >= logging.WARNING else sys.stdout
@@ -96,7 +96,7 @@ class _LogEverythingInterceptHandler(logging.Handler):
             self.handleError(record)
 
 
-def intercept_stdlib(level=None, use_pretty_formatter=True):
+def intercept_stdlib(level: Optional[int] = None, use_pretty_formatter: bool = True) -> Any:
     """
     Install a LogEverything handler on the root stdlib logger.
     All stdlib loggers will now use LogEverything's formatting.
@@ -127,7 +127,7 @@ def intercept_stdlib(level=None, use_pretty_formatter=True):
     root.addHandler(_intercept_handler)
 
     # Set root level
-    effective_level = level
+    effective_level: Any = level
     if effective_level is None:
         effective_level = _safe_log_level(_config.get("level", logging.INFO))
     if isinstance(effective_level, str):
@@ -137,7 +137,7 @@ def intercept_stdlib(level=None, use_pretty_formatter=True):
     return _intercept_handler
 
 
-def restore_stdlib():
+def restore_stdlib() -> None:
     """Restore the root logger to its state before intercept_stdlib()."""
     global _original_root_handlers, _intercept_handler
 

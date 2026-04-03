@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python
+#!/usr/bin/env python
 """
 Tests for evaluating the visual appearance and readability of log output.
 
@@ -7,22 +7,14 @@ JSON) with different logging scenarios to help evaluate and improve the visual a
 and readability of logs.
 """
 
-import json
-
 # Removed logging import
 import os
-import sys
-import tempfile
-import time
 from datetime import datetime
-from pathlib import Path
 
 import pytest
 
-import logeverything
-from logeverything import Logger
+from logeverything import Logger, get_logger
 from logeverything import core as core_module
-from logeverything import get_logger
 from logeverything.capture.print_capture import capture_print
 from logeverything.decorators import log_class, log_function
 from logeverything.handlers import ConsoleHandler, FileHandler, JSONHandler, PrettyFormatter
@@ -106,7 +98,7 @@ class TestVisualOutput:
 
         try:
             1 / 0
-        except Exception as e:
+        except Exception:
             logger.exception("An unexpected error occurred")
 
         logger.info("Application shutdown complete")
@@ -211,7 +203,7 @@ class TestVisualOutput:
             # Add a failing case to see error handling
             complex_calculation([1, 2], [3, 4], -1)  # Should fail
 
-        except Exception as e:
+        except Exception:
             get_logger("logeverything").exception("Error in test")
 
         # Close handlers
@@ -221,8 +213,8 @@ class TestVisualOutput:
             logger.removeHandler(handler)
 
         print(f"\nGenerated hierarchical log files in {TEST_OUTPUT_DIR}:")
-        print(f"  - hierarchical.log")
-        print(f"  - hierarchical.json")
+        print("  - hierarchical.log")
+        print("  - hierarchical.json")
 
     def test_different_formatting_options(self):
         """
@@ -384,7 +376,7 @@ class TestVisualOutput:
             # Process more data
             data_system.process_request("data-789", {"key1": "value1", "key2": "value2"})
 
-        except Exception as e:
+        except Exception:
             main_logger.exception("Error processing request")
 
         # Simulate application shutdown
@@ -399,8 +391,8 @@ class TestVisualOutput:
             logger.removeHandler(handler)
 
         print(f"\nGenerated real-world application logs in {TEST_OUTPUT_DIR}:")
-        print(f"  - real_world.log")
-        print(f"  - real_world.json")
+        print("  - real_world.log")
+        print("  - real_world.json")
 
     def test_colorful_log_themes(self):
         """
@@ -409,7 +401,6 @@ class TestVisualOutput:
         This test creates logs using different color schemes to evaluate their
         readability and visual appeal.
         """
-        import sys
         from io import StringIO
 
         log_path = os.path.join(TEST_OUTPUT_DIR, "color_themes.log")
@@ -454,7 +445,7 @@ class TestVisualOutput:
         with open(log_path, "w") as outfile:
             # For each theme, create a handler and generate logs
             for theme_name, theme in themes.items():
-                outfile.write(f"\n\n{'='*20} {theme_name.upper()} THEME {'='*20}\n\n")
+                outfile.write(f"\n\n{'=' * 20} {theme_name.upper()} THEME {'=' * 20}\n\n")
 
                 # Create a StringIO to capture output
                 output = StringIO()
@@ -487,7 +478,7 @@ class TestVisualOutput:
                 logger.removeHandler(handler)
 
         print(f"\nGenerated color theme comparison in {TEST_OUTPUT_DIR}:")
-        print(f"  - color_themes.log (contains ANSI color codes)")
+        print("  - color_themes.log (contains ANSI color codes)")
 
     def test_generate_sample_report(self):
         """
@@ -557,7 +548,7 @@ class TestVisualOutput:
         logger.removeHandler(handler)
 
         print(f"\nGenerated sample system report in {TEST_OUTPUT_DIR}:")
-        print(f"  - system_report.log")
+        print("  - system_report.log")
 
 
 if __name__ == "__main__":

@@ -97,7 +97,9 @@ class LogBuffer:
         while not self._closed:
             with self._lock:
                 self._not_empty.wait(timeout=self._flush_interval)
-            if self._closed and not self._queue:
+            # Check for shutdown signal (self._closed can change from another thread)
+            should_stop = self._closed and not self._queue
+            if should_stop:
                 break
             self._drain()
 

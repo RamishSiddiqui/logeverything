@@ -13,7 +13,6 @@ Fields injected:
 """
 
 import logging
-from typing import Optional
 
 from .indent_manager import get_indent_manager
 
@@ -37,11 +36,11 @@ class HierarchyFilter(logging.Filter):
         """Inject hierarchy fields into the log record."""
         indent_mgr = get_indent_manager()
         level, call_id, parent_call_id, execution_id = indent_mgr.get_hierarchy_snapshot()
-        record.indent_level = level  # type: ignore[attr-defined]
-        record.call_id = call_id  # type: ignore[attr-defined]
-        record.parent_call_id = parent_call_id  # type: ignore[attr-defined]
-        record.execution_id = execution_id  # type: ignore[attr-defined]
+        record.indent_level = level
+        record.call_id = call_id
+        record.parent_call_id = parent_call_id
+        record.execution_id = execution_id
         # log_type defaults to "message"; decorators override via extra={}
         if not hasattr(record, "log_type"):
-            record.log_type = "message"  # type: ignore[attr-defined]
+            record.log_type = "message"
         return True

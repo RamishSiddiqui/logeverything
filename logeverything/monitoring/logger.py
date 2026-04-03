@@ -32,7 +32,9 @@ class StructuredLogger:
     - Automatic log rotation
     """
 
-    def __init__(self, name: str, storage=None, max_files: int = 100, max_size_mb: int = 50):
+    def __init__(
+        self, name: str, storage: Optional[Any] = None, max_files: int = 100, max_size_mb: int = 50
+    ):
         self.name = name
         self.storage = storage
         self.max_files = max_files
@@ -47,7 +49,7 @@ class StructuredLogger:
         # Initialize first log file
         self._initialize_log_file()
 
-    def _initialize_log_file(self):
+    def _initialize_log_file(self) -> None:
         """Initialize a new log file."""
         if not self.storage:
             return
@@ -77,10 +79,10 @@ class StructuredLogger:
         if not self._current_log_file:
             return False
 
-        max_size_bytes = self.max_size_mb * 1024 * 1024
+        max_size_bytes = self.max_size_mb * 1024 * 1024  # type: ignore[unreachable]
         return self._current_file_size >= max_size_bytes
 
-    def _rotate_log_file(self):
+    def _rotate_log_file(self) -> None:
         """Rotate to a new log file."""
         self._log_counter += 1
 
@@ -90,12 +92,12 @@ class StructuredLogger:
 
         self._initialize_log_file()
 
-    def _write_log_entry(self, entry: Dict[str, Any]):
+    def _write_log_entry(self, entry: Dict[str, Any]) -> None:
         """Write a log entry to the current file."""
         if not self._current_log_file:
             return
 
-        try:
+        try:  # type: ignore[unreachable]
             json_line = json.dumps(entry, ensure_ascii=False) + "\\n"
 
             with open(self._current_log_file, "a", encoding="utf-8") as f:
@@ -149,19 +151,19 @@ class StructuredLogger:
 
         return entry
 
-    def debug(self, message: str, extra: Optional[Dict[str, Any]] = None):
+    def debug(self, message: str, extra: Optional[Dict[str, Any]] = None) -> None:
         """Log a debug message."""
         with self._lock:
             entry = self._create_log_entry("DEBUG", message, extra)
             self._write_log_entry(entry)
 
-    def info(self, message: str, extra: Optional[Dict[str, Any]] = None):
+    def info(self, message: str, extra: Optional[Dict[str, Any]] = None) -> None:
         """Log an info message."""
         with self._lock:
             entry = self._create_log_entry("INFO", message, extra)
             self._write_log_entry(entry)
 
-    def warning(self, message: str, extra: Optional[Dict[str, Any]] = None):
+    def warning(self, message: str, extra: Optional[Dict[str, Any]] = None) -> None:
         """Log a warning message."""
         with self._lock:
             entry = self._create_log_entry("WARNING", message, extra)
@@ -172,7 +174,7 @@ class StructuredLogger:
         message: str,
         extra: Optional[Dict[str, Any]] = None,
         exc_info: Optional[Exception] = None,
-    ):
+    ) -> None:
         """Log an error message."""
         with self._lock:
             entry = self._create_log_entry("ERROR", message, extra, exc_info)
@@ -183,13 +185,13 @@ class StructuredLogger:
         message: str,
         extra: Optional[Dict[str, Any]] = None,
         exc_info: Optional[Exception] = None,
-    ):
+    ) -> None:
         """Log a critical message."""
         with self._lock:
             entry = self._create_log_entry("CRITICAL", message, extra, exc_info)
             self._write_log_entry(entry)
 
-    def operation_start(self, operation_name: str, **kwargs) -> str:
+    def operation_start(self, operation_name: str, **kwargs: Any) -> str:
         """Start tracking an operation."""
         op_id = str(uuid.uuid4())
 
@@ -216,7 +218,7 @@ class StructuredLogger:
 
         return op_id
 
-    def operation_end(self, operation_id: str, success: bool = True, **kwargs):
+    def operation_end(self, operation_id: str, success: bool = True, **kwargs: Any) -> None:
         """End tracking an operation."""
         ctx = operation_context.get({})
         start_time = ctx.get("start_time", time.time())
@@ -241,7 +243,7 @@ class StructuredLogger:
         operation_context.set({})
 
 
-def set_correlation_context(corr_id: str, context: Optional[Dict[str, Any]] = None):
+def set_correlation_context(corr_id: str, context: Optional[Dict[str, Any]] = None) -> None:
     """Set correlation ID and context for current thread."""
     correlation_id.set(corr_id)
     if context:
@@ -251,24 +253,27 @@ def set_correlation_context(corr_id: str, context: Optional[Dict[str, Any]] = No
 class OperationTracker:
     """Context manager for tracking operations."""
 
-    def __init__(self, logger: StructuredLogger, operation_name: str, **kwargs):
+    def __init__(self, logger: StructuredLogger, operation_name: str, **kwargs: Any):
         self.logger = logger
         self.operation_name = operation_name
         self.kwargs = kwargs
-        self.operation_id = None
+        self.operation_id: Optional[str] = None
 
-    def __enter__(self):
+    def __enter__(self) -> str:
         self.operation_id = self.logger.operation_start(self.operation_name, **self.kwargs)
         return self.operation_id
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    def __exit__(
+        self, exc_type: Optional[type], exc_val: Optional[BaseException], exc_tb: Any
+    ) -> None:
         success = exc_type is None
 
         if exc_val:
             self.logger.error(
                 f"Operation failed: {self.operation_name}",
                 extra={"operation_id": self.operation_id},
-                exc_info=exc_val,
+                exc_info=exc_val if isinstance(exc_val, Exception) else None,
             )
 
-        self.logger.operation_end(self.operation_id, success=success)
+        if self.operation_id:
+            self.logger.operation_end(self.operation_id, success=success)

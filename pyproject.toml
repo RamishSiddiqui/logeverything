@@ -2,32 +2,37 @@
 requires = ["setuptools>=61.0", "wheel>=0.38.0", "build>=0.8.0"]
 build-backend = "setuptools.build_meta"
 
-[tool.black]
+[tool.ruff]
 line-length = 100
-target-version = ['py37', 'py38', 'py39', 'py310', 'py311']
-include = '\.pyi?$'
-exclude = '''
-/(
-    \.eggs
-  | \.git
-  | \.hg
-  | \.mypy_cache
-  | \.tox
-  | \.venv
-  | _build
-  | buck-out
-  | build
-  | dist
-)/
-'''
+target-version = "py38"
+exclude = [
+    ".eggs",
+    ".git",
+    ".hg",
+    ".mypy_cache",
+    ".tox",
+    ".venv",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+]
 
-[tool.isort]
-profile = "black"
-line_length = 100
-multi_line_output = 3
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+ignore = []
+
+[tool.ruff.lint.isort]
+known-first-party = ["logeverything"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "lf"
 
 [tool.mypy]
-python_version = "3.8"
+python_version = "3.9"
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true
@@ -40,11 +45,51 @@ warn_redundant_casts = true
 warn_unused_ignores = true
 warn_no_return = true
 warn_unreachable = true
+follow_imports = "normal"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "pydantic.*"
+ignore_errors = true
+follow_imports = "skip"
+
+[[tool.mypy.overrides]]
+module = "logeverything.transport.buffer"
+warn_unreachable = false
 
 [[tool.mypy.overrides]]
 module = "tests.*"
 disallow_untyped_defs = false
 disallow_incomplete_defs = false
+
+[[tool.mypy.overrides]]
+module = [
+    "colorama.*",
+    "celery.*",
+    "django.*",
+    "psutil.*",
+    "fastapi.*",
+    "uvicorn.*",
+    "starlette.*",
+    "flask.*",
+]
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "logeverything.integrations.celery"
+disallow_untyped_decorators = false
+
+[[tool.mypy.overrides]]
+module = "logeverything.monitoring.api_server"
+disallow_untyped_decorators = false
+
+[[tool.mypy.overrides]]
+module = "logeverything.capture.print_capture"
+disable_error_code = ["assignment", "unreachable", "misc"]
+
+[[tool.mypy.overrides]]
+module = "logeverything.handlers.handlers"
+disable_error_code = ["assignment"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -52,9 +97,11 @@ python_files = "test_*.py"
 python_classes = "Test*"
 python_functions = "test_*"
 addopts = "--cov=logeverything --cov-report=xml:coverage.xml --cov-report=term -v"
+asyncio_mode = "auto"
 markers = [
     "thread_sensitive: marks tests that are sensitive to thread leaks",
-    "slow: marks tests as slow (deselect with '-m \"not slow\"')"
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "asyncio: mark tests as async"
 ]
 filterwarnings = [
     "ignore::DeprecationWarning:pydantic.*",

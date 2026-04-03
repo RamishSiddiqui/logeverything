@@ -20,7 +20,7 @@ import time
 from dataclasses import dataclass
 from typing import Any, Optional, Union
 
-from logeverything import AsyncLogger, Logger, get_logger
+from logeverything import AsyncLogger, Logger
 from logeverything.decorators import log
 
 # =============================================================================
@@ -206,7 +206,7 @@ class PerformanceMonitor:
 
                 results[item] = {"result": result, "duration": duration}
 
-                self.sync_logger.info(f"📊 Item {i+1}/{len(items)}: {duration:.4f}s")
+                self.sync_logger.info(f"📊 Item {i + 1}/{len(items)}: {duration:.4f}s")
 
         return results
 

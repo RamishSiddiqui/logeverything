@@ -21,7 +21,7 @@ from pathlib import Path
 from typing import Any, Dict, List
 
 from logeverything import AsyncLogger, Logger
-from logeverything.asyncio import async_log_class, async_log_function
+from logeverything.asyncio import async_log_class
 from logeverything.decorators import log, log_class, log_function, log_io
 
 # =============================================================================

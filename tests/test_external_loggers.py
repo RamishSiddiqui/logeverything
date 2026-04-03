@@ -12,16 +12,14 @@ import logging
 import os
 import sys
 import unittest
-from unittest.mock import MagicMock, call, patch
-
-import pytest
+from unittest.mock import MagicMock, patch
 
 # Removed logging import
 
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from logeverything import CRITICAL, DEBUG, ERROR, INFO, WARNING, Logger, configure_external_logger
+from logeverything import DEBUG, ERROR, INFO, WARNING, configure_external_logger
 from logeverything.core import get_logger
 from logeverything.external import configure_common_loggers, harmonize_logger_levels
 from logeverything.handlers import ConsoleHandler, PrettyFormatter

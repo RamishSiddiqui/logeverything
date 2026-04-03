@@ -28,7 +28,7 @@ Requirements:
 """
 
 import os
-from typing import Dict, List, Optional, Union
+from typing import Optional
 
 # Set up environment for cleaner demo output
 os.environ["PYTHONIOENCODING"] = "utf-8"
@@ -36,7 +36,6 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 # Import LogEverything first to capture all logs
 from logeverything import configure_external_logger, setup_logging
-from logeverything.core import get_logger
 
 # Configure LogEverything's own logger
 logger = setup_logging(level="INFO", use_color=True, align_values=True, show_timestamps=True)
@@ -65,16 +64,14 @@ for logger_name in [
 # Now import the libraries (ensures LogEverything captures everything)
 import fastapi
 import mlflow
-import numpy as np
 import pandas as pd
 import requests
 import torch
 import transformers
 import uvicorn
-from fastapi import BackgroundTasks, FastAPI, HTTPException, Request
+from fastapi import BackgroundTasks, HTTPException, Request
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
-from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
 # Log that we've configured everything
 logger.info(

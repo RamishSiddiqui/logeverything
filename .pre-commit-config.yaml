@@ -8,34 +8,33 @@ repos:
     -   id: check-added-large-files
     -   id: debug-statements
 
--   repo: https://github.com/psf/black
-    rev: 23.3.0
+-   repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.15.9
     hooks:
-    -   id: black
-        args: ["logeverything"]
-        language_version: python3
+    -   id: ruff-check
+        args: ["--fix"]
+        files: ^logeverything/
+    -   id: ruff-format
+        files: ^logeverything/
+    -   id: ruff-check
+        name: ruff-check-dashboard
+        args: ["--fix"]
+        files: ^logeverything-dashboard/
+    -   id: ruff-format
+        name: ruff-format-dashboard
+        files: ^logeverything-dashboard/
 
--   repo: https://github.com/pycqa/isort
-    rev: 5.12.0
+-   repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.3.0
     hooks:
-    -   id: isort
-        args: ["--profile", "black", "logeverything"]
+    -   id: mypy
+        additional_dependencies: [types-PyYAML, types-colorama, types-requests]
+        files: ^logeverything/
 
-# -   repo: https://github.com/pycqa/flake8
-#     rev: 6.0.0
-#     hooks:
-#     -   id: flake8
-#         args: ["logeverything"]
-#         additional_dependencies: [flake8-docstrings]
-
-# -   repo: https://github.com/pre-commit/mirrors-mypy
-#     rev: v1.3.0
-#     hooks:
-#     -   id: mypy
-#         additional_dependencies: [types-PyYAML, types-colorama, types-requests]
-
-# -   repo: https://github.com/PyCQA/bandit
-#     rev: 1.7.5
-#     hooks:
-#     -   id: bandit
-#         args: ["-c", "pyproject.toml"]
+-   repo: https://github.com/PyCQA/bandit
+    rev: 1.7.5
+    hooks:
+    -   id: bandit
+        args: ["-c", "pyproject.toml"]
+        files: ^logeverything/
+        additional_dependencies: [pbr]

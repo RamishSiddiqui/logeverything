@@ -10,7 +10,7 @@ import logging
 import os
 import threading
 import weakref
-from typing import IO, Any, Dict, List, Literal, Optional, Set, TextIO, Union
+from typing import IO, Any, Dict, List, Literal, Optional, Set, TextIO, Tuple, Union
 
 
 # Global adaptive column width management
@@ -26,20 +26,22 @@ class AdaptiveColumnManager:
 
     def __init__(self, max_name_width: int = 30):
         self._lock = threading.Lock()
-        self._formatters = weakref.WeakSet()  # Track all formatters using weak references
+        self._formatters: weakref.WeakSet = (
+            weakref.WeakSet()
+        )  # Track all formatters using weak references
         self._max_name_width = 10  # Minimum width for logger names
         self._absolute_max_width = max_name_width  # Maximum width to prevent terminal wrapping
-        self._active_loggers = set()  # Track active logger names
-        self._truncated_names = {}  # Cache for truncated names
+        self._active_loggers: Set[str] = set()  # Track active logger names
+        self._truncated_names: Dict[str, str] = {}  # Cache for truncated names
 
-    def register_formatter(self, formatter):
+    def register_formatter(self, formatter: Any) -> None:
         """Register a formatter to receive column width updates."""
         with self._lock:
             self._formatters.add(formatter)
             # Set initial width for new formatter
             formatter.column_widths["name"] = min(self._max_name_width, self._absolute_max_width)
 
-    def update_logger_name(self, logger_name: str):
+    def update_logger_name(self, logger_name: str) -> None:
         """Update the maximum name width if this logger name is longer."""
         # Fast path: name already registered, no lock needed
         if logger_name in self._active_loggers:
@@ -93,7 +95,7 @@ class AdaptiveColumnManager:
 
         return self._truncated_names[logger_name]
 
-    def remove_logger_name(self, logger_name: str):
+    def remove_logger_name(self, logger_name: str) -> None:
         """
         Remove a logger name and potentially resize if it was the longest.
         Note: This is optional/advanced - for now we'll keep it simple and not shrink.
@@ -111,7 +113,7 @@ class AdaptiveColumnManager:
         with self._lock:
             return min(self._max_name_width, self._absolute_max_width)
 
-    def set_max_width(self, max_width: int):
+    def set_max_width(self, max_width: int) -> None:
         """Set the absolute maximum width for logger names."""
         with self._lock:
             self._absolute_max_width = max_width
@@ -506,7 +508,7 @@ class FileHandler(logging.FileHandler):
             # Shift all backup files
             for i in range(self.backup_count - 1, 0, -1):
                 source = f"{self.baseFilename}.{i}"
-                dest = f"{self.baseFilename}.{i+1}"
+                dest = f"{self.baseFilename}.{i + 1}"
                 if os.path.exists(source):
                     os.rename(source, dest)
 
@@ -536,7 +538,7 @@ class FileHandler(logging.FileHandler):
                     shutil.copyfileobj(f_in, f_out)
                 os.remove(filepath)
             except Exception:
-                pass  # best-effort
+                pass  # nosec B110 -- best-effort gzip compression
 
         t = _threading.Thread(target=_do_compress, daemon=True)
         t.start()
@@ -576,7 +578,7 @@ class TimedRotatingFileHandler(FileHandler):
     ):
         if when not in self.WHEN_MAP:
             raise ValueError(
-                f"Invalid 'when' value: {when!r}. " f"Must be one of {list(self.WHEN_MAP.keys())}"
+                f"Invalid 'when' value: {when!r}. Must be one of {list(self.WHEN_MAP.keys())}"
             )
         super().__init__(filename, encoding=encoding, level=level)
         self._when = when
@@ -634,7 +636,7 @@ class TimedRotatingFileHandler(FileHandler):
 
         if self.stream:
             self.stream.close()
-            self.stream = None  # type: ignore[assignment]
+            self.stream = None
 
         suffix = _dt.datetime.now().strftime(self._date_fmt)
         rotated = f"{self.baseFilename}.{suffix}"
@@ -669,7 +671,7 @@ class TimedRotatingFileHandler(FileHandler):
                 if mtime < cutoff:
                     os.remove(path)
             except Exception:
-                pass
+                pass  # nosec B110 -- best-effort cleanup of old files
 
 
 class PrettyFormatter(logging.Formatter):
@@ -797,7 +799,7 @@ class PrettyFormatter(logging.Formatter):
         self._display_name_cache: Dict[str, str] = {}
 
         # Time formatting cache: (integer_second, formatted_string)
-        self._cached_time: Optional[tuple] = None
+        self._cached_time: Optional[Tuple[int, str]] = None
 
     def formatTime(self, record: logging.LogRecord, datefmt: Optional[str] = None) -> str:
         """Cache-optimized formatTime — same-second records reuse the formatted string.
@@ -1284,7 +1286,10 @@ class FormattedFileHandler(FileHandler):
 
         # Call the parent constructor
         super().__init__(
-            filename=filename, mode=mode, encoding=encoding, level=level  # Pass encoding to parent
+            filename=filename,
+            mode=mode,
+            encoding=encoding,
+            level=level,  # Pass encoding to parent
         )
 
         # Store the max size and backup count for rotation
@@ -1441,12 +1446,12 @@ class EnhancedConsoleHandler(ConsoleHandler):
 
 
 # Export functions for adaptive column management
-def get_adaptive_column_manager():
+def get_adaptive_column_manager() -> AdaptiveColumnManager:
     """Get the global adaptive column manager instance."""
     return _adaptive_column_manager
 
 
-def register_logger_name(name: str):
+def register_logger_name(name: str) -> None:
     """
     Register a logger name with the adaptive column manager.
 
@@ -1461,7 +1466,7 @@ def get_current_name_column_width() -> int:
     return _adaptive_column_manager.get_current_name_width()
 
 
-def set_max_logger_name_width(max_width: int):
+def set_max_logger_name_width(max_width: int) -> None:
     """
     Set the maximum width for logger names to prevent terminal wrapping.
 

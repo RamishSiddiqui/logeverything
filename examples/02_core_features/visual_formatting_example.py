@@ -6,11 +6,9 @@ This example demonstrates the enhanced visual formatting capabilities of LogEver
 including pretty formatting, colored console output, and hierarchical visualization.
 """
 
-import logging
 import os
 import platform
 import sys
-from datetime import datetime
 
 # Add parent directory to path so we can import logeverything from the development directory
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -19,7 +17,6 @@ from logeverything import (
     EnhancedConsoleHandler,
     FormattedFileHandler,
     Logger,
-    PrettyFormatter,
     log_class,
     log_function,
 )
@@ -97,7 +94,7 @@ def factorial(n):
         return 1
 
     result = n * factorial(n - 1)
-    logger.debug(f"Factorial calculation: {n} * factorial({n-1}) = {result}")
+    logger.debug(f"Factorial calculation: {n} * factorial({n - 1}) = {result}")
     return result
 
 
@@ -141,11 +138,11 @@ class DataProcessor:
 
         results = []
         for i, item in enumerate(items):
-            self.logger.debug(f"Processing item {i+1}/{len(items)}")
+            self.logger.debug(f"Processing item {i + 1}/{len(items)}")
             result = self._process_item(item)
             results.append(result)
 
-        self.logger.info(f"Batch processing complete")
+        self.logger.info("Batch processing complete")
         return results
 
     def _process_item(self, item):

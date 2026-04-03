@@ -20,11 +20,10 @@ Usage::
 
 import logging
 import time
-from typing import Optional, Sequence, Set
+from typing import Any, Optional, Sequence, Set
 
 from logeverything.correlation import (
     clear_correlation,
-    get_correlation_id,
     set_correlation_id,
     set_request_context,
 )
@@ -98,7 +97,7 @@ class LogEverythingFlask:
             request.remote_addr,
         )
 
-    def _after_request(self, response):
+    def _after_request(self, response: Any) -> Any:
         if getattr(g, "_le_skip", True):
             return response
 
@@ -115,7 +114,7 @@ class LogEverythingFlask:
         response.headers[self.request_id_header] = getattr(g, "_le_correlation_id", "")
         return response
 
-    def _teardown_request(self, exception=None) -> None:
+    def _teardown_request(self, exception: Optional[BaseException] = None) -> None:
         if getattr(g, "_le_skip", True):
             return
 

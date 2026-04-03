@@ -22,12 +22,11 @@ Run with:
 """
 
 import json
-import os
 import sys
 import time
 import uuid
 from pathlib import Path
-from typing import Any, Callable, Dict, List, Optional
+from typing import Any, Dict, Optional
 
 # Add the parent directory to the path for imports to work when running directly
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -39,7 +38,6 @@ from logeverything import (
     VerboseLoggingContext,
     VisualLoggingContext,
     configure_external_logger,
-    log_class,
     log_function,
     setup_logging,
 )

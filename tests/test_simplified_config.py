@@ -1,4 +1,4 @@
-﻿"""
+"""
 Tests for the configuration simplification features.
 """
 

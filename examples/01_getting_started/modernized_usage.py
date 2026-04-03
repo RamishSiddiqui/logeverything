@@ -17,9 +17,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 # Import LogEverything's modernized API
-from logeverything import CRITICAL, DEBUG, ERROR, INFO, WARNING, Logger
+from logeverything import DEBUG, Logger
 from logeverything.decorators import log
-from logeverything.handlers import ConsoleHandler, PrettyFormatter
 
 
 def setup_simple_logging():

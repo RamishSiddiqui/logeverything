@@ -1,18 +1,13 @@
 """
 Sphinx extension for executing code blocks and displaying their output.
 """
-import asyncio
-import io
-import os
-import subprocess
+
 import sys
 import traceback
-from contextlib import redirect_stderr, redirect_stdout
-from typing import Any, Dict, List
+from typing import List
 
 from docutils import nodes
 from docutils.parsers.rst import directives
-from sphinx.directives.code import CodeBlock
 from sphinx.util.docutils import SphinxDirective
 
 

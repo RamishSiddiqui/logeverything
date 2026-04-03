@@ -6,7 +6,6 @@ and fire-and-forget (zero retries) configuration.
 """
 
 import json
-import logging
 from unittest.mock import MagicMock, patch
 
 from logeverything.transport.udp import UDPTransportHandler

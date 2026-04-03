@@ -28,7 +28,8 @@ def test_clean_output():
     # Create a console handler with no column alignment
     handler = logging.StreamHandler()
     formatter = PrettyFormatter(
-        use_colors=False, align_columns=False  # Disable column alignment for clean output
+        use_colors=False,
+        align_columns=False,  # Disable column alignment for clean output
     )
     handler.setFormatter(formatter)
     logger.addHandler(handler)

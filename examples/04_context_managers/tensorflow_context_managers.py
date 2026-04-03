@@ -11,7 +11,6 @@ import os
 import sys
 import time
 from datetime import datetime
-from typing import Any, Dict, Optional, Tuple
 
 import numpy as np
 
@@ -85,7 +84,7 @@ class LogEverythingCallback(keras.callbacks.Callback):
 
     def on_epoch_begin(self, epoch, logs=None):
         self.epoch_start_time = time.time()
-        self.logger.info(f"Starting epoch {epoch+1}/{self.params['epochs']}")
+        self.logger.info(f"Starting epoch {epoch + 1}/{self.params['epochs']}")
 
     def on_batch_begin(self, batch, logs=None):
         self.batch_start_time = time.time()
@@ -100,7 +99,7 @@ class LogEverythingCallback(keras.callbacks.Callback):
                 # Use QuietLoggingContext for routine batch logging to reduce noise
                 with QuietLoggingContext(level=logging.DEBUG):
                     metrics_str = ", ".join(f"{k}: {v:.4f}" for k, v in logs.items())
-                    self.logger.debug(f"Batch {batch+1}/{self.params['steps']}: {metrics_str}")
+                    self.logger.debug(f"Batch {batch + 1}/{self.params['steps']}: {metrics_str}")
 
     def on_epoch_end(self, epoch, logs=None):
         # Track metrics history
@@ -117,21 +116,21 @@ class LogEverythingCallback(keras.callbacks.Callback):
             # Warning for potential overfitting
             with LoggingContext(level=logging.WARNING):
                 self.logger.warning(
-                    f"Epoch {epoch+1}/{self.params['epochs']} - Potential overfitting detected"
+                    f"Epoch {epoch + 1}/{self.params['epochs']} - Potential overfitting detected"
                 )
                 metrics_str = ", ".join(f"{k}: {v:.4f}" for k, v in logs.items())
                 self.logger.warning(f"Metrics: {metrics_str}")
                 self.logger.warning(
-                    f"Time: {epoch_time:.2f}s (avg batch: {avg_batch_time*1000:.2f}ms)"
+                    f"Time: {epoch_time:.2f}s (avg batch: {avg_batch_time * 1000:.2f}ms)"
                 )
         else:
             # Use VisualLoggingContext for epoch results with proper formatting
             with VisualLoggingContext():
-                self.logger.info(f"Epoch {epoch+1}/{self.params['epochs']} completed")
+                self.logger.info(f"Epoch {epoch + 1}/{self.params['epochs']} completed")
                 metrics_str = ", ".join(f"{k}: {v:.4f}" for k, v in logs.items())
                 self.logger.info(f"Metrics: {metrics_str}")
                 self.logger.info(
-                    f"Time: {epoch_time:.2f}s (avg batch: {avg_batch_time*1000:.2f}ms)"
+                    f"Time: {epoch_time:.2f}s (avg batch: {avg_batch_time * 1000:.2f}ms)"
                 )
 
         # Reset batch times for next epoch
@@ -159,7 +158,7 @@ class LogEverythingCallback(keras.callbacks.Callback):
                 self.logger.info("-" * len(header))
 
                 for epoch in range(len(next(iter(self.metrics_history.values())))):
-                    row = f"{epoch+1:5d} | "
+                    row = f"{epoch + 1:5d} | "
                     row += " | ".join(
                         f"{self.metrics_history[metric][epoch]:10.4f}"
                         for metric in self.metrics_history.keys()

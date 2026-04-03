@@ -204,7 +204,9 @@ async def performance_comparison():
         result = fibonacci_optimized(size)
         end_time = time.perf_counter()
 
-        app_logger.info(f"📊 Fibonacci({size}) = {result}, took {end_time - start_time:.6f} seconds")
+        app_logger.info(
+            f"📊 Fibonacci({size}) = {result}, took {end_time - start_time:.6f} seconds"
+        )
 
 
 # =============================================================================

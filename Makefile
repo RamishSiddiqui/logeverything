@@ -3,7 +3,7 @@
 # Usage:
 #   make all       - Run clean, format, lint, test, docs, and build in sequence
 #   make clean     - Remove build artifacts and cache files
-#   make format    - Format code using black and isort
+#   make format    - Format code using ruff
 #   make lint      - Check code style and quality
 #   make test      - Run tests with coverage
 #   make docs      - Build documentation
@@ -66,13 +66,11 @@ else
 endif
 
 format:
-	black logeverything tests
-	isort --profile black logeverything tests
+	ruff format logeverything tests
 
 lint:
-	flake8 logeverything
-	black logeverything tests
-	isort --profile black logeverything tests
+	ruff check logeverything tests
+	ruff format --check logeverything tests
 	mypy logeverything
 	bandit -r logeverything
 

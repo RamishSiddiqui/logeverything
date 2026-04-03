@@ -1,6 +1,7 @@
 """
 Configuration file for the Sphinx documentation builder.
 """
+
 import os
 import sys
 
@@ -13,7 +14,6 @@ copyright = "2025-2026, LogEverything Team"
 author = "Muhammad Ramish Siddiqui"
 
 # The full version, including alpha/beta/rc tags
-from logeverything import __version__ as release  # noqa: E402
 
 # Project title and tagline for Furo
 html_title = "LogEverything"

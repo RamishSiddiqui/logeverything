@@ -12,12 +12,12 @@ import sys
 import time
 import uuid
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any, Dict
 
 # Add the parent directory to the path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from logeverything import AsyncLogger, Logger, configure
+from logeverything import AsyncLogger, configure
 from logeverything.decorators import log
 
 

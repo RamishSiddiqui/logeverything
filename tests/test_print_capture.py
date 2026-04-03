@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python
+#!/usr/bin/env python
 """
 Tests for print statement capturing functionality.
 """
@@ -7,13 +7,11 @@ import io
 import logging  # Keep for MockHandler compatibility
 import sys
 import unittest
-from contextlib import redirect_stdout
-from unittest.mock import MagicMock, patch
 
-from logeverything import CRITICAL, DEBUG, ERROR, INFO, WARNING
-from logeverything.capture.print_capture import _logger_cache  # Import the cache for test cleanup
+from logeverything import DEBUG, INFO
 from logeverything.capture.print_capture import (
     PrintCaptureStream,
+    _logger_cache,  # Import the cache for test cleanup
     _original_print,
     capture_print,
     capture_stdout,
@@ -22,7 +20,7 @@ from logeverything.capture.print_capture import (
     restore_stdout,
 )
 from logeverything.core import configure, get_logger
-from logeverything.handlers import ConsoleHandler, PrettyFormatter
+from logeverything.handlers import PrettyFormatter
 
 
 class MockHandler(logging.Handler):

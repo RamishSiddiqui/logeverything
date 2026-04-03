@@ -10,15 +10,13 @@ import json
 import os
 import sys
 from datetime import datetime
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional
 
 import matplotlib.pyplot as plt
 import numpy as np
-import pandas as pd
 
 # Add parent directory to path to import utils
 sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
-import utils
 
 
 def load_benchmark_results(filepath: str) -> Dict[str, Any]:
@@ -175,7 +173,7 @@ def plot_time_comparison(results: Dict[str, Any], save_path: Optional[str] = Non
 
     # Add labels
     ax.set_xlabel("Time (ms)")
-    ax.set_title(f'Time Metrics - {results.get("name", "Unknown")}')
+    ax.set_title(f"Time Metrics - {results.get('name', 'Unknown')}")
     ax.set_yticks([r + bar_width * 1.5 for r in range(len(names))])
     ax.set_yticklabels(names)
 
@@ -428,7 +426,7 @@ def generate_benchmark_report(
         f.write("<div class='container'>\n")
 
         # Header
-        f.write(f"<h1>LogEverything Benchmark Report</h1>\n")
+        f.write("<h1>LogEverything Benchmark Report</h1>\n")
         f.write(f"<p>Generated on {now.strftime('%Y-%m-%d %H:%M:%S')}</p>\n")
 
         # System info from the latest benchmark
@@ -446,14 +444,14 @@ def generate_benchmark_report(
 
         # Plots for each benchmark type
         for benchmark_type in sorted(benchmark_types.keys()):
-            f.write(f"<div class='benchmark-section'>\n")
+            f.write("<div class='benchmark-section'>\n")
             f.write(f"<h2>{benchmark_type}</h2>\n")
 
             # Time metrics plot
             if f"{benchmark_type}_times" in plot_paths:
                 plot_path = os.path.relpath(plot_paths[f"{benchmark_type}_times"], report_path)
                 f.write("<div class='plot'>\n")
-                f.write(f"<h3>Time Metrics</h3>\n")
+                f.write("<h3>Time Metrics</h3>\n")
                 f.write(f"<img src='{plot_path}' alt='{benchmark_type} Time Metrics'>\n")
                 f.write("</div>\n")
 
@@ -461,7 +459,7 @@ def generate_benchmark_report(
             if f"{benchmark_type}_ops" in plot_paths:
                 plot_path = os.path.relpath(plot_paths[f"{benchmark_type}_ops"], report_path)
                 f.write("<div class='plot'>\n")
-                f.write(f"<h3>Operations Per Second</h3>\n")
+                f.write("<h3>Operations Per Second</h3>\n")
                 f.write(f"<img src='{plot_path}' alt='{benchmark_type} Operations Per Second'>\n")
                 f.write("</div>\n")
 
@@ -469,7 +467,7 @@ def generate_benchmark_report(
             if f"{benchmark_type}_history" in plot_paths:
                 plot_path = os.path.relpath(plot_paths[f"{benchmark_type}_history"], report_path)
                 f.write("<div class='plot'>\n")
-                f.write(f"<h3>Performance History</h3>\n")
+                f.write("<h3>Performance History</h3>\n")
                 f.write(f"<img src='{plot_path}' alt='{benchmark_type} Performance History'>\n")
                 f.write("</div>\n")
 

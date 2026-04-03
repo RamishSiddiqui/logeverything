@@ -4,7 +4,6 @@ Main runner script for LogEverything benchmarks.
 
 import argparse
 import importlib
-import json
 import os
 import sys
 import time

@@ -41,7 +41,6 @@ def cmd_version() -> None:
 
 def cmd_doctor() -> None:
     """Check environment: Python, platform, optional packages, py.typed, dashboard."""
-    from logeverything import __version__
 
     py_version = f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"
 

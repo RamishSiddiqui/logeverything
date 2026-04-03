@@ -21,7 +21,7 @@ import threading
 import time as _time
 import weakref
 from contextlib import contextmanager
-from typing import Any, Dict, Optional, Tuple
+from typing import Any, Dict, Iterator, List, Optional, Tuple, cast
 
 # Try to import contextvars for async support
 try:
@@ -30,8 +30,8 @@ try:
     HAS_CONTEXTVARS = True
 except ImportError:
     HAS_CONTEXTVARS = False
-    ContextVar = None
-    Token = None
+    ContextVar = None  # type: ignore[assignment,misc]
+    Token = None  # type: ignore[assignment,misc]
 
 
 class IndentContext:
@@ -51,7 +51,7 @@ class IndentContext:
         self.indent_char: str = "     "  # Increased default spacing
         self.indent_level: int = 2
         # Call stack for hierarchy tracking
-        self.call_stack: list = []
+        self.call_stack: List[str] = []
         # Cached execution ID (computed once per context)
         self.execution_id_str: Optional[str] = None
 
@@ -74,10 +74,8 @@ class IndentManager:
 
         # Context variables for async contexts (if available)
         if HAS_CONTEXTVARS:
-            self._async_level: ContextVar[int] = ContextVar("indent_level", default=0)
-            self._async_context: ContextVar[IndentContext] = ContextVar(
-                "indent_context", default=None
-            )
+            self._async_level: Any = ContextVar("indent_level", default=0)
+            self._async_context: Any = ContextVar("indent_context", default=None)
         else:
             self._async_level = None
             self._async_context = None
@@ -153,7 +151,7 @@ class IndentManager:
             self._thread_local.context = context
             self._active_contexts.add(context)
 
-        return self._thread_local.context
+        return cast(IndentContext, self._thread_local.context)
 
     def _get_async_context(self) -> IndentContext:
         """Get or create async-aware indent context."""
@@ -172,7 +170,7 @@ class IndentManager:
             self._async_context.set(context)
             self._active_contexts.add(context)
 
-        return context
+        return cast(IndentContext, context)
 
     def _get_context(self) -> IndentContext:
         """Get the appropriate context based on sync/async detection.
@@ -351,7 +349,7 @@ class IndentManager:
         return indent_str
 
     @contextmanager
-    def context(self, levels: int = 1):
+    def context(self, levels: int = 1) -> Iterator["IndentManager"]:
         """
         Context manager for temporary indentation level changes.
 
@@ -566,12 +564,12 @@ def get_indent_level() -> int:
     return _indent_manager.get_level()
 
 
-def set_visual_preferences(**kwargs) -> None:
+def set_visual_preferences(**kwargs: Any) -> None:
     """Set visual formatting preferences."""
     _indent_manager.set_visual_preferences(**kwargs)
 
 
 # Context manager for temporary indentation
-def indent_context(levels: int = 1):
+def indent_context(levels: int = 1) -> Any:
     """Context manager for temporary indentation."""
     return _indent_manager.context(levels)

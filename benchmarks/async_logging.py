@@ -6,7 +6,7 @@ import asyncio
 import os
 import sys
 import tempfile
-from typing import Any, Dict, List
+from typing import Any, Dict
 
 # Add parent directory to path to import logeverything
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -15,7 +15,6 @@ from benchmarks import utils
 from logeverything import Logger
 from logeverything.asyncio.async_logging import (
     AsyncLoggingContext,
-    AsyncQueueHandler,
     async_log_function,
     cleanup_all_async_handlers,
 )

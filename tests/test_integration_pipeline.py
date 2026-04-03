@@ -1,9 +1,8 @@
 """Integration test: full logging pipeline through HTTP transport."""
+
 import json
 import logging
-from unittest.mock import MagicMock, patch
-
-import pytest
+from unittest.mock import patch
 
 
 class TestHTTPPipeline:

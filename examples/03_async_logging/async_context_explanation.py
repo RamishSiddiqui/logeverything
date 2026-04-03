@@ -64,7 +64,9 @@ async def demonstrate_the_problem():
         # This works!
         async with demo.working_context("working"):
             print("   ✅ This works perfectly!")
-        print("   ✅ Reason: Method calls @asynccontextmanager function and returns context manager")
+        print(
+            "   ✅ Reason: Method calls @asynccontextmanager function and returns context manager"
+        )
     except Exception as e:
         print(f"   Unexpected error: {e}")
 

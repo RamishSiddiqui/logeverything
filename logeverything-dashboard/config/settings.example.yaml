@@ -89,7 +89,7 @@ ui:
   default_theme: "auto"
   themes:
     - "light"
-    - "dark" 
+    - "dark"
     - "auto"
   refresh_intervals:           # Available refresh intervals (seconds)
     - 1

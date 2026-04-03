@@ -2,26 +2,21 @@
 Main FastAPI application for LogEverything Dashboard
 """
 
-import argparse
 import asyncio
 import json
-import os
-import sqlite3
-from datetime import datetime, timedelta
+from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Optional
 
 import uvicorn
-import yaml
-from fastapi import Depends, FastAPI, HTTPException, Request, WebSocket
+from fastapi import FastAPI, HTTPException, Request, WebSocket
 from fastapi.responses import HTMLResponse, JSONResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from . import __version__
-from .config import Settings, get_connection_manager, get_settings
+from .config import get_connection_manager, get_settings
 from .connection_routes import router as connection_router
-from .models import LogEvent, MonitoringStats, SystemStats
 from .services import MonitoringService, WebSocketManager
 
 # Initialize FastAPI app

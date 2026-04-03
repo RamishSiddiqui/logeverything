@@ -91,7 +91,7 @@ class MetricsCollector:
     operation-level performance tracking.
     """
 
-    def __init__(self, storage=None, collection_interval: float = 5.0):
+    def __init__(self, storage: Optional[Any] = None, collection_interval: float = 5.0):
         self.storage = storage
         self.collection_interval = collection_interval
         self.total_collected = 0
@@ -215,7 +215,7 @@ class MetricsCollector:
         custom_metrics: Optional[Dict[str, Any]] = None,
         cpu_time: Optional[float] = None,
         memory_delta: Optional[int] = None,
-    ):
+    ) -> None:
         """Record metrics for a completed operation."""
 
         metrics = OperationMetrics(
@@ -294,11 +294,11 @@ class PerformanceTracker:
         self.operation_id = operation_id or f"op_{int(time.time() * 1000)}"
         self.custom_metrics = custom_metrics or {}
 
-        self.start_time = None
-        self.start_memory = None
-        self.start_cpu_time = None
+        self.start_time: Optional[float] = None
+        self.start_memory: Optional[int] = None
+        self.start_cpu_time: Optional[float] = None
 
-    def __enter__(self):
+    def __enter__(self) -> str:
         self.start_time = time.time()
 
         # Record starting memory usage
@@ -312,14 +312,16 @@ class PerformanceTracker:
 
         return self.operation_id
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        duration = time.time() - self.start_time
+    def __exit__(
+        self, exc_type: Optional[type], exc_val: Optional[BaseException], exc_tb: Any
+    ) -> None:
+        duration = time.time() - self.start_time if self.start_time else 0.0
         success = exc_type is None
         error_message = str(exc_val) if exc_val else None
 
         # Calculate resource deltas
-        memory_delta = None
-        cpu_delta = None
+        memory_delta: Optional[int] = None
+        cpu_delta: Optional[float] = None
 
         try:
             process = psutil.Process()

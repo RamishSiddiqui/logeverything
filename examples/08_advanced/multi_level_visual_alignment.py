@@ -67,7 +67,7 @@ def level_0_orchestrator():
 
                     # Simulate some complex logic
                     for i in range(3):
-                        logger.debug(f"Processing validation rule {i+1}")
+                        logger.debug(f"Processing validation rule {i + 1}")
 
                     logger.info("✨ Atomic checks completed successfully")
                     return "validation_passed"

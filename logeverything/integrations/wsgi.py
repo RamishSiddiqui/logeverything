@@ -7,7 +7,7 @@ Provides automatic request correlation, logging, and timing.
 
 import logging
 import time
-from typing import Callable, Iterable, Optional, Sequence, Set
+from typing import Any, Callable, Iterable, Optional, Sequence, Set
 
 from logeverything.correlation import clear_correlation, set_correlation_id, set_request_context
 
@@ -40,7 +40,7 @@ class LogEverythingWSGIMiddleware:
     def __call__(self, environ: dict, start_response: Callable) -> Iterable[bytes]:
         path = environ.get("PATH_INFO", "/")
         if path in self.exclude_paths:
-            return self.app(environ, start_response)
+            return self.app(environ, start_response)  # type: ignore[no-any-return]
 
         # --- Correlation ---
         incoming_id = environ.get(self._wsgi_header_key, "")
@@ -56,7 +56,7 @@ class LogEverythingWSGIMiddleware:
 
         status_code: Optional[str] = None
 
-        def custom_start_response(status, response_headers, exc_info=None):
+        def custom_start_response(status: str, response_headers: list, exc_info: Any = None) -> Any:
             nonlocal status_code
             status_code = status
             # Inject correlation header
@@ -65,7 +65,7 @@ class LogEverythingWSGIMiddleware:
 
         try:
             response = self.app(environ, custom_start_response)
-            return response
+            return response  # type: ignore[no-any-return]
         except Exception:
             duration_ms = (time.perf_counter() - start) * 1000
             self.logger.exception(

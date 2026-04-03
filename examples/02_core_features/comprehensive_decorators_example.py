@@ -18,7 +18,7 @@ from pathlib import Path
 # Add the parent directory to the path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from logeverything import AsyncLogger, Logger
+from logeverything import Logger
 from logeverything.decorators import log, log_class, log_function, log_io
 
 # Create the comprehensive_example logger BEFORE decorators are defined

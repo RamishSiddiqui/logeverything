@@ -70,7 +70,7 @@ async def performance_comparison():
 
     print(f"Sync logging: {sync_time:.4f}s for {num_logs} logs")
     print(f"Async logging: {async_time:.4f}s for {num_logs} logs")
-    print(f"Performance improvement: {sync_time/async_time:.2f}x faster")
+    print(f"Performance improvement: {sync_time / async_time:.2f}x faster")
 
 
 async def concurrent_logging():
@@ -83,7 +83,7 @@ async def concurrent_logging():
     async def worker(worker_id, task_count):
         """Worker coroutine that logs its progress."""
         for i in range(task_count):
-            await async_log.info(f"Worker {worker_id}: Processing task {i+1}")
+            await async_log.info(f"Worker {worker_id}: Processing task {i + 1}")
             await asyncio.sleep(0.01)  # Simulate work
         await async_log.info(f"Worker {worker_id}: Completed all tasks")
 
@@ -187,7 +187,7 @@ async def batched_logging():
         # Create all log tasks for the batch
         log_tasks = []
         for i in range(batch_size):
-            task = batch_log.debug(f"Batch {batch_id}: Processing item {i+1}")
+            task = batch_log.debug(f"Batch {batch_id}: Processing item {i + 1}")
             log_tasks.append(task)
 
         # Wait for all logs in batch to complete
@@ -205,7 +205,7 @@ async def batched_logging():
     total_logs = sum(batch_sizes) + len(batch_sizes) * 2  # +2 for start/end logs per batch
 
     print(f"✓ Processed {total_logs} logs in {total_time:.2f}s")
-    print(f"✓ Throughput: {total_logs/total_time:.0f} logs/second")
+    print(f"✓ Throughput: {total_logs / total_time:.0f} logs/second")
 
 
 async def async_context_managers():

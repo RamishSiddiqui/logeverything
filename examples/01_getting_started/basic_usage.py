@@ -19,7 +19,7 @@ from pathlib import Path
 # Add the parent directory to the path for imports to work when running directly
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from logeverything import CRITICAL, DEBUG, ERROR, INFO, WARNING, Logger
+from logeverything import DEBUG, INFO, WARNING, Logger
 from logeverything.decorators import log
 from logeverything.handlers import ConsoleHandler, FileHandler, JSONHandler
 

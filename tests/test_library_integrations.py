@@ -12,9 +12,6 @@ import io
 import os
 import sys
 import unittest
-from unittest.mock import patch
-
-import pytest
 
 # Import the safe shutdown utilities
 from safe_shutdown import register_safe_shutdown
@@ -22,12 +19,12 @@ from safe_shutdown import register_safe_shutdown
 # Add the parent directory to the path to make imports work when running directly
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from logeverything import CRITICAL, DEBUG, ERROR, INFO, WARNING, configure_external_logger
+from logeverything import configure_external_logger
 from logeverything.core import get_logger
 from logeverything.handlers import ConsoleHandler, PrettyFormatter
 
 # Import mock libraries module
-from tests.mock_libraries import install_mocks, remove_mocks
+from tests.mock_libraries import install_mocks
 
 # Install mock libraries if the real ones aren't available
 installed_mocks = install_mocks()
@@ -51,7 +48,6 @@ class TestLangChainIntegration(unittest.TestCase):
     def setUp(self):
         """Set up test fixtures."""
         # Import langchain
-        import langchain
 
         # Reset langchain logger to default state
         self.langchain_logger = get_logger("langchain")
@@ -101,7 +97,6 @@ class TestLangChainIntegration(unittest.TestCase):
 
         # Import common LangChain components that might log
         from langchain.prompts import PromptTemplate
-        from langchain.schema import Document
 
         # Create a simple prompt that will generate logs
         prompt = PromptTemplate(input_variables=["topic"], template="Tell me about {topic}")
@@ -125,7 +120,6 @@ class TestFastAPIIntegration(unittest.TestCase):
     def setUp(self):
         """Set up test fixtures."""
         # Import fastapi
-        import fastapi
 
         # Reset fastapi/uvicorn loggers to default state
         for name in ["fastapi", "uvicorn", "uvicorn.access"]:
@@ -209,7 +203,6 @@ class TestMLflowIntegration(unittest.TestCase):
     def setUp(self):
         """Set up test fixtures."""
         # Import mlflow
-        import mlflow
 
         # Reset mlflow logger to default state
         self.mlflow_logger = get_logger("mlflow")
@@ -361,7 +354,6 @@ class TestRequestsIntegration(unittest.TestCase):
     def setUp(self):
         """Set up test fixtures."""
         # Import requests
-        import requests
 
         # Reset requests logger to default state
         self.requests_logger = get_logger("requests")
@@ -383,7 +375,6 @@ class TestRequestsIntegration(unittest.TestCase):
 
     def test_requests_logger_integration(self):
         """Test that we can properly integrate with the Requests library logger."""
-        import requests
 
         # First, the requests logger is usually set to a high level and won't show DEBUG messages
         requests_logger = get_logger("requests")
@@ -496,7 +487,7 @@ class TestMultipleLibraryIntegration(unittest.TestCase):
             for msg in expected_messages:
                 self.assertIn(msg, log_content)
 
-        except Exception as e:
+        except Exception:
             # If there are import issues with mock libraries, skip the detailed assertions
             # and just verify basic logging functionality
             langchain_logger = get_logger("langchain")
@@ -510,7 +501,6 @@ class TestMultipleLibraryIntegration(unittest.TestCase):
     def test_harmonize_logger_levels(self):
         """Test harmonizing levels across multiple external loggers."""
         from logeverything import harmonize_logger_levels
-        from logeverything.handlers import ConsoleHandler, PrettyFormatter
 
         # First set different levels for different loggers
         get_logger("langchain").setLevel("DEBUG")

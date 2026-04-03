@@ -12,15 +12,14 @@ import sys
 import tempfile
 import threading
 import unittest
-from typing import Any
-from unittest.mock import MagicMock, Mock, patch
+from unittest.mock import patch
 
 import pytest
 
 # Add the parent directory to the path to make imports work
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from logeverything import CRITICAL, DEBUG, ERROR, INFO, WARNING, Logger
+from logeverything import DEBUG, WARNING, Logger
 from logeverything import core as core_module
 from logeverything.core import (
     DEFAULT_CONFIG,
@@ -387,7 +386,7 @@ class TestCoreEdgeCases(unittest.TestCase):
             try:
                 logger = get_logger("test.error")
                 # Should either handle gracefully or raise appropriate exception
-            except Exception as e:
+            except Exception:
                 # Error handling is acceptable
                 pass
 

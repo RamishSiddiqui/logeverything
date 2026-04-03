@@ -1,4 +1,4 @@
-﻿"""
+"""
 Test script for checking that we've fixed the environment detection bug.
 This script will mock different environment combinations and verify that
 the environment detection works as expected.

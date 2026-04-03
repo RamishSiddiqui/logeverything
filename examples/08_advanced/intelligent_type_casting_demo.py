@@ -6,7 +6,6 @@ by intelligently casting loggers to compatible types while preserving the origin
 """
 
 import asyncio
-import logging
 import sys
 from pathlib import Path
 
@@ -14,8 +13,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from logeverything import AsyncLogger, Logger
-from logeverything.asyncio import async_log_class, async_log_function
-from logeverything.core import register_logger, unregister_logger
+from logeverything.asyncio import async_log_class
 from logeverything.decorators import log, log_class, log_function, log_io
 
 
@@ -264,7 +262,7 @@ def main():
         elapsed = (end_time - start_time) * 1000  # Convert to milliseconds
 
         print(f"  Completed 100 async calls with type casting in {elapsed:.2f}ms")
-        print(f"  Average per call: {elapsed/100:.2f}ms")
+        print(f"  Average per call: {elapsed / 100:.2f}ms")
         print(f"  All results correct: {all(results[i] == i * 2 for i in range(100))}")
         print()
 

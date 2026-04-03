@@ -2,20 +2,13 @@
 Tests for context manager functionality in LogEverything.
 """
 
-import os
-import sys
-from io import StringIO
-from typing import Any, Dict, List, Optional, Union
+from typing import Any
 
 import pytest
 
-from logeverything import CRITICAL  # LogEverything level constants
 from logeverything import (
     DEBUG,
-    ERROR,
-    INFO,
     WARNING,
-    Logger,
     LoggingContext,
     QuietLoggingContext,
     TemporaryHandlerContext,
@@ -24,7 +17,6 @@ from logeverything import (
 )
 from logeverything import core as core_module
 from logeverything.core import _config, get_logger
-from logeverything.handlers import ConsoleHandler, PrettyFormatter
 
 
 class TestLogingContext:

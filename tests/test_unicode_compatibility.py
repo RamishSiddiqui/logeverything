@@ -5,12 +5,10 @@ This module tests the automatic Unicode encoding fixes implemented in LogEveryth
 to prevent UnicodeEncodeError on Windows systems with cp1252 console encoding.
 """
 
-import io
 import os
 import platform
 import sys
 import tempfile
-import time
 import unittest
 from unittest.mock import Mock, patch
 

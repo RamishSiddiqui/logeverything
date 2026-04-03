@@ -17,7 +17,7 @@ import pytest
 # Add the parent directory to the path to make imports work
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from logeverything import CRITICAL, DEBUG, ERROR, INFO, WARNING
+from logeverything import DEBUG, WARNING
 from logeverything import core as core_module
 from logeverything.core import get_logger
 from logeverything.decorators import log

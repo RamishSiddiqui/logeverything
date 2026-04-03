@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python
+#!/usr/bin/env python
 """
 Tests for enhanced visual formatting features of LogEverything.
 
@@ -8,13 +8,11 @@ PrettyFormatter, FormattedFileHandler, and EnhancedConsoleHandler.
 
 # Removed logging import
 import os
-import sys
 from datetime import datetime
 from io import StringIO
 
 import pytest
 
-from logeverything import CRITICAL, DEBUG, ERROR, INFO, WARNING
 from logeverything import core as core_module
 from logeverything import get_logger
 from logeverything.decorators import log_class, log_function
@@ -116,7 +114,7 @@ class TestEnhancedVisuals:
             file_handler.setFormatter(formatter)
 
             # Configure logger
-            logger = get_logger(f"logeverything.pretty")
+            logger = get_logger("logeverything.pretty")
             logger.handlers = []
             logger.addHandler(file_handler)
             logger.setLevel("DEBUG")
@@ -178,9 +176,9 @@ class TestEnhancedVisuals:
         for handler in handlers:
             # Verify UTF-8 encoding for file handlers
             if hasattr(handler, "encoding"):
-                assert (
-                    handler.encoding == "utf-8"
-                ), f"Handler {handler.__class__.__name__} should use UTF-8 encoding"
+                assert handler.encoding == "utf-8", (
+                    f"Handler {handler.__class__.__name__} should use UTF-8 encoding"
+                )
 
             logger = get_logger("logeverything.formatted")
             logger.handlers = []
@@ -195,10 +193,10 @@ class TestEnhancedVisuals:
             logger.removeHandler(handler)
 
         print(f"\nGenerated formatted file handler output in {TEST_OUTPUT_DIR}:")
-        print(f"  - formatted_basic.log")
-        print(f"  - formatted_no_symbols.log")
-        print(f"  - formatted_no_indent.log")
-        print(f"  - formatted_plain.log")
+        print("  - formatted_basic.log")
+        print("  - formatted_no_symbols.log")
+        print("  - formatted_no_indent.log")
+        print("  - formatted_plain.log")
 
     def test_enhanced_console_handler(self):
         """Test the EnhancedConsoleHandler with different color themes."""
@@ -210,7 +208,7 @@ class TestEnhancedVisuals:
         # Create a file to capture all theme outputs
         with open(ansi_path, "w", encoding="utf-8") as outfile:
             for theme in themes:
-                outfile.write(f"\n\n{'='*20} {theme.upper()} THEME {'='*20}\n\n")
+                outfile.write(f"\n\n{'=' * 20} {theme.upper()} THEME {'=' * 20}\n\n")
 
                 # Create a StringIO to capture output
                 output = StringIO()
@@ -250,7 +248,7 @@ class TestEnhancedVisuals:
                 logger.removeHandler(handler)
 
         print(f"\nGenerated enhanced console handler themes in {TEST_OUTPUT_DIR}:")
-        print(f"  - enhanced_console_themes.log")
+        print("  - enhanced_console_themes.log")
 
     def test_real_world_scenario_with_enhanced_formatting(self):
         """Test a real-world scenario with enhanced formatting."""
@@ -284,7 +282,7 @@ class TestEnhancedVisuals:
         def authenticate_user(username, password):
             """Simulate user authentication."""
             logger.info(f"Authenticating user: {username}")
-            logger.debug(f"Validating credentials")
+            logger.debug("Validating credentials")
 
             if username == "admin" and password == "secret":
                 logger.info(f"User {username} authenticated successfully")
@@ -300,7 +298,7 @@ class TestEnhancedVisuals:
 
             total = 0
             for i, item in enumerate(items):
-                logger.debug(f"Processing item {i+1}: {item['name']}")
+                logger.debug(f"Processing item {i + 1}: {item['name']}")
                 if item.get("in_stock", True):
                     total += item["price"]
                 else:
@@ -322,7 +320,7 @@ class TestEnhancedVisuals:
                 logger.info(f"Processing payment for order {order_id}")
 
                 # Simulate payment processing steps
-                logger.debug(f"Validating payment information")
+                logger.debug("Validating payment information")
 
                 # Simulate an API call
                 logger.debug(f"Calling {self.provider} API")
@@ -376,7 +374,7 @@ class TestEnhancedVisuals:
                     if order_result["total"] < 50.0:
                         raise ValueError("Order total below shipping minimum")
 
-                except Exception as e:
+                except Exception:
                     logger.exception("Shipping check failed")
 
                     # Process refund due to shipping issue
@@ -384,7 +382,7 @@ class TestEnhancedVisuals:
                         refund_result = payment_processor.refund_payment(
                             payment_result["transaction_id"], order_result["total"]
                         )
-        except Exception as e:
+        except Exception:
             logger.exception("Unexpected error in request processing")
 
         logger.info("Request processing completed")
@@ -396,8 +394,8 @@ class TestEnhancedVisuals:
         logger.removeHandler(json_handler)
 
         print(f"\nGenerated enhanced real-world scenario logs in {TEST_OUTPUT_DIR}:")
-        print(f"  - enhanced_real_world.log")
-        print(f"  - enhanced_real_world.json")
+        print("  - enhanced_real_world.log")
+        print("  - enhanced_real_world.json")
 
     def _generate_test_logs(self, logger):
         """Generate a standard set of test log entries."""
@@ -429,7 +427,7 @@ class TestEnhancedVisuals:
         # Error with traceback
         try:
             1 / 0
-        except Exception as e:
+        except Exception:
             logger.exception("An exception occurred")
 
 

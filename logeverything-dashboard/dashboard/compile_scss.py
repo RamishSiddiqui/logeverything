@@ -2,7 +2,6 @@
 SCSS compilation script for LogEverything Dashboard
 """
 
-import glob
 import os
 import time
 from pathlib import Path

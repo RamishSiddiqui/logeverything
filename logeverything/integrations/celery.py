@@ -25,7 +25,7 @@ from logeverything.correlation import (
 )
 
 try:
-    from celery import Celery
+    from celery import Celery  # noqa: F401
     from celery.signals import (
         before_task_publish,
         task_failure,

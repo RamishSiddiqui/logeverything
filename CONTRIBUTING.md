@@ -32,9 +32,7 @@ Thank you for your interest in contributing to LogEverything! This document prov
 
 We follow these standards to maintain code quality:
 
-- **Code Formatting**: We use [Black](https://black.readthedocs.io/) with a line length of 100 characters.
-- **Import Sorting**: We use [isort](https://pycqa.github.io/isort/) with Black compatibility.
-- **Linting**: We use [flake8](https://flake8.pycqa.org/) for code linting.
+- **Code Formatting & Linting**: We use [Ruff](https://docs.astral.sh/ruff/) for formatting, import sorting, and linting with a line length of 100 characters.
 - **Type Checking**: We use [mypy](https://mypy.readthedocs.io/) for static type checking.
 - **Security**: We use [bandit](https://bandit.readthedocs.io/) for security vulnerability checks.
 
@@ -47,9 +45,9 @@ We use pre-commit hooks to ensure code quality standards are met before code is 
 - Verify YAML files are valid
 - Check for large files that shouldn't be committed
 - Remove Python debug statements
-- Format code with Black
-- Sort imports with isort
-- Check code with flake8
+- Format code with Ruff
+- Sort imports with Ruff
+- Lint code with Ruff
 - Run type checking with mypy
 - Perform security scanning with bandit
 
@@ -66,7 +64,7 @@ You can also run individual quality checks using the Makefile:
 
 ```bash
 make lint  # Check all quality standards
-make format  # Auto-format code with Black and isort
+make format  # Auto-format code with Ruff
 ```
 
 Before submitting a pull request, make sure all checks pass with:

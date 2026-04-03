@@ -15,9 +15,6 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 # Import everything needed from the top-level package
 from logeverything import (  # Core setup; Decorators; Handlers; Profile support
     PROFILES,
-    ConsoleHandler,
-    FileHandler,
-    JSONHandler,
     Logger,
     get_profile,
     log,

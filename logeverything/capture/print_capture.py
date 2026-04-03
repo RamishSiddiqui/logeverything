@@ -291,7 +291,7 @@ def enable_print_capture(
     _thread_local.print_prefix = prefix
     _thread_local.print_settings = (logger_name, level, prefix)  # Bundled for fast read
     # Complex print function type with default args
-    builtins.print = logging_print  # type: ignore[assignment]
+    builtins.print = logging_print
 
 
 def disable_print_capture() -> None:

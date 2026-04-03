@@ -3,9 +3,9 @@ Connection models for LogEverything Dashboard
 """
 
 from datetime import datetime
-from typing import Any, Dict, List, Optional
+from typing import List, Optional
 
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field
 
 
 class ConnectionConfig(BaseModel):

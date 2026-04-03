@@ -11,10 +11,9 @@ import sys
 # Add the parent directory to the path so we can import the package
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-import logging
 import random
 import time
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Tuple
 
 import logeverything as le
 
@@ -119,7 +118,9 @@ class Model:
             history["loss"].append(loss)
             history["accuracy"].append(accuracy)
 
-            self.logger.info(f"Epoch {epoch+1}/{epochs}: loss={loss:.4f}, accuracy={accuracy:.4f}")
+            self.logger.info(
+                f"Epoch {epoch + 1}/{epochs}: loss={loss:.4f}, accuracy={accuracy:.4f}"
+            )
 
         self.trained = True
         self.logger.info(f"Model {self.name} training completed")
@@ -162,7 +163,7 @@ class Model:
         # Simulate saving
         time.sleep(0.2)
 
-        self.logger.info(f"Model saved successfully")
+        self.logger.info("Model saved successfully")
         return True
 
 

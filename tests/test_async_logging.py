@@ -9,15 +9,13 @@ import asyncio
 # Removed logging import
 import os
 import time
-from typing import List, cast
 
 import pytest
 
-from logeverything import CRITICAL, DEBUG, ERROR, INFO, WARNING, AsyncLogger
+from logeverything import AsyncLogger
 from logeverything import core as core_module
 from logeverything.asyncio.async_logging import AsyncQueueHandler, async_log_function
 from logeverything.core import get_logger
-from logeverything.handlers import ConsoleHandler, PrettyFormatter
 
 
 @pytest.fixture

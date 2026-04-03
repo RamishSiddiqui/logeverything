@@ -4,10 +4,9 @@ Comprehensive benchmarking suite for LogEverything performance testing.
 """
 
 import asyncio
-import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
-from typing import Any, Callable, Dict, List
+from typing import Any, Dict
 
 import logeverything
 

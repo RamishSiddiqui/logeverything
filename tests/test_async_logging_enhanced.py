@@ -7,9 +7,6 @@ designed to achieve high test coverage for async_logging.py module.
 
 import asyncio
 import logging  # Keep for LogRecord and level constants compatibility
-import os
-import queue
-import threading
 import time
 from io import StringIO
 from typing import List
@@ -17,7 +14,7 @@ from unittest.mock import Mock, patch
 
 import pytest
 
-from logeverything import CRITICAL, DEBUG, ERROR, INFO, WARNING, AsyncLogger, Logger
+from logeverything import CRITICAL, DEBUG, ERROR, INFO, AsyncLogger
 from logeverything import core as core_module
 from logeverything.asyncio.async_logging import (
     AsyncLoggingContext,
@@ -31,7 +28,6 @@ from logeverything.asyncio.async_logging import (
     log_async_class,
     log_async_function,
 )
-from logeverything.core import get_logger
 from logeverything.handlers import ConsoleHandler, PrettyFormatter
 
 
@@ -281,12 +277,12 @@ class TestAsyncQueueHandler:
         output2_str = output2.getvalue()
 
         # Both handlers should receive the message without color codes
-        assert (
-            "H1: Multi-handler test" in output1_str
-        ), f"Expected 'H1: Multi-handler test' in {repr(output1_str)}"
-        assert (
-            "H2: Multi-handler test" in output2_str
-        ), f"Expected 'H2: Multi-handler test' in {repr(output2_str)}"
+        assert "H1: Multi-handler test" in output1_str, (
+            f"Expected 'H1: Multi-handler test' in {repr(output1_str)}"
+        )
+        assert "H2: Multi-handler test" in output2_str, (
+            f"Expected 'H2: Multi-handler test' in {repr(output2_str)}"
+        )
 
         async_handler.close()
         output1.close()

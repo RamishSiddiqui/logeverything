@@ -11,7 +11,7 @@ import sys
 import threading
 import time
 import unittest
-from unittest.mock import MagicMock, call, patch
+from unittest.mock import patch
 
 # Add the parent directory to the path to make imports work
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -24,7 +24,7 @@ from logeverything import core as core_module
 from logeverything.capture.print_capture import _original_print
 from logeverything.core import get_logger
 from logeverything.decorators import log_function
-from logeverything.handlers import ConsoleHandler, FileHandler, PrettyFormatter
+from logeverything.handlers import FileHandler
 
 
 class TestConfiguration(unittest.TestCase):
@@ -210,7 +210,7 @@ class TestConcurrentLogging(unittest.TestCase):
 
     def test_multiprocess_logging(self):
         """Test logging from multiple processes."""
-        if sys.platform.startswith("win"):
+        if sys.platform.startswith("win") or sys.platform == "darwin":
             # On Windows, we'll use a simulated approach instead of actual multiprocessing
             # This avoids issues with process spawning on Windows
 

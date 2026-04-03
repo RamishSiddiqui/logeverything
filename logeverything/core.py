@@ -104,8 +104,7 @@ def _format_info_message(message: str, message_type: str = "INFO") -> str:
 
         # Format: timestamp | [ icon LEVEL ] | logeverything | indentation + message
         formatted = (
-            f"{color}{timestamp} | {level_text} | logeverything | "
-            f"{current_indent}{message}{reset}"
+            f"{color}{timestamp} | {level_text} | logeverything | {current_indent}{message}{reset}"
         )
 
     except ImportError:
@@ -748,7 +747,7 @@ def setup_logging(
                 platform_capabilities = detect_platform_capabilities()
 
                 # Auto-detect if we should force ASCII to prevent encoding errors
-                should_force_ascii = _config.get("force_ascii", False)
+                should_force_ascii = bool(_config.get("force_ascii", False))
                 if not should_force_ascii and not platform_capabilities.get(
                     "supports_unicode", True
                 ):
@@ -756,11 +755,11 @@ def setup_logging(
 
                 console_handler: logging.Handler = EnhancedConsoleHandler(
                     use_colors=not bool(_config.get("disable_colors", False)),
-                    color_messages=_config.get("color_messages", False),
-                    use_symbols=_config.get("use_symbols", _config["visual_mode"])
+                    color_messages=bool(_config.get("color_messages", False)),
+                    use_symbols=bool(_config.get("use_symbols", _config["visual_mode"]))
                     and not should_force_ascii,
-                    use_indent=_config.get("use_indent", _config["visual_mode"]),
-                    align_columns=_config.get("align_columns", False),
+                    use_indent=bool(_config.get("use_indent", _config["visual_mode"])),
+                    align_columns=bool(_config.get("align_columns", False)),
                     color_theme=str(_config.get("color_theme", "default")),
                     ascii_only=should_force_ascii,
                     level=cast(Union[int, str], _config["level"]),
@@ -1390,7 +1389,7 @@ def find_logger_for_decorator(
     if real_handlers and (root_logger.level != logging.WARNING or len(real_handlers) > 1):
         # Root logger has non-default configuration, use it
         logging.getLogger("logeverything").debug(
-            "Decorator: No Logger instances configured, " "using standard Python logger 'root'."
+            "Decorator: No Logger instances configured, using standard Python logger 'root'."
         )
         return _create_standard_logger_proxy(root_logger)
 

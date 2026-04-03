@@ -9,7 +9,6 @@ This module contains comprehensive tests to verify that:
 - Registry is properly maintained throughout
 """
 
-import asyncio
 import os
 import sys
 import threading
@@ -24,7 +23,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")
 
 from logeverything import Logger
 from logeverything.asyncio import AsyncLogger
-from logeverything.core import _active_loggers, get_logger
+from logeverything.core import _active_loggers
 
 
 class TestLoggerDeletionCleanup(unittest.TestCase):

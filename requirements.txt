@@ -4,9 +4,7 @@
 # Development dependencies
 pytest>=7.0.0
 pytest-cov>=4.0.0
-black>=22.0.0
-flake8>=5.0.0
-isort>=5.10.0
+ruff>=0.1.6
 mypy>=0.971
 
 # Documentation dependencies
@@ -24,8 +22,6 @@ pytest-xdist>=3.0.0
 # Code quality dependencies
 bandit>=1.7.0
 pre-commit>=3.3.2  # For managing Git hooks
-flake8-docstrings>=1.7.0  # For enforcing docstring standards
-types-all>=1.0.0  # Type stubs for mypy
 
 # Integration testing dependencies
 langchain>=0.0.313

@@ -7,7 +7,6 @@ This module tests the integration of LogEverything with multiprocessing.
 import logging
 import os
 import sys
-import unittest
 
 # Add the parent directory to the path to make imports work
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))

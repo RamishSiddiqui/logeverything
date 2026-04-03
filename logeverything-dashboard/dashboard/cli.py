@@ -9,7 +9,6 @@ Usage:
 
 import argparse
 import os
-import sys
 import threading
 from pathlib import Path
 

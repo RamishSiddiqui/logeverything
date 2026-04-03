@@ -8,13 +8,10 @@ These tests ensure the new decorator enhancements work correctly with:
 - Performance considerations
 """
 
-import io
-import logging
 import os
 import sys
 import threading
 import time
-from unittest.mock import MagicMock, patch
 
 import pytest
 
@@ -23,8 +20,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")
 
 from logeverything import Logger
 from logeverything.core import _active_loggers
-from logeverything.decorators import log, log_class, log_function, log_io
-from logeverything.handlers import ConsoleHandler
+from logeverything.decorators import log, log_class
 
 
 @pytest.mark.usefixtures("complete_logging_isolation")

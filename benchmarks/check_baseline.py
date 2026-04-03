@@ -9,6 +9,7 @@ Usage::
 
     python benchmarks/check_baseline.py
 """
+
 import json
 import logging
 import os

@@ -6,10 +6,9 @@ during interpreter shutdown, particularly when third-party libraries try to
 log messages after handlers have been closed.
 """
 
-import atexit
 import logging
 import sys
-from logging import Handler, Logger
+from logging import Logger
 
 
 class SafeHandler(logging.Handler):

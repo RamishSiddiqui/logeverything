@@ -181,7 +181,7 @@ class MockRequests(MockModule):
             # Log when post is called
             logging.getLogger("requests").info(f"POST request to {url}")
             if "json" in kwargs:
-                logging.getLogger("requests").debug(f"With JSON payload")
+                logging.getLogger("requests").debug("With JSON payload")
             return Response()
 
         self.get = get
@@ -347,7 +347,7 @@ class MockNumpy(MockModule):
         # Mock array creation functions
         def array(object, dtype=None, *args, **kwargs):
             # Log array creation
-            logging.getLogger("numpy").debug(f"Creating numpy array")
+            logging.getLogger("numpy").debug("Creating numpy array")
             return object
 
         def zeros(shape, dtype=None, *args, **kwargs):

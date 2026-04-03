@@ -67,8 +67,7 @@ class TestTimedRotatingFileHandler:
             f for f in os.listdir(tmp_log_dir) if today_suffix in f and f != "app.log"
         ]
         assert len(rotated_candidates) >= 1, (
-            f"Expected a rotated file with suffix {today_suffix}, "
-            f"found: {os.listdir(tmp_log_dir)}"
+            f"Expected a rotated file with suffix {today_suffix}, found: {os.listdir(tmp_log_dir)}"
         )
 
         # The base file should still exist (reopened after rollover)
@@ -162,9 +161,9 @@ class TestTimedRotatingFileHandler:
         time.sleep(1.0)
 
         gz_files = [f for f in os.listdir(tmp_log_dir) if f.endswith(".gz")]
-        assert (
-            len(gz_files) >= 1
-        ), f"Expected at least one .gz file, found: {os.listdir(tmp_log_dir)}"
+        assert len(gz_files) >= 1, (
+            f"Expected at least one .gz file, found: {os.listdir(tmp_log_dir)}"
+        )
 
         # Verify the .gz file is a valid gzip archive
         gz_path = os.path.join(tmp_log_dir, gz_files[0])
@@ -211,9 +210,9 @@ class TestFileHandlerCompress:
 
         files = os.listdir(tmp_log_dir)
         gz_files = [f for f in files if f.endswith(".gz")]
-        assert (
-            len(gz_files) >= 1
-        ), f"Expected at least one .gz file from size-based rotation, found: {files}"
+        assert len(gz_files) >= 1, (
+            f"Expected at least one .gz file from size-based rotation, found: {files}"
+        )
 
         # Verify the .gz file is a valid gzip archive
         gz_path = os.path.join(tmp_log_dir, gz_files[0])

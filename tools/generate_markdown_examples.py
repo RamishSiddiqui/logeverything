@@ -5,7 +5,6 @@ This script generates a markdown file with code snippets and their
 corresponding outputs to demonstrate LogEverything's capabilities.
 """
 
-import os
 import sys
 from pathlib import Path
 
@@ -13,24 +12,10 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 # Import the actual API from logeverything
-from logeverything import (
-    EnhancedConsoleHandler,
-    FormattedFileHandler,
-    LoggingContext,
-    PrettyFormatter,
-    QuietLoggingContext,
-    TemporaryHandlerContext,
-    VerboseLoggingContext,
-    VisualLoggingContext,
-    configure,
-    setup_logging,
-)
 
 # Fix the import to use the correct decorators that actually exist
-from logeverything.decorators import log_class, log_function, log_io
 
 # Fix the import name capture_prints -> capture_print (singular form)
-from logeverything.print_capture import capture_print
 
 # Create directory for markdown examples if it doesn't exist
 EXAMPLES_DIR = Path(__file__).resolve().parent

@@ -8,7 +8,12 @@ from .format_utils import format_value, safe_float, safe_int
 from .levels import CRITICAL, DEBUG, ERROR, FATAL, INFO, WARN, WARNING
 from .monitoring import LoggingMetrics, PerformanceMonitor
 from .path_utils import get_relative_path
-from .platform_utils import clear_symbol_cache, get_ascii_only_mode, get_symbols, supports_unicode
+from .platform_utils import (  # noqa: F401
+    clear_symbol_cache,
+    get_ascii_only_mode,
+    get_symbols,
+    supports_unicode,
+)
 
 __all__ = [
     "get_relative_path",

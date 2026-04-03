@@ -11,7 +11,6 @@ from typing import Callable, Optional, Sequence, Set
 
 from logeverything.correlation import (
     clear_correlation,
-    get_correlation_id,
     set_correlation_id,
     set_request_context,
 )

@@ -54,7 +54,7 @@ _handler_pool_lock = threading.Lock()
 
 def get_pooled_handler(
     queue_size: int = 1000,
-    target_handlers: List[Any] = None,
+    target_handlers: Optional[List[Any]] = None,
     flush_level: int = logging.CRITICAL,
     flush_interval: float = 1.0,
 ) -> "AsyncQueueHandler":
@@ -140,7 +140,7 @@ def cleanup_all_async_handlers_optimized() -> int:
         try:
             handler._stop_event.set()
         except Exception:
-            pass
+            pass  # nosec B110 -- shutdown cleanup, logging could cause recursion
 
     # Small delay to allow threads to see the stop signal
     time.sleep(0.01)
@@ -158,14 +158,14 @@ def cleanup_all_async_handlers_optimized() -> int:
                     handler.queue.get_nowait()
                     handler.processed_records += 1
             except Exception:
-                pass
+                pass  # nosec B110 -- shutdown cleanup, logging could cause recursion
 
             # Close target handlers without waiting
             for target_handler in handler.target_handlers:
                 try:
                     target_handler.close()
                 except Exception:
-                    pass
+                    pass  # nosec B110 -- best-effort cleanup
 
             _global_handler_registry.discard(handler)
             count += 1
@@ -251,7 +251,7 @@ class AsyncQueueHandler(logging.Handler):
 
                 # Check for sentinel None (signals shutdown)
                 if record is None:
-                    self.queue.task_done()
+                    self.queue.task_done()  # type: ignore[unreachable]
                     break
 
                 # Process the record
@@ -323,7 +323,7 @@ class AsyncQueueHandler(logging.Handler):
                 record = self.queue.get(block=False)
                 if record is None:
                     # Skip sentinel records used for shutdown signaling
-                    self.queue.task_done()
+                    self.queue.task_done()  # type: ignore[unreachable]
                     continue
                 self._process_record(record)
                 self.queue.task_done()
@@ -343,7 +343,7 @@ class AsyncQueueHandler(logging.Handler):
         # Put a sentinel None into the queue to wake up the worker thread
         # if it's blocked on queue.get()
         try:
-            self.queue.put_nowait(None)
+            self.queue.put_nowait(None)  # type: ignore[arg-type]
         except queue.Full:
             pass  # Queue is full, worker will see stop_event on next timeout
 
@@ -678,9 +678,7 @@ def async_log_class(cls: Optional[Type] = None, using: Optional[str] = None, **o
                     attr, "_logeverything_decorated"
                 ):
                     # Apply async_log_function decorator with options
-                    decorated: Any = async_log_function(using=using, **options)(
-                        attr  # type: ignore[arg-type]
-                    )
+                    decorated: Any = async_log_function(using=using, **options)(cast(Any, attr))
                     setattr(decorated, "_log_decorated", True)
                     setattr(cls, attr_name, decorated)
 

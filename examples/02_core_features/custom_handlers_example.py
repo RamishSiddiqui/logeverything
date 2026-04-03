@@ -29,7 +29,6 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from logeverything import Logger
 from logeverything.handlers import ConsoleHandler, FileHandler, JSONLineFormatter
-from logeverything.handlers.handlers import PrettyFormatter
 
 
 class DatabaseHandler(logging.Handler):

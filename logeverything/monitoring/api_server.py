@@ -8,6 +8,7 @@ monitoring tools to access real-time monitoring data.
 import json
 import threading
 from datetime import datetime, timezone
+from typing import Any, Optional
 
 try:
     import uvicorn
@@ -31,13 +32,19 @@ class MonitoringAPIServer:
     - Data export
     """
 
-    def __init__(self, port: int = 8999, storage=None, metrics_collector=None, logger=None):
+    def __init__(
+        self,
+        port: int = 8999,
+        storage: Optional[Any] = None,
+        metrics_collector: Optional[Any] = None,
+        logger: Optional[Any] = None,
+    ):
         self.port = port
         self.storage = storage
         self.metrics_collector = metrics_collector
         self.logger = logger
 
-        self._server_thread = None
+        self._server_thread: Optional[threading.Thread] = None
         self._server = None
         self._is_running = False
 
@@ -48,7 +55,7 @@ class MonitoringAPIServer:
 
         self._setup_app()
 
-    def _setup_app(self):
+    def _setup_app(self) -> None:
         """Setup FastAPI application with routes."""
         if not FASTAPI_AVAILABLE:
             return
@@ -71,11 +78,11 @@ class MonitoringAPIServer:
         # Setup routes
         self._setup_routes()
 
-    def _setup_routes(self):
+    def _setup_routes(self) -> None:
         """Setup API routes."""
 
         @self.app.get("/")
-        async def root():
+        async def root() -> dict:
             return {
                 "service": "LogEverything Monitoring API",
                 "version": "1.0.0",
@@ -84,7 +91,7 @@ class MonitoringAPIServer:
             }
 
         @self.app.get("/health")
-        async def health_check():
+        async def health_check() -> dict:
             """Health check endpoint."""
             return {
                 "status": "healthy",
@@ -98,7 +105,7 @@ class MonitoringAPIServer:
             }
 
         @self.app.get("/metrics/system")
-        async def get_system_metrics():
+        async def get_system_metrics() -> Any:
             """Get current system metrics."""
             if not self.metrics_collector:
                 raise HTTPException(status_code=503, detail="Metrics collector not available")
@@ -110,7 +117,7 @@ class MonitoringAPIServer:
                 raise HTTPException(status_code=500, detail=f"Failed to collect metrics: {e}")
 
         @self.app.get("/metrics/system/recent")
-        async def get_recent_system_metrics(limit: int = 100):
+        async def get_recent_system_metrics(limit: int = 100) -> JSONResponse:
             """Get recent system metrics from storage."""
             if not self.storage:
                 raise HTTPException(status_code=503, detail="Storage not available")
@@ -122,7 +129,7 @@ class MonitoringAPIServer:
                 raise HTTPException(status_code=500, detail=f"Failed to retrieve metrics: {e}")
 
         @self.app.get("/operations/recent")
-        async def get_recent_operations(limit: int = 100):
+        async def get_recent_operations(limit: int = 100) -> JSONResponse:
             """Get recent operations."""
             if not self.storage:
                 raise HTTPException(status_code=503, detail="Storage not available")
@@ -134,7 +141,7 @@ class MonitoringAPIServer:
                 raise HTTPException(status_code=500, detail=f"Failed to retrieve operations: {e}")
 
         @self.app.get("/operations/summary")
-        async def get_operations_summary(hours: int = 24):
+        async def get_operations_summary(hours: int = 24) -> JSONResponse:
             """Get operations summary statistics."""
             if not self.storage:
                 raise HTTPException(status_code=503, detail="Storage not available")
@@ -146,7 +153,7 @@ class MonitoringAPIServer:
                 raise HTTPException(status_code=500, detail=f"Failed to get summary: {e}")
 
         @self.app.get("/system/trends")
-        async def get_system_trends(hours: int = 24):
+        async def get_system_trends(hours: int = 24) -> JSONResponse:
             """Get system metrics trends."""
             if not self.storage:
                 raise HTTPException(status_code=503, detail="Storage not available")
@@ -158,7 +165,7 @@ class MonitoringAPIServer:
                 raise HTTPException(status_code=500, detail=f"Failed to get trends: {e}")
 
         @self.app.get("/export")
-        async def export_data(format: str = "json"):
+        async def export_data(format: str = "json") -> JSONResponse:
             """Export monitoring data."""
             if not self.storage:
                 raise HTTPException(status_code=503, detail="Storage not available")
@@ -183,7 +190,7 @@ class MonitoringAPIServer:
                 raise HTTPException(status_code=500, detail=f"Export failed: {e}")
 
         @self.app.post("/api/ingest/logs")
-        async def ingest_logs(request: Request):
+        async def ingest_logs(request: Request) -> JSONResponse:
             """Receive batched log records from transport handlers."""
             if not self.storage:
                 raise HTTPException(status_code=503, detail="Storage not available")
@@ -207,7 +214,7 @@ class MonitoringAPIServer:
             level: str = "",
             correlation_id: str = "",
             source: str = "",
-        ):
+        ) -> JSONResponse:
             """Query stored logs with optional filters."""
             if not self.storage:
                 raise HTTPException(status_code=503, detail="Storage not available")
@@ -224,7 +231,7 @@ class MonitoringAPIServer:
                 raise HTTPException(status_code=500, detail=f"Query failed: {e}")
 
         @self.app.get("/api/logs/trace/{correlation_id}")
-        async def get_log_trace(correlation_id: str):
+        async def get_log_trace(correlation_id: str) -> JSONResponse:
             """Get all log entries for a specific correlation ID."""
             if not self.storage:
                 raise HTTPException(status_code=503, detail="Storage not available")
@@ -236,7 +243,7 @@ class MonitoringAPIServer:
                 raise HTTPException(status_code=500, detail=f"Trace query failed: {e}")
 
         @self.app.get("/status")
-        async def get_monitoring_status():
+        async def get_monitoring_status() -> JSONResponse:
             """Get detailed monitoring system status."""
             status = {
                 "api_server": {
@@ -272,18 +279,18 @@ class MonitoringAPIServer:
             return datetime.now().timestamp() - self._start_time
         return 0.0
 
-    def start(self):
+    def start(self) -> None:
         """Start the API server in a background thread."""
         if not FASTAPI_AVAILABLE or self._is_running:
             return
 
         self._start_time = datetime.now().timestamp()
 
-        def run_server():
+        def run_server() -> None:
             try:
                 uvicorn.run(
                     self.app,
-                    host="0.0.0.0",
+                    host="0.0.0.0",  # nosec B104 -- dev server, intentional for all-interface binding
                     port=self.port,
                     log_level="warning",  # Reduce log noise
                     access_log=False,
@@ -301,7 +308,7 @@ class MonitoringAPIServer:
                 f"Monitoring API server started on port {self.port}", extra={"api_port": self.port}
             )
 
-    def stop(self):
+    def stop(self) -> None:
         """Stop the API server."""
         if not self._is_running:
             return
@@ -324,14 +331,20 @@ class SimpleAPIServer:
     Fallback simple HTTP server when FastAPI is not available.
     """
 
-    def __init__(self, port: int = 8999, storage=None, metrics_collector=None, logger=None):
+    def __init__(
+        self,
+        port: int = 8999,
+        storage: Optional[Any] = None,
+        metrics_collector: Optional[Any] = None,
+        logger: Optional[Any] = None,
+    ):
         self.port = port
         self.storage = storage
         self.metrics_collector = metrics_collector
         self.logger = logger
         self._is_running = False
 
-    def start(self):
+    def start(self) -> None:
         """Start simple HTTP server."""
         if self.logger:
             self.logger.info(
@@ -343,7 +356,7 @@ class SimpleAPIServer:
         # For now, just mark as running
         self._is_running = True
 
-    def stop(self):
+    def stop(self) -> None:
         """Stop the server."""
         self._is_running = False
 

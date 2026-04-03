@@ -12,7 +12,7 @@ from pathlib import Path
 # Add the parent directory to the path so we can import logeverything
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from logeverything import AsyncLogger, Logger
+from logeverything import Logger
 from logeverything.decorators import log, log_function, log_io
 
 
@@ -136,7 +136,7 @@ def main():
         elapsed = (end_time - start_time) * 1000
 
         print(f"  Completed 50 operations in {elapsed:.2f}ms")
-        print(f"  Average per operation: {elapsed/50:.2f}ms")
+        print(f"  Average per operation: {elapsed / 50:.2f}ms")
         print(f"  All results correct: {all(results[i] == i**2 for i in range(50))}")
         print()
 

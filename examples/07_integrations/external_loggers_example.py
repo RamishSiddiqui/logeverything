@@ -13,7 +13,6 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from logeverything import (
-    configure_common_loggers,
     configure_external_logger,
     log_function,
     setup_logging,

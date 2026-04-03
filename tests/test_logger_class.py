@@ -8,15 +8,12 @@ that provides a user-friendly interface for hierarchical logging.
 import io
 import os
 import sys
-import tempfile
-import time
 import unittest
-from unittest.mock import MagicMock, patch
 
 # Add the parent directory to the path to make imports work
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from logeverything import Logger, VisualLoggingContext
+from logeverything import Logger
 from logeverything.handlers import ConsoleHandler, PrettyFormatter
 
 

@@ -350,7 +350,7 @@ async def simulate_web_application():
             duration = time.time() - start_time
             await metrics.record_request(duration, response.status_code)
             return response
-        except Exception as e:
+        except Exception:
             duration = time.time() - start_time
             await metrics.record_request(duration, 500)
             raise

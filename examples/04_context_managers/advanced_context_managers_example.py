@@ -142,7 +142,7 @@ class DatabaseConnection:
         if exc_type:
             self.logger.error(f"Database error in {self.db_name}: {exc_val}")
         else:
-            self.logger.info(f"Database operation completed successfully")
+            self.logger.info("Database operation completed successfully")
 
         self.logger.info(f"Closing connection to {self.db_name}")
         time.sleep(0.05)  # Simulate cleanup
@@ -306,7 +306,7 @@ def advanced_context_patterns():
     # Multiple concurrent contexts
     contexts = []
     for i in range(3):
-        contexts.append(log_context(f"Parallel operation {i+1}", logger=trans_logger))
+        contexts.append(log_context(f"Parallel operation {i + 1}", logger=trans_logger))
 
     # Enter all contexts
     entered_contexts = [ctx.__enter__() for ctx in contexts]

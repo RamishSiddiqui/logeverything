@@ -25,7 +25,6 @@ The suite will run each test and pause for visual confirmation.
 import logging
 import os
 import sys
-import time
 from pathlib import Path
 
 # Add the parent directory to the path to import logeverything
@@ -42,9 +41,9 @@ def clear_screen():
 
 def wait_for_confirmation(test_name):
     """Wait for user confirmation before proceeding."""
-    print(f"\n{'='*80}")
+    print(f"\n{'=' * 80}")
     print(f"TEST: {test_name}")
-    print(f"{'='*80}")
+    print(f"{'=' * 80}")
     print("Please examine the output above for:")
     print("  ✓ Perfect alignment of tree lines (│, ┌─►, └─◄)")
     print("  ✓ Consistent spacing in [emoji LEVEL] blocks")

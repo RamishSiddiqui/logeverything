@@ -1,4 +1,4 @@
-﻿"""
+"""
 Tests for the configuration profiles feature.
 """
 
@@ -13,10 +13,9 @@ from unittest.mock import patch
 # Add the parent directory to the path to make imports work
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from logeverything import CRITICAL, DEBUG, ERROR, INFO, WARNING, Logger
+from logeverything import Logger
 from logeverything.core import get_logger
 from logeverything.decorators import log_function
-from logeverything.handlers import ConsoleHandler, PrettyFormatter
 from logeverything.profiles import PROFILES, get_profile
 
 

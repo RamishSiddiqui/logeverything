@@ -11,14 +11,14 @@ import io
 import os
 import sys
 import unittest
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
 import pytest
 
 # Add the parent directory to the path to make imports work when running directly
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from logeverything import Logger, configure_external_logger
+from logeverything import configure_external_logger
 from logeverything.core import get_logger
 from logeverything.handlers import ConsoleHandler, PrettyFormatter
 
@@ -42,8 +42,6 @@ class TestFastAPIUvicornIntegration(unittest.TestCase):
     )
     def setUp(self):
         """Set up test fixtures."""
-        import fastapi
-        import uvicorn
 
         # Save original state of loggers
         self.logger_names = ["fastapi", "uvicorn", "uvicorn.access", "uvicorn.error"]
@@ -122,7 +120,6 @@ class TestFastAPIUvicornIntegration(unittest.TestCase):
     )
     def test_uvicorn_logging_configuration(self):
         """Test configuring Uvicorn's loggers."""
-        import uvicorn
 
         # Configure all Uvicorn loggers with propagation disabled
         configured_loggers = []
@@ -213,8 +210,6 @@ class TestFastAPIIntegrationRealWorld(unittest.TestCase):
     @pytest.mark.skipif(check_library("fastapi"), reason="FastAPI not installed")
     def setUp(self):
         """Set up test fixtures."""
-        import fastapi
-        from fastapi.testclient import TestClient
 
         # Save original state
         self.fastapi_logger = get_logger("fastapi")

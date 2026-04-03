@@ -3,7 +3,6 @@
 Test the new Logger class to ensure it provides a clean interface.
 """
 
-import os
 import sys
 from pathlib import Path
 

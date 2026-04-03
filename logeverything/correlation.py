@@ -14,7 +14,6 @@ Key Features:
 import functools
 import logging
 import os
-import threading
 from contextvars import ContextVar, copy_context
 from typing import Any, Callable, Dict, Optional
 
@@ -106,10 +105,10 @@ class CorrelationFilter(logging.Filter):
 
     def filter(self, record: logging.LogRecord) -> bool:
         """Inject correlation fields into the log record."""
-        record.correlation_id = _correlation_id.get()  # type: ignore[attr-defined]
+        record.correlation_id = _correlation_id.get()
         ctx = _request_context.get()
-        record.request_method = ctx.get("method", "")  # type: ignore[attr-defined]
-        record.request_path = ctx.get("path", "")  # type: ignore[attr-defined]
+        record.request_method = ctx.get("method", "")
+        record.request_path = ctx.get("path", "")
         return True
 
 

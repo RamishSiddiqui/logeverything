@@ -4,7 +4,6 @@ Mock implementations for HuggingFace Hub components to avoid SSL certificate iss
 
 import logging
 import os
-from unittest.mock import MagicMock
 
 # Configure HuggingFace to bypass SSL verification
 os.environ["CURL_CA_BUNDLE"] = ""

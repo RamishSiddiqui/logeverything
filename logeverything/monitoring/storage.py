@@ -50,13 +50,14 @@ class MonitoringStorage:
         self.session_id = f"session_{int(time.time())}"
         self._log_session_start()
 
-    def _init_database(self):
+    def _init_database(self) -> None:
         """Initialize SQLite database with required tables."""
         with self._db_lock:
             conn = sqlite3.connect(self.db_path)
 
             # System metrics table
-            conn.execute("""
+            conn.execute(
+                """
                 CREATE TABLE IF NOT EXISTS system_metrics (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     session_id TEXT NOT NULL,
@@ -71,10 +72,12 @@ class MonitoringStorage:
                     full_data TEXT,
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 )
-            """)
+            """
+            )
 
             # Operation metrics table
-            conn.execute("""
+            conn.execute(
+                """
                 CREATE TABLE IF NOT EXISTS operation_metrics (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     session_id TEXT NOT NULL,
@@ -89,10 +92,12 @@ class MonitoringStorage:
                     custom_metrics TEXT,
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 )
-            """)
+            """
+            )
 
             # Sessions table
-            conn.execute("""
+            conn.execute(
+                """
                 CREATE TABLE IF NOT EXISTS sessions (
                     session_id TEXT PRIMARY KEY,
                     start_time TEXT NOT NULL,
@@ -102,10 +107,12 @@ class MonitoringStorage:
                     config TEXT,
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 )
-            """)
+            """
+            )
 
             # Ingested logs table (populated by transport handlers via the API)
-            conn.execute("""
+            conn.execute(
+                """
                 CREATE TABLE IF NOT EXISTS logs (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     session_id TEXT,
@@ -119,7 +126,8 @@ class MonitoringStorage:
                     process_id INTEGER,
                     extra TEXT
                 )
-            """)
+            """
+            )
 
             # Create indexes for performance
             conn.execute(
@@ -150,7 +158,7 @@ class MonitoringStorage:
             conn.commit()
             conn.close()
 
-    def _log_session_start(self):
+    def _log_session_start(self) -> None:
         """Log the start of a new monitoring session."""
         with self._db_lock:
             conn = sqlite3.connect(self.db_path)
@@ -169,7 +177,7 @@ class MonitoringStorage:
             conn.commit()
             conn.close()
 
-    def store_metrics(self, metrics: SystemMetrics):
+    def store_metrics(self, metrics: SystemMetrics) -> None:
         """Store system metrics to database."""
         with self._db_lock:
             conn = sqlite3.connect(self.db_path)
@@ -197,7 +205,7 @@ class MonitoringStorage:
             conn.commit()
             conn.close()
 
-    def store_operation_metrics(self, metrics: OperationMetrics):
+    def store_operation_metrics(self, metrics: OperationMetrics) -> None:
         """Store operation metrics to database."""
         with self._db_lock:
             conn = sqlite3.connect(self.db_path)
@@ -281,7 +289,7 @@ class MonitoringStorage:
                 FROM operation_metrics
                 WHERE session_id = ?
                 AND datetime(timestamp) > datetime('now', '-{} hours')
-            """.format(hours),
+            """.format(hours),  # nosec B608 -- hours is int, user data uses ?
                 (self.session_id,),
             )
 
@@ -298,7 +306,7 @@ class MonitoringStorage:
                 GROUP BY operation_name
                 ORDER BY count DESC
                 LIMIT 10
-            """.format(hours),
+            """.format(hours),  # nosec B608 -- hours is int, user data uses ?
                 (self.session_id,),
             )
 
@@ -334,7 +342,7 @@ class MonitoringStorage:
                 FROM system_metrics
                 WHERE session_id = ?
                 AND datetime(timestamp) > datetime('now', '-{} hours')
-            """.format(hours),
+            """.format(hours),  # nosec B608 -- hours is int, user data uses ?
                 (self.session_id,),
             )
 
@@ -471,7 +479,7 @@ class MonitoringStorage:
                 where = "WHERE " + " AND ".join(clauses)
 
             cursor = conn.execute(
-                f"SELECT * FROM logs {where} ORDER BY timestamp DESC LIMIT ?",
+                f"SELECT * FROM logs {where} ORDER BY timestamp DESC LIMIT ?",  # nosec B608 -- where built from whitelist, user data uses ?
                 params + [limit],
             )
 
@@ -494,7 +502,7 @@ class MonitoringStorage:
             conn.close()
             return results
 
-    def cleanup_old_logs(self, max_files: int):
+    def cleanup_old_logs(self, max_files: int) -> None:
         """Clean up old log files to prevent disk space issues."""
         log_files = list(self.logs_dir.glob("app_logs_*.jsonl"))
 
@@ -509,32 +517,38 @@ class MonitoringStorage:
                 except OSError:
                     pass  # File might be in use, skip
 
-    def cleanup_old_data(self, days: int = 30):
+    def cleanup_old_data(self, days: int = 30) -> None:
         """Clean up old data from database."""
         with self._db_lock:
             conn = sqlite3.connect(self.db_path)
 
             # Clean old metrics
-            conn.execute("""
+            conn.execute(
+                """
                 DELETE FROM system_metrics
                 WHERE datetime(timestamp) < datetime('now', '-{} days')
-            """.format(days))
+            """.format(days)  # nosec B608 -- days is int, user data uses ?
+            )
 
-            conn.execute("""
+            conn.execute(
+                """
                 DELETE FROM operation_metrics
                 WHERE datetime(timestamp) < datetime('now', '-{} days')
-            """.format(days))
+            """.format(days)  # nosec B608 -- days is int, user data uses ?
+            )
 
             # Clean old sessions
-            conn.execute("""
+            conn.execute(
+                """
                 DELETE FROM sessions
                 WHERE datetime(start_time) < datetime('now', '-{} days')
-            """.format(days))
+            """.format(days)  # nosec B608 -- days is int, user data uses ?
+            )
 
             conn.commit()
             conn.close()
 
-    def close_session(self):
+    def close_session(self) -> None:
         """Mark the current session as ended."""
         with self._db_lock:
             conn = sqlite3.connect(self.db_path)
@@ -549,7 +563,7 @@ class MonitoringStorage:
             conn.commit()
             conn.close()
 
-    def export_data(self, output_file: str, format: str = "json"):
+    def export_data(self, output_file: str, format: str = "json") -> Path:
         """Export monitoring data to file."""
         data = {
             "session_id": self.session_id,

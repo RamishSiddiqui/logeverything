@@ -64,7 +64,7 @@ def format_value(value: Any, max_length: int = 300) -> str:
 
         # Truncate if too long
         if len(value_str) > max_length:
-            return f"{value_str[:max_length-3]}..."
+            return f"{value_str[: max_length - 3]}..."
 
         return value_str
     except Exception:

@@ -14,14 +14,13 @@ using LogEverything, including:
 """
 
 import asyncio
-import json
 import sys
 import threading
 import time
 from datetime import datetime, timedelta
 from enum import Enum
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict
 
 # Add the parent directory to the path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))

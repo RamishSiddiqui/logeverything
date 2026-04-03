@@ -3,7 +3,6 @@ Dashboard Configuration
 """
 
 import json
-import os
 import uuid
 from pathlib import Path
 from typing import Any, Dict, List, Optional
@@ -190,8 +189,3 @@ def get_connection_manager() -> ConnectionManager:
     """Get connection manager singleton."""
     settings = get_settings()
     return ConnectionManager(settings)
-
-
-def get_settings() -> Settings:
-    """Get dashboard settings."""
-    return Settings()

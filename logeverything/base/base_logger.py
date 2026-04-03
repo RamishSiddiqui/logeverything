@@ -30,9 +30,9 @@ class BaseLogger(ABC):
     """
 
     # Cached import references to avoid per-call import overhead
-    _get_current_indent = None
-    _colorama_fore = None
-    _colorama_style = None
+    _get_current_indent: Any = None
+    _colorama_fore: Any = None
+    _colorama_style: Any = None
     _colorama_checked = False
 
     def __init__(self, name: str):

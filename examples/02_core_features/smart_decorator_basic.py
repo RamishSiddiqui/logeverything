@@ -2,8 +2,6 @@ import sys
 import time
 from pathlib import Path
 
-import requests
-
 # Add the parent directory to the path for imports to work when running directly
 sys.path.insert(0, str(Path(__file__).parent.parent))
 

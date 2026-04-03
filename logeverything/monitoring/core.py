@@ -8,7 +8,13 @@ import signal
 import time
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import TYPE_CHECKING, Any, Dict, Optional
+
+if TYPE_CHECKING:
+    from .api_server import MonitoringAPIServer
+    from .logger import StructuredLogger
+    from .metrics import MetricsCollector
+    from .storage import MonitoringStorage
 
 
 class MonitoringSystem:
@@ -30,19 +36,19 @@ class MonitoringSystem:
 
         # State tracking
         self.is_running = False
-        self.start_time = None
+        self.start_time: Optional[float] = None
 
         # Components (lazy loaded to avoid circular imports)
-        self.logger = None
-        self.metrics_collector = None
-        self.api_server = None
-        self.storage = None
+        self.logger: Optional["StructuredLogger"] = None
+        self.metrics_collector: Optional["MetricsCollector"] = None
+        self.api_server: Optional["MonitoringAPIServer"] = None
+        self.storage: Optional["MonitoringStorage"] = None
 
         # Setup
         self._setup_output_directory()
         self._register_shutdown_handlers()
 
-    def _setup_output_directory(self):
+    def _setup_output_directory(self) -> None:
         """Create the output directory structure."""
         self.output_dir.mkdir(parents=True, exist_ok=True)
         (self.output_dir / "logs").mkdir(exist_ok=True)
@@ -60,17 +66,17 @@ class MonitoringSystem:
         with open(self.output_dir / "session_info.json", "w") as f:
             json.dump(session_info, f, indent=2)
 
-    def _register_shutdown_handlers(self):
+    def _register_shutdown_handlers(self) -> None:
         """Register handlers for clean shutdown."""
         atexit.register(self.stop)
 
-        def signal_handler(signum, frame):
+        def signal_handler(signum: int, frame: Any) -> None:
             self.stop()
 
         signal.signal(signal.SIGINT, signal_handler)
         signal.signal(signal.SIGTERM, signal_handler)
 
-    def start(self):
+    def start(self) -> None:
         """Start the monitoring system."""
         if self.is_running:
             return
@@ -115,7 +121,7 @@ class MonitoringSystem:
                 },
             )
 
-    def stop(self):
+    def stop(self) -> None:
         """Stop the monitoring system."""
         if not self.is_running:
             return
@@ -128,7 +134,7 @@ class MonitoringSystem:
 
         # Log shutdown
         if self.logger:
-            duration = time.time() - self.start_time if self.start_time else 0
+            duration = time.time() - self.start_time if self.start_time else 0.0
             self.logger.info(
                 "Monitoring system stopped", extra={"session_duration_seconds": duration}
             )
@@ -148,18 +154,18 @@ class MonitoringSystem:
             "api_port": self.api_port if self.enable_api else None,
         }
 
-    def __enter__(self):
+    def __enter__(self) -> "MonitoringSystem":
         """Context manager entry."""
         self.start()
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    def __exit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:
         """Context manager exit."""
         self.stop()
 
 
 # Global monitoring instance
-_global_monitoring_system = None
+_global_monitoring_system: Optional[MonitoringSystem] = None
 
 
 def start_monitoring(
@@ -187,7 +193,7 @@ def start_monitoring(
     return _global_monitoring_system
 
 
-def stop_monitoring():
+def stop_monitoring() -> None:
     """Stop the global monitoring system."""
     global _global_monitoring_system
 

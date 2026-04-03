@@ -9,7 +9,7 @@ of a data science pipeline.
 import logging
 import os
 import sys
-from typing import Dict, Tuple
+from typing import Dict
 
 import numpy as np
 import pandas as pd

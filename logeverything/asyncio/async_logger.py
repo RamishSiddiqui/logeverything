@@ -37,7 +37,7 @@ Example usage::
 import asyncio
 import logging
 from contextlib import asynccontextmanager
-from typing import Any, AsyncGenerator, Optional, cast
+from typing import Any, AsyncGenerator, Dict, Optional, cast
 
 from ..base import BaseLogger
 from ..core import get_logger
@@ -141,7 +141,7 @@ class AsyncLogger(BaseLogger):
                 # Use intelligent defaults
                 self._auto_configure_sync()
 
-    def _translate_convenience_parameters(self, config: dict[str, Any]) -> dict[str, Any]:
+    def _translate_convenience_parameters(self, config: Dict[str, Any]) -> Dict[str, Any]:
         """
         Translate convenience parameters to proper handler configuration.
 
@@ -175,13 +175,13 @@ class AsyncLogger(BaseLogger):
     class CenteredFormatter(logging.Formatter):
         """Custom formatter that centers the levelname field."""
 
-        def __init__(self, fmt=None, datefmt=None):
+        def __init__(self, fmt: Optional[str] = None, datefmt: Optional[str] = None):
             # Use standard date format if none provided
             if datefmt is None:
                 datefmt = "%Y-%m-%d %H:%M:%S"
             super().__init__(fmt, datefmt)
 
-        def format(self, record):
+        def format(self, record: logging.LogRecord) -> str:
             # Store original levelname
             original_levelname = record.levelname
             # Center the levelname in 8 characters
@@ -330,7 +330,7 @@ class AsyncLogger(BaseLogger):
 
         if isinstance(handlers_config, list):
             for handler_spec in handlers_config:
-                handler = None
+                handler: Any = None
 
                 if isinstance(handler_spec, str):
                     if handler_spec == "console":
@@ -370,7 +370,7 @@ class AsyncLogger(BaseLogger):
         env_config = _get_environment_config(env_type)
 
         # Add async-specific optimizations (async_mode is always True for AsyncLogger)
-        async_config = {
+        async_config: Dict[str, Any] = {
             **env_config,
             "async_mode": True,  # AsyncLogger always uses async mode
             **config,  # User config overrides defaults
@@ -405,7 +405,7 @@ class AsyncLogger(BaseLogger):
         env_config = _get_environment_config(env_type)
 
         # Add async-specific optimizations (async_mode is always True for AsyncLogger)
-        async_config = {
+        async_config: Dict[str, Any] = {
             **env_config,
             "async_mode": True,  # AsyncLogger always uses async mode
             "async_queue_size": 5000,  # Larger queue for async workloads
@@ -429,7 +429,7 @@ class AsyncLogger(BaseLogger):
             _async_auto_detection_shown = True
 
         # Setup logging with async-optimized defaults
-        setup_logging(auto_detect_env=False, _internal=True, **async_config)  # type: ignore[arg-type]
+        setup_logging(auto_detect_env=False, _internal=True, **async_config)
 
         # Create and configure async handler
         console_handler = logging.StreamHandler()

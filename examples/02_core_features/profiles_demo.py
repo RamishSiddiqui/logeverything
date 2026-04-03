@@ -13,7 +13,6 @@ Available profiles:
 - testing: Configuration for test environments
 """
 
-import random
 import sys
 import time
 from pathlib import Path
@@ -21,7 +20,7 @@ from pathlib import Path
 # Add the parent directory to the path for imports to work when running directly
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from logeverything import Logger, get_profile, log_class, log_function
+from logeverything import Logger, get_profile, log_function
 
 
 def demonstrate_development_profile():

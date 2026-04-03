@@ -80,7 +80,7 @@ class UDPTransportHandler(logging.Handler):
         try:
             self._sock.close()
         except Exception:
-            pass
+            pass  # nosec B110 -- best-effort socket cleanup
         super().close()
 
     # --- Internals ---
@@ -102,7 +102,7 @@ class UDPTransportHandler(logging.Handler):
 
                 entry["correlation_id"] = get_correlation_id()
             except Exception:
-                pass
+                pass  # nosec B110 -- best-effort correlation lookup
         return entry
 
     def _send_batch(self, batch: List[Dict[str, Any]]) -> None:

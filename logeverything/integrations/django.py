@@ -20,7 +20,7 @@ Optional settings (in ``settings.py``)::
 
 import logging
 import time
-from typing import Callable, Set
+from typing import Any, Callable, Set
 
 from logeverything.correlation import clear_correlation, set_correlation_id, set_request_context
 
@@ -58,7 +58,7 @@ class LogEverythingDjangoMiddleware:
         # Django normalises headers to META keys: HTTP_X_REQUEST_ID
         self._meta_key = "HTTP_" + self.request_id_header.upper().replace("-", "_")
 
-    def __call__(self, request):
+    def __call__(self, request: Any) -> Any:
         path = request.path
         if path in self.exclude_paths:
             return self.get_response(request)
@@ -93,7 +93,7 @@ class LogEverythingDjangoMiddleware:
         response[self.request_id_header] = cid
         return response
 
-    def process_exception(self, request, exception):
+    def process_exception(self, request: Any, exception: BaseException) -> None:
         """Log unhandled exceptions with correlation context."""
         self.logger.exception(
             "Unhandled exception in %s %s: %s",
@@ -104,9 +104,9 @@ class LogEverythingDjangoMiddleware:
         return None  # Let Django's default exception handling continue
 
     @staticmethod
-    def _get_client_ip(request) -> str:
+    def _get_client_ip(request: Any) -> str:
         """Extract client IP, respecting X-Forwarded-For."""
         xff = request.META.get("HTTP_X_FORWARDED_FOR")
         if xff:
-            return xff.split(",")[0].strip()
-        return request.META.get("REMOTE_ADDR", "unknown")
+            return xff.split(",")[0].strip()  # type: ignore[no-any-return]
+        return request.META.get("REMOTE_ADDR", "unknown")  # type: ignore[no-any-return]

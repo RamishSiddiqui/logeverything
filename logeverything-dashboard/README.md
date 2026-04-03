@@ -173,14 +173,14 @@ logeverything:
   api_url: "http://localhost:8080/api/v1"
   api_key: "${LOGEVERYTHING_API_KEY}"
   timeout: 30
-  
+
 # Dashboard Settings
 dashboard:
   title: "LogEverything Dashboard"
   refresh_interval: 5
   max_operations: 1000
 
-# Server Configuration  
+# Server Configuration
 server:
   host: "127.0.0.1"
   port: 8000
@@ -453,4 +453,3 @@ MIT License - see [LICENSE](LICENSE) file for details.
 ---
 
 **Part of the LogEverything ecosystem** 🌟
-
