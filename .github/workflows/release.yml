@@ -70,6 +70,7 @@ jobs:
     needs: [release-please, build]
     if: needs.release-please.outputs.release_created == 'true'
     runs-on: ubuntu-latest
+    environment: release
 
     steps:
     - uses: actions/checkout@v4
