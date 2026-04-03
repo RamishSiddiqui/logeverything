@@ -5,6 +5,14 @@ All notable changes to LogEverything will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.2](https://github.com/RamishSiddiqui/logeverything/compare/v0.1.1...v0.1.2) (2026-04-03)
+
+
+### Bug Fixes
+
+* add environment release for PyPI trusted publishing ([2bd0c31](https://github.com/RamishSiddiqui/logeverything/commit/2bd0c313d3ec4ad57b5f41f57ae1d19845495e5c))
+* add release environment and trigger build via whitespace update ([9a724e7](https://github.com/RamishSiddiqui/logeverything/commit/9a724e72783514d6deae82b0f42671c47b607439))
+
 ## [0.1.1](https://github.com/RamishSiddiqui/logeverything/compare/v0.1.0...v0.1.1) (2026-04-03)
 
 
