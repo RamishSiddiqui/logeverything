@@ -5,6 +5,18 @@ All notable changes to LogEverything will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.1](https://github.com/RamishSiddiqui/logeverything/compare/v0.1.0...v0.1.1) (2026-04-03)
+
+
+### Bug Fixes
+
+* setup release please and trigger v0.1.1 ([#3](https://github.com/RamishSiddiqui/logeverything/issues/3)) ([9007dad](https://github.com/RamishSiddiqui/logeverything/commit/9007dad96c5e38428918d8c18c3021b5ba41b751))
+
+
+### Documentation
+
+* Update badges in index.rst to use correct GitHub repo and branch ([d41551c](https://github.com/RamishSiddiqui/logeverything/commit/d41551c1d0aa6af601a3c569faae5370811e0f6f))
+
 ## [Unreleased]
 
 ### Added
