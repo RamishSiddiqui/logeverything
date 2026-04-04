@@ -7,8 +7,6 @@ on:
       - 'v*'
       - 'dashboard-v*'
   pull_request:
-    branches-ignore:
-      - 'release-please--branches--*'
     branches: [ master, main ]
   workflow_dispatch:
 
