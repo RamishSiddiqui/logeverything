@@ -5,6 +5,17 @@ All notable changes to LogEverything will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.3](https://github.com/RamishSiddiqui/logeverything/compare/v0.3.2...v0.3.3) (2026-04-04)
+
+
+### Bug Fixes
+
+* **release:** add explicit check to skip CI on release-please PRs ([4a57644](https://github.com/RamishSiddiqui/logeverything/commit/4a5764456cf966af1fc09cef5027cdf209bfc096))
+* **release:** configure release-please to skip labeling and CI ([67dc37f](https://github.com/RamishSiddiqui/logeverything/commit/67dc37f6d187bb9a2ee8df7d7793df4d33a82cce))
+* **release:** exclude release-please branches from CI workflows ([8eda2d0](https://github.com/RamishSiddiqui/logeverything/commit/8eda2d0ccb330d6b43136a049e4a2bf0bced684e))
+* **release:** exclude release-please branches from CI workflows ([670eca2](https://github.com/RamishSiddiqui/logeverything/commit/670eca2cd845953a5f85a0ffb8002ede635678a6))
+* **release:** revert branch exclusion and find better approach ([ab2984a](https://github.com/RamishSiddiqui/logeverything/commit/ab2984a60664dfe51bf47883dd7511521228f6f7))
+
 ## [0.3.2](https://github.com/RamishSiddiqui/logeverything/compare/v0.3.1...v0.3.2) (2026-04-04)
 
 
