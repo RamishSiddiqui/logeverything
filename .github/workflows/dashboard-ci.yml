@@ -21,9 +21,9 @@ jobs:
 
     steps:
     - name: Check if this is a release-please PR
-      if: github.event.pull_request.head.ref  == 'release-please--branches--main'
+      if: contains(github.head_ref, 'release-please')
       run: |
-        echo "This is a release-please PR, skipping CI"
+        echo "This is a release-please PR (${{ github.head_ref }}), skipping CI"
         exit 0
 
     - uses: actions/checkout@v4
