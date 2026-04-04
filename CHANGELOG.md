@@ -5,6 +5,22 @@ All notable changes to LogEverything will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0](https://github.com/RamishSiddiqui/logeverything/compare/v0.2.0...v0.3.0) (2026-04-04)
+
+
+### Features
+
+* **ci:** implement Smart CI 2.0 to eliminate redundant triggers ([ad730c8](https://github.com/RamishSiddiqui/logeverything/commit/ad730c84d42e2f1d97b9dce7465f013713967d11))
+* **ci:** implement Smart CI 2.0 to eliminate redundant triggers ([3ae7cca](https://github.com/RamishSiddiqui/logeverything/commit/3ae7ccae99703ba96e448b0703a5b10a9d9fcceb))
+* **release:** implement smart CI optimization and multi-component au… ([f8b9355](https://github.com/RamishSiddiqui/logeverything/commit/f8b93559c01d0f3d042bc85d20e81c236c59c884))
+* **release:** implement smart CI optimization and multi-component automation ([dc09f1d](https://github.com/RamishSiddiqui/logeverything/commit/dc09f1d40e2b8082ab76f4b941b716fdd8a62191))
+
+
+### Bug Fixes
+
+* **ci:** fix yaml syntax with block scalar for skip condition ([f61213b](https://github.com/RamishSiddiqui/logeverything/commit/f61213b7eea07be7b0acc714caa45e5d6c3061f1))
+* **ci:** fix yaml syntax with block scalar for skip condition ([5ce5387](https://github.com/RamishSiddiqui/logeverything/commit/5ce53872d39606b465c76e5bde4c2ae208a9f6ff))
+
 ## [0.2.0](https://github.com/RamishSiddiqui/logeverything/compare/v0.1.3...v0.2.0) (2026-04-03)
 
 
