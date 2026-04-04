@@ -7,6 +7,10 @@ on:
     tags:
       - 'v*'
       - 'dashboard-v*'
+  pull_request:
+    branches:
+      - main
+    types: [closed]
 
 permissions:
   contents: write
@@ -15,6 +19,7 @@ permissions:
 
 jobs:
   release-please:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     outputs:
       releases_created: ${{ steps.release.outputs.releases_created }}
