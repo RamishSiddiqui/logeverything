@@ -1,11 +1,6 @@
 name: Python CI
 
 on:
-  push:
-    branches: [ master, main ]
-    tags-ignore:
-      - 'v*'
-      - 'dashboard-v*'
   pull_request:
     branches: [ master, main ]
   workflow_dispatch:
