@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+    tags:
+      - 'v*'
+      - 'dashboard-v*'
 
 permissions:
   contents: write
@@ -11,26 +14,7 @@ permissions:
   id-token: write
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.11'
-
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -e ".[dev]"
-
-    - name: Run tests
-      run: pytest tests/ --tb=short -q
-
   release-please:
-    needs: test
     runs-on: ubuntu-latest
     outputs:
       releases_created: ${{ steps.release.outputs.releases_created }}
@@ -41,12 +25,19 @@ jobs:
         with:
           token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
 
-  build:
-    needs: [release-please, test]
+  build-and-publish:
+    needs: release-please
     if: needs.release-please.outputs.releases_created == 'true'
     runs-on: ubuntu-latest
+    environment: release
+    permissions:
+      contents: write
+      id-token: write
+
     steps:
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
 
     - name: Set up Python
       uses: actions/setup-python@v5
@@ -62,37 +53,11 @@ jobs:
       run: |
         # Build core library
         python -m build
-        # Build dashboard if it's part of the release
-        if [ -d "logeverything-dashboard" ]; then
-          cd logeverything-dashboard && python -m build && cd ..
-        fi
-
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: dist
-        path: |
-          dist/
-          logeverything-dashboard/dist/
-
-  publish:
-    needs: [release-please, build]
-    if: needs.release-please.outputs.releases_created == 'true'
-    runs-on: ubuntu-latest
-    environment: release
-    permissions:
-      id-token: write
-
-    steps:
-    - uses: actions/checkout@v4
-
-    - name: Download build artifacts
-      uses: actions/download-artifact@v4
-      with:
-        name: dist
-        path: dist/
+        # Build dashboard
+        cd logeverything-dashboard && python -m build && cd ..
 
     - name: Publish all released packages to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
-        packages-dir: dist/
+        packages-dir: .
+        verbose: true

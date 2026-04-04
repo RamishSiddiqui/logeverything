@@ -8,9 +8,12 @@
     },
     "logeverything-dashboard": {
       "release-type": "python",
+      "package-name": "logeverything-dashboard",
       "extra-files": [
         "logeverything-dashboard/pyproject.toml"
       ]
     }
-  }
+  },
+  "separate-pull-requests": false,
+  "include-component-in-tag": true
 }
