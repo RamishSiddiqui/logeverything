@@ -9,8 +9,11 @@ on:
 
 jobs:
   lint-and-build:
-    # Skip if it's a bot-created Release PR to avoid redundant runs
-    if: github.event.pull_request.user.login != 'github-actions[bot]'
+    # Skip if it's a bot-created Release PR or a release commit on main
+    if: |
+      (github.event_name == 'pull_request' && !startsWith(github.event.pull_request.head.ref, 'release-please')) ||
+      (github.event_name == 'push' && github.ref_name == 'main' && !contains(github.event.head_commit.message, 'chore(main): release')) ||
+      (github.event_name == 'workflow_dispatch')
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
