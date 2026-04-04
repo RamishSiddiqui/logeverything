@@ -16,7 +16,7 @@ from .decorators import log, log_class, log_function, log_io
 from .logger import Logger
 from .utils import CRITICAL, DEBUG, ERROR, FATAL, INFO, WARN, WARNING  # noqa: F401
 
-__version__ = "0.3.3"
+__version__ = "0.4.0"
 
 # Re-export core functions
 get_logger = core_module.get_logger
