@@ -20,6 +20,12 @@ jobs:
         python-version: ['3.9', '3.10', '3.11', '3.12']
 
     steps:
+    - name: Check if this is a release-please PR
+      if: github.event.pull_request.head.ref  == 'release-please--branches--main'
+      run: |
+        echo "This is a release-please PR, skipping CI"
+        exit 0
+
     - uses: actions/checkout@v4
 
     - name: Set up Python ${{ matrix.python-version }}
