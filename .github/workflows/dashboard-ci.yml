@@ -21,9 +21,9 @@ jobs:
 
     steps:
     - name: Check if this is a release-please PR
-      if: contains(github.head_ref, 'release-please')
+      if: contains(github.head_ref, 'release-please') || contains(github.event.pull_request.title, 'chore:')
       run: |
-        echo "This is a release-please PR (${{ github.head_ref }}), skipping CI"
+        echo 'This is a release-please PR, skipping CI'
         exit 0
 
     - uses: actions/checkout@v4
