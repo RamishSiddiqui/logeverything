@@ -23,5 +23,8 @@
   ],
   "skip-github-release": false,
   "draft": false,
-  "prerelease": false
+  "prerelease": false,
+  "pull-request-header": "Automated Release Pull Request",
+  "pull-request-title-pattern": "chore: release ${branch} ${version}",
+  "skip-labeling": true
 }
