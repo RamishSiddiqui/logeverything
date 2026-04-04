@@ -24,6 +24,7 @@ jobs:
         id: release
         with:
           token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
+          skip-labeling: true
 
   build-and-publish:
     needs: release-please
