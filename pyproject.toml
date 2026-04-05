@@ -4,7 +4,9 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "logeverything"
+
 version = "0.9.0"
+
 description = "A comprehensive logging library for Python applications with minimal code changes"
 readme = "README.md"
 requires-python = ">=3.9"

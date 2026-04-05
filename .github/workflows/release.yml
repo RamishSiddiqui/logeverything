@@ -12,11 +12,6 @@ permissions:
 
 jobs:
   release-please:
-    # Release-please creates commits like "chore: release main" or "chore(main): release X.Y.Z"
-    # Both patterns must be excluded to break the loop
-    if: |
-      !startsWith(github.event.head_commit.message, 'chore: release') &&
-      !startsWith(github.event.head_commit.message, 'chore(main): release')
     runs-on: ubuntu-latest
     outputs:
       releases_created: ${{ steps.release.outputs.releases_created }}
