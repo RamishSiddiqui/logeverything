@@ -7,6 +7,9 @@ on:
 
 jobs:
   lint-and-build:
+    if: |
+      !startsWith(github.head_ref, 'release-please') &&
+      !startsWith(github.event.pull_request.title, 'chore: release')
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -15,12 +18,6 @@ jobs:
         python-version: ['3.9', '3.10', '3.11', '3.12']
 
     steps:
-    - name: Check if this is a release-please PR
-      if: contains(github.head_ref, 'release-please') || contains(github.event.pull_request.title, 'chore:')
-      run: |
-        echo 'This is a release-please PR, skipping CI'
-        exit 0
-
     - uses: actions/checkout@v4
 
     - name: Set up Python ${{ matrix.python-version }}
@@ -34,17 +31,13 @@ jobs:
         pip install -e "./logeverything-dashboard[dev]"
 
     - name: Lint with ruff
-      run: |
-        ruff check logeverything-dashboard/dashboard/
+      run: ruff check logeverything-dashboard/dashboard/
 
     - name: Format check with ruff
-      run: |
-        ruff format --check logeverything-dashboard/dashboard/
+      run: ruff format --check logeverything-dashboard/dashboard/
 
     - name: Build verification
-      run: |
-        python -m build logeverything-dashboard/
+      run: python -m build logeverything-dashboard/
 
     - name: Import smoke test
-      run: |
-        python -c "from dashboard.cli import main"
+      run: python -c "from dashboard.cli import main"

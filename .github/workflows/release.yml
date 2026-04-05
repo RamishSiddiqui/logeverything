@@ -12,6 +12,11 @@ permissions:
 
 jobs:
   release-please:
+    # Release-please creates commits like "chore: release main" or "chore(main): release X.Y.Z"
+    # Both patterns must be excluded to break the loop
+    if: |
+      !startsWith(github.event.head_commit.message, 'chore: release') &&
+      !startsWith(github.event.head_commit.message, 'chore(main): release')
     runs-on: ubuntu-latest
     outputs:
       releases_created: ${{ steps.release.outputs.releases_created }}
@@ -35,6 +40,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
       with:
+        ref: ${{ needs.release-please.outputs.tag_name }}
         fetch-depth: 0
 
     - name: Set up Python
@@ -49,13 +55,17 @@ jobs:
 
     - name: Build all packages
       run: |
-        # Build core library
         python -m build
-        # Build dashboard
         cd logeverything-dashboard && python -m build && cd ..
+
+    - name: Collect dist files
+      run: |
+        mkdir -p all-dists
+        cp dist/* all-dists/
+        cp logeverything-dashboard/dist/* all-dists/
 
     - name: Publish all released packages to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
-        packages-dir: .
+        packages-dir: all-dists/
         verbose: true
