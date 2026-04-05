@@ -5,6 +5,47 @@ All notable changes to LogEverything will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.3](https://github.com/RamishSiddiqui/logeverything/compare/v0.3.2...v0.3.3) (2026-04-05)
+
+
+### Bug Fixes
+
+* dynamic versioning ([#42](https://github.com/RamishSiddiqui/logeverything/issues/42)) ([442e15c](https://github.com/RamishSiddiqui/logeverything/commit/442e15cb6a941d3109f52f271a95e511c73a1106))
+* **release:** add explicit check to skip CI on release-please PRs ([4a57644](https://github.com/RamishSiddiqui/logeverything/commit/4a5764456cf966af1fc09cef5027cdf209bfc096))
+* **release:** configure release-please to skip labeling and CI ([67dc37f](https://github.com/RamishSiddiqui/logeverything/commit/67dc37f6d187bb9a2ee8df7d7793df4d33a82cce))
+* **release:** eliminate CI triggers on push to main - CI runs only on PRs ([e1fc418](https://github.com/RamishSiddiqui/logeverything/commit/e1fc41864c7e717fc6b7a8a6bf26507fc0ce8b64))
+* **release:** eliminate CI triggers on push to main - CI runs only on… ([e4df52a](https://github.com/RamishSiddiqui/logeverything/commit/e4df52a18f00c3324a9cf5a4940b7c3261e6e307))
+* **release:** exclude release-please branches from CI workflows ([8eda2d0](https://github.com/RamishSiddiqui/logeverything/commit/8eda2d0ccb330d6b43136a049e4a2bf0bced684e))
+* **release:** exclude release-please branches from CI workflows ([670eca2](https://github.com/RamishSiddiqui/logeverything/commit/670eca2cd845953a5f85a0ffb8002ede635678a6))
+* **release:** modify release workflow to only run on merged PRs ([13354ca](https://github.com/RamishSiddiqui/logeverything/commit/13354cab49e8a359ed0dcef15f772ef78d067b70))
+* **release:** revert branch exclusion and find better approach ([ab2984a](https://github.com/RamishSiddiqui/logeverything/commit/ab2984a60664dfe51bf47883dd7511521228f6f7))
+* **release:** simplify release-please PR detection ([19515d2](https://github.com/RamishSiddiqui/logeverything/commit/19515d252acbb97b8d6343fffb4e7603a41adf2f))
+* **release:** skip release-please when merging a release PR ([448d3bb](https://github.com/RamishSiddiqui/logeverything/commit/448d3bb0c78fbce804b193e912c67ea6a22d9311))
+* **release:** use flexible branch name check for release-please PRs ([30df1ea](https://github.com/RamishSiddiqui/logeverything/commit/30df1ea3e48b34f2b500dc188726ddc16cb748db))
+* sync release state to v0.3.2 ([#48](https://github.com/RamishSiddiqui/logeverything/issues/48)) ([41e039e](https://github.com/RamishSiddiqui/logeverything/commit/41e039e57dd9aa991b404c5b78d762aa4cd3cfb1))
+* test pypi publish flow ([#44](https://github.com/RamishSiddiqui/logeverything/issues/44)) ([6346747](https://github.com/RamishSiddiqui/logeverything/commit/6346747ccb7f6b5890f67d2696e2eaf9c86daf39))
+* Updated all the three workflows. ([b5254f0](https://github.com/RamishSiddiqui/logeverything/commit/b5254f0309fda7dde49421ed214601c93a75bba2))
+* Updated all the three workflows. ([364772c](https://github.com/RamishSiddiqui/logeverything/commit/364772c5bb6e011e65e707c84b971e144f42b5cd))
+* Updated all the three workflows. ([abfd673](https://github.com/RamishSiddiqui/logeverything/commit/abfd6735bfe3b04ca21e94ef197fce892a60b7fa))
+* Updated all the three workflows. ([696c595](https://github.com/RamishSiddiqui/logeverything/commit/696c5955cfafe2d9dfc47a55d29b521285ae9114))
+* Updated all the three workflows. ([58536de](https://github.com/RamishSiddiqui/logeverything/commit/58536deee9dd9bd065e06a6b55130b96f70b9694))
+
+
+### Chores
+
+* release main ([69f54a0](https://github.com/RamishSiddiqui/logeverything/commit/69f54a0cfcbef3beb6be4ca333caad6068fb9d6e))
+* release main ([9b09d47](https://github.com/RamishSiddiqui/logeverything/commit/9b09d47277437096776c085e67dad0ea7d4b3789))
+* release main ([e0977c6](https://github.com/RamishSiddiqui/logeverything/commit/e0977c67b896fa3f3c70f0c5d5245f40f7187479))
+* release main ([7c61215](https://github.com/RamishSiddiqui/logeverything/commit/7c612159d59843fe14c44b97ce06aecef1ee0b98))
+* release main ([03e97f1](https://github.com/RamishSiddiqui/logeverything/commit/03e97f119a875c7292471fbf3db5b688e056bd37))
+* release main ([0a68ca0](https://github.com/RamishSiddiqui/logeverything/commit/0a68ca08c1194464619d87b6ba96cca5252a3397))
+* release main ([d3510cb](https://github.com/RamishSiddiqui/logeverything/commit/d3510cb04dd597e20498dd84704d703835585ec5))
+* release main ([6411737](https://github.com/RamishSiddiqui/logeverything/commit/6411737634153ad8a26a0ca13166f041986a3d06))
+* release main ([94e1824](https://github.com/RamishSiddiqui/logeverything/commit/94e1824fa4dee3bea8c13600d36ebf32915d5b7e))
+* release main ([f52950e](https://github.com/RamishSiddiqui/logeverything/commit/f52950eabfc09a8f418c4c4b6ba639e2aada5ae5))
+* release main ([#43](https://github.com/RamishSiddiqui/logeverything/issues/43)) ([1c789a2](https://github.com/RamishSiddiqui/logeverything/commit/1c789a2f8981cc2808af3c2ed9ef87c00646f121))
+* release main ([#45](https://github.com/RamishSiddiqui/logeverything/issues/45)) ([965bd9b](https://github.com/RamishSiddiqui/logeverything/commit/965bd9b5eecc912f78e37a42d5941364c4db36d5))
+
 ## [0.9.0](https://github.com/RamishSiddiqui/logeverything/compare/v0.8.0...v0.9.0) (2026-04-05)
 
 
