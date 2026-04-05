@@ -14,8 +14,7 @@
       ]
     }
   },
-  "separate-pull-requests": false,
-  "include-component-in-tag": false,
+  "separate-pull-requests": true,
   "changelog-sections": [
     {
       "type": "feat",
