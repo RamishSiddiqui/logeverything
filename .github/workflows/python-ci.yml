@@ -7,9 +7,9 @@ on:
 
 jobs:
   test:
-    # Skip entirely for release-please PRs - no broken exit-0 trick needed
     if: |
-      github.event_name == 'workflow_dispatch' || !startsWith(github.head_ref, 'release-please--')
+      github.event_name == 'workflow_dispatch' ||
+      !startsWith(github.head_ref, 'release-please--')
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -76,3 +76,17 @@ jobs:
 
     - name: Run benchmark baseline check
       run: python benchmarks/check_baseline.py
+
+  ci-status:
+    name: Python CI Status
+    runs-on: ubuntu-latest
+    needs: test
+    if: always()
+    steps:
+      - name: Check result
+        run: |
+          if [[ "${{ needs.test.result }}" == "success" || "${{ needs.test.result }}" == "skipped" ]]; then
+            echo "CI passed or skipped"
+          else
+            exit 1
+          fi
