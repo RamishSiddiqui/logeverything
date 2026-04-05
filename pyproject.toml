@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "logeverything"
-dynamic = ["version"]
+version = "0.7.0"
 description = "A comprehensive logging library for Python applications with minimal code changes"
 readme = "README.md"
 requires-python = ">=3.9"
@@ -105,8 +105,6 @@ Documentation = "https://logeverything.readthedocs.io/"
 Source = "https://github.com/RamishSiddiqui/logeverything"
 Tracker = "https://github.com/RamishSiddiqui/logeverything/issues"
 
-[tool.setuptools.dynamic]
-version = {attr = "logeverything.__init__.__version__"}
 
 [tool.setuptools.packages.find]
 exclude = ["tests", "docs", "examples", "tools"]
