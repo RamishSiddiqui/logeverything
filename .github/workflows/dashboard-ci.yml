@@ -8,8 +8,7 @@ on:
 jobs:
   lint-and-build:
     if: |
-      !startsWith(github.head_ref, 'release-please') &&
-      !startsWith(github.event.pull_request.title, 'chore: release')
+      github.event_name == 'workflow_dispatch' || !startsWith(github.head_ref, 'release-please--')
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
