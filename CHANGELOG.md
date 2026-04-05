@@ -5,6 +5,13 @@ All notable changes to LogEverything will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.4](https://github.com/RamishSiddiqui/logeverything/compare/v0.3.3...v0.3.4) (2026-04-05)
+
+
+### Bug Fixes
+
+* trigger first automated release ([#51](https://github.com/RamishSiddiqui/logeverything/issues/51)) ([965b09f](https://github.com/RamishSiddiqui/logeverything/commit/965b09f07530a537c7c912025cb6a29ef41dc0b8))
+
 ## [0.3.3](https://github.com/RamishSiddiqui/logeverything/compare/v0.3.2...v0.3.3) (2026-04-05)
 
 
