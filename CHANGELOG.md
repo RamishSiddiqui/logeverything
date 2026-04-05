@@ -5,6 +5,82 @@ All notable changes to LogEverything will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.0](https://github.com/RamishSiddiqui/logeverything/compare/v0.7.0...v0.8.0) (2026-04-05)
+
+
+### Features
+
+* **ci:** implement Smart CI 2.0 to eliminate redundant triggers ([ad730c8](https://github.com/RamishSiddiqui/logeverything/commit/ad730c84d42e2f1d97b9dce7465f013713967d11))
+* **ci:** implement Smart CI 2.0 to eliminate redundant triggers ([3ae7cca](https://github.com/RamishSiddiqui/logeverything/commit/3ae7ccae99703ba96e448b0703a5b10a9d9fcceb))
+* **release:** implement multi-component automation and switch to PAT ([9f11407](https://github.com/RamishSiddiqui/logeverything/commit/9f11407f2c6bbe4e0dbf435b52581d10b2a660e9))
+* **release:** implement multi-component automation and switch to PAT ([2c9cdff](https://github.com/RamishSiddiqui/logeverything/commit/2c9cdff3cb9139a0b6789299f557e6f6777d9b12))
+* **release:** implement smart CI optimization and multi-component au… ([f8b9355](https://github.com/RamishSiddiqui/logeverything/commit/f8b93559c01d0f3d042bc85d20e81c236c59c884))
+* **release:** implement smart CI optimization and multi-component automation ([dc09f1d](https://github.com/RamishSiddiqui/logeverything/commit/dc09f1d40e2b8082ab76f4b941b716fdd8a62191))
+
+
+### Bug Fixes
+
+* add environment release for PyPI trusted publishing ([2bd0c31](https://github.com/RamishSiddiqui/logeverything/commit/2bd0c313d3ec4ad57b5f41f57ae1d19845495e5c))
+* add release environment and trigger build via whitespace update ([9a724e7](https://github.com/RamishSiddiqui/logeverything/commit/9a724e72783514d6deae82b0f42671c47b607439))
+* **ci:** fix yaml syntax with block scalar for skip condition ([f61213b](https://github.com/RamishSiddiqui/logeverything/commit/f61213b7eea07be7b0acc714caa45e5d6c3061f1))
+* **ci:** fix yaml syntax with block scalar for skip condition ([5ce5387](https://github.com/RamishSiddiqui/logeverything/commit/5ce53872d39606b465c76e5bde4c2ae208a9f6ff))
+* dynamic versioning ([#42](https://github.com/RamishSiddiqui/logeverything/issues/42)) ([442e15c](https://github.com/RamishSiddiqui/logeverything/commit/442e15cb6a941d3109f52f271a95e511c73a1106))
+* **release:** add explicit check to skip CI on release-please PRs ([4a57644](https://github.com/RamishSiddiqui/logeverything/commit/4a5764456cf966af1fc09cef5027cdf209bfc096))
+* **release:** configure release-please to skip labeling and CI ([67dc37f](https://github.com/RamishSiddiqui/logeverything/commit/67dc37f6d187bb9a2ee8df7d7793df4d33a82cce))
+* **release:** correct typo in release-please outputs (singular to plu… ([ac53641](https://github.com/RamishSiddiqui/logeverything/commit/ac53641a730018a45039625e5e270e7aff8fb0fa))
+* **release:** correct typo in release-please outputs (singular to plural) ([1515630](https://github.com/RamishSiddiqui/logeverything/commit/151563036262145b2f986d644cdcab056b45ece7))
+* **release:** eliminate CI triggers on push to main - CI runs only on PRs ([e1fc418](https://github.com/RamishSiddiqui/logeverything/commit/e1fc41864c7e717fc6b7a8a6bf26507fc0ce8b64))
+* **release:** eliminate CI triggers on push to main - CI runs only on… ([e4df52a](https://github.com/RamishSiddiqui/logeverything/commit/e4df52a18f00c3324a9cf5a4940b7c3261e6e307))
+* **release:** exclude release-please branches from CI workflows ([8eda2d0](https://github.com/RamishSiddiqui/logeverything/commit/8eda2d0ccb330d6b43136a049e4a2bf0bced684e))
+* **release:** exclude release-please branches from CI workflows ([670eca2](https://github.com/RamishSiddiqui/logeverything/commit/670eca2cd845953a5f85a0ffb8002ede635678a6))
+* **release:** modify release workflow to only run on merged PRs ([13354ca](https://github.com/RamishSiddiqui/logeverything/commit/13354cab49e8a359ed0dcef15f772ef78d067b70))
+* **release:** revert branch exclusion and find better approach ([ab2984a](https://github.com/RamishSiddiqui/logeverything/commit/ab2984a60664dfe51bf47883dd7511521228f6f7))
+* **release:** simplify release-please PR detection ([19515d2](https://github.com/RamishSiddiqui/logeverything/commit/19515d252acbb97b8d6343fffb4e7603a41adf2f))
+* **release:** skip release-please when merging a release PR ([448d3bb](https://github.com/RamishSiddiqui/logeverything/commit/448d3bb0c78fbce804b193e912c67ea6a22d9311))
+* **release:** streamline release workflow to prevent redundant testing ([a78befc](https://github.com/RamishSiddiqui/logeverything/commit/a78befc9372eac5f9b372803943f075384ebf6a6))
+* **release:** streamline release workflow to prevent redundant testing ([9151c35](https://github.com/RamishSiddiqui/logeverything/commit/9151c35d4146b0f57571846efa23ebdb5fdf3b51))
+* **release:** use flexible branch name check for release-please PRs ([30df1ea](https://github.com/RamishSiddiqui/logeverything/commit/30df1ea3e48b34f2b500dc188726ddc16cb748db))
+* setup release please and trigger v0.1.1 ([#3](https://github.com/RamishSiddiqui/logeverything/issues/3)) ([9007dad](https://github.com/RamishSiddiqui/logeverything/commit/9007dad96c5e38428918d8c18c3021b5ba41b751))
+* Updated all the three workflows. ([b5254f0](https://github.com/RamishSiddiqui/logeverything/commit/b5254f0309fda7dde49421ed214601c93a75bba2))
+* Updated all the three workflows. ([364772c](https://github.com/RamishSiddiqui/logeverything/commit/364772c5bb6e011e65e707c84b971e144f42b5cd))
+* Updated all the three workflows. ([abfd673](https://github.com/RamishSiddiqui/logeverything/commit/abfd6735bfe3b04ca21e94ef197fce892a60b7fa))
+* Updated all the three workflows. ([696c595](https://github.com/RamishSiddiqui/logeverything/commit/696c5955cfafe2d9dfc47a55d29b521285ae9114))
+* Updated all the three workflows. ([58536de](https://github.com/RamishSiddiqui/logeverything/commit/58536deee9dd9bd065e06a6b55130b96f70b9694))
+
+
+### Chores
+
+* apply formatting fixes to trigger CI ([97ecb10](https://github.com/RamishSiddiqui/logeverything/commit/97ecb10d4877bcbd75ac6f3a43c89e07e40bcd2d))
+* Fix setup.py dependencies to use furo for docs ([9f50d20](https://github.com/RamishSiddiqui/logeverything/commit/9f50d201daf4eafad6b9c66d7ab78ed4f0456a29))
+* **main:** release 0.1.1 ([89d7a0e](https://github.com/RamishSiddiqui/logeverything/commit/89d7a0e65fae0103cdaf3644eaa5efc882f53293))
+* **main:** release 0.1.1 ([#8](https://github.com/RamishSiddiqui/logeverything/issues/8)) ([eaed44b](https://github.com/RamishSiddiqui/logeverything/commit/eaed44b0838ad93075b7f6bd6ee99d355c877be0))
+* **main:** release 0.1.2 ([b3d6637](https://github.com/RamishSiddiqui/logeverything/commit/b3d66370955c31b9d572ad46f1134b572d0f864b))
+* **main:** release 0.1.3 ([e8cc16e](https://github.com/RamishSiddiqui/logeverything/commit/e8cc16e13b3285071daa0a89713532d39d15f65c))
+* **main:** release 0.1.3 ([301c6c1](https://github.com/RamishSiddiqui/logeverything/commit/301c6c17d6ed8e291d59ebac6a2c9df84961c635))
+* manual push to trigger CI on release PR ([16b97ac](https://github.com/RamishSiddiqui/logeverything/commit/16b97aca53e6b43dc3ff526945d7c7d747b0930a))
+* manual trigger CI for v0.1.3 release ([1539f26](https://github.com/RamishSiddiqui/logeverything/commit/1539f264a311aba81a705cf915f56a642b0a93cc))
+* modernize metadata and fix CI triggers for release bot ([a22462b](https://github.com/RamishSiddiqui/logeverything/commit/a22462b04e3d450ab97579830b812c6230f74ae8))
+* release main ([69f54a0](https://github.com/RamishSiddiqui/logeverything/commit/69f54a0cfcbef3beb6be4ca333caad6068fb9d6e))
+* release main ([9b09d47](https://github.com/RamishSiddiqui/logeverything/commit/9b09d47277437096776c085e67dad0ea7d4b3789))
+* release main ([e0977c6](https://github.com/RamishSiddiqui/logeverything/commit/e0977c67b896fa3f3c70f0c5d5245f40f7187479))
+* release main ([7c61215](https://github.com/RamishSiddiqui/logeverything/commit/7c612159d59843fe14c44b97ce06aecef1ee0b98))
+* release main ([03e97f1](https://github.com/RamishSiddiqui/logeverything/commit/03e97f119a875c7292471fbf3db5b688e056bd37))
+* release main ([0a68ca0](https://github.com/RamishSiddiqui/logeverything/commit/0a68ca08c1194464619d87b6ba96cca5252a3397))
+* release main ([d3510cb](https://github.com/RamishSiddiqui/logeverything/commit/d3510cb04dd597e20498dd84704d703835585ec5))
+* release main ([6411737](https://github.com/RamishSiddiqui/logeverything/commit/6411737634153ad8a26a0ca13166f041986a3d06))
+* release main ([94e1824](https://github.com/RamishSiddiqui/logeverything/commit/94e1824fa4dee3bea8c13600d36ebf32915d5b7e))
+* release main ([f52950e](https://github.com/RamishSiddiqui/logeverything/commit/f52950eabfc09a8f418c4c4b6ba639e2aada5ae5))
+* release main ([016fdc7](https://github.com/RamishSiddiqui/logeverything/commit/016fdc74cf32ff67c23e6373fa055f71a87c3780))
+* release main ([52083ec](https://github.com/RamishSiddiqui/logeverything/commit/52083ec6ad08f04a651bff15520ccb3bc614a3f3))
+* release main ([3dd8c65](https://github.com/RamishSiddiqui/logeverything/commit/3dd8c65b962ebf95e9a9534a89c4b1f15f5f9c87))
+* release main ([debc8d8](https://github.com/RamishSiddiqui/logeverything/commit/debc8d8a2b88e356d7b5e615627d290323adf563))
+* release main ([97ffa3e](https://github.com/RamishSiddiqui/logeverything/commit/97ffa3e9dba242d82e7f4b2d7a71b3401efe125d))
+* release main ([a7df589](https://github.com/RamishSiddiqui/logeverything/commit/a7df58943d1b02d033d888d4ce9f4e54e0d7b2d0))
+* release main ([1ff9ef0](https://github.com/RamishSiddiqui/logeverything/commit/1ff9ef08e49a5684b2692090195882baf8de1be2))
+* release main ([904ffdc](https://github.com/RamishSiddiqui/logeverything/commit/904ffdc11131dac89c08bdfc5fd88db790d272af))
+* remove path filters from Dashboard CI to unblock release bot ([#7](https://github.com/RamishSiddiqui/logeverything/issues/7)) ([87ce74f](https://github.com/RamishSiddiqui/logeverything/commit/87ce74f9ff9fdab036318de36c79c603cf8908cf))
+* Rename master branch to main and update README ([f916969](https://github.com/RamishSiddiqui/logeverything/commit/f9169692d89009f82b1eba83717c5736bc6ed8f3))
+
 ## [0.7.0](https://github.com/RamishSiddiqui/logeverything/compare/v0.6.0...v0.7.0) (2026-04-05)
 
 
