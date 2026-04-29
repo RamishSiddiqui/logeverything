@@ -1,9 +1,6 @@
 name: Sync to Public Repo
 
-on:
-  push:
-    branches:
-      - main
+on: workflow_dispatch
 
 jobs:
   sync:
