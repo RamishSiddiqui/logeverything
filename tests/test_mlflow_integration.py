@@ -349,7 +349,7 @@ class TestMLflowTransformersIntegration(unittest.TestCase):
             logger.propagate = state["propagate"]
 
     @pytest.mark.skip(
-        reason="Integration test requires mlflow, transformers, and torch - skipped due to environment conflicts"
+        reason="Integration test requires mlflow, transformers, and torch - skipped due to conflict"
     )
     @patch("mlflow.start_run")
     @patch("transformers.AutoTokenizer.from_pretrained")
@@ -373,7 +373,7 @@ class TestMLflowTransformersIntegration(unittest.TestCase):
         mock_model_instance = MagicMock()
         mock_model.return_value = mock_model_instance
         mock_tokenizer_instance = MagicMock()
-        mock_tokenizer.return_value = mock_tokenizer_instance  # Instead of complex MLflow operations that can fail, just test logger integration
+        mock_tokenizer.return_value = mock_tokenizer_instance  # Just test integration
         # Log messages directly from both loggers
         mlflow_logger = get_logger("mlflow")
         transformers_logger = get_logger("transformers")

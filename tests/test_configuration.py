@@ -227,7 +227,7 @@ class TestConcurrentLogging(unittest.TestCase):
                     process_logger = get_logger(f"simulated_process_{i}")
                     process_logger.addHandler(file_handler)
                     process_logger.setLevel("INFO")
-                    process_logger.info(f"Info from simulated process {i}")
+                    process_logger.info(f"Simulated {i}")
 
                 # Close the handler to ensure file is written
                 file_handler.close()
@@ -239,7 +239,7 @@ class TestConcurrentLogging(unittest.TestCase):
                 # Check that all simulated processes logged successfully
                 for i in range(3):
                     self.assertIn(
-                        f"logeverything.simulated_process_{i} - INFO - Info from simulated process {i}",
+                        f"logeverything.simulated_process_{i} - INFO - Simulated {i}",
                         log_content,
                     )
             finally:

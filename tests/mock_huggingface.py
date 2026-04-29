@@ -16,7 +16,6 @@ os.environ["TRANSFORMERS_OFFLINE"] = "1"  # Force offline mode
 def patch_huggingface_hub():
     """Patch the huggingface_hub modules to avoid SSL verification issues."""
     try:
-        import sys
 
         import huggingface_hub
         import huggingface_hub.file_download

@@ -322,7 +322,7 @@ class TestCoreEdgeCases(unittest.TestCase):
             parent_dir = os.path.dirname(invalid_path)
             if os.path.exists(parent_dir):
                 os.rmdir(parent_dir)
-        except:
+        except Exception:
             pass
 
     def test_threading_context_isolation(self):

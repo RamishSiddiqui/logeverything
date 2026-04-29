@@ -165,7 +165,7 @@ class TestExternalLoggerIntegration(unittest.TestCase):
 
     def test_configure_common_loggers(self):
         """Test automatic configuration of common loggers."""
-        # Setup mock logger dictionary with safer loggers (not mlflow which has circular import issues)
+        # Setup mock logger dictionary with safer loggers
         mock_logger_dict = {
             "langchain": MagicMock(),
             "requests": MagicMock(),
@@ -285,7 +285,7 @@ class TestSetupLoggingWithExternalLoggers(unittest.TestCase):
 
         # Verify the loggers have been set to DEBUG level as specified
         # Get fresh logger instances after configuration
-        # Use logging.getLogger to get the same logger instances that configure_external_logger works with
+        # Use logging.getLogger for configure_external_logger integration
         langchain_logger = logging.getLogger("langchain")
         mlflow_logger = logging.getLogger("mlflow")
 
