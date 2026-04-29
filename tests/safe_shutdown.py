@@ -96,7 +96,7 @@ def register_safe_shutdown():
     original_handle_error = logging.Handler.handleError
 
     def safe_handle_error(self, record):
-        """Safely handle errors during logging without printing traceback for I/O errors during shutdown."""
+        """Safely handle errors during logging without printing traceback."""
         try:
             t, v, tb = sys.exc_info()
             if t is ValueError and "I/O operation on closed file" in str(v):

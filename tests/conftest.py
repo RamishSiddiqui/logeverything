@@ -3,10 +3,18 @@ Configure pytest testing environment for the LogEverything library.
 """
 
 import atexit
+import io
+import logging
 import os
 import sys
+import tempfile
 import threading
 import time
+
+import pytest
+
+from logeverything import core as core_module
+from logeverything.core import get_logger
 
 # Add the parent directory to sys.path so pytest can import the logeverything module correctly
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -32,14 +40,7 @@ Shared fixtures for LogEverything tests.
 This module provides pytest fixtures shared across test modules.
 """
 
-import io
-import logging
-import tempfile
 
-import pytest
-
-from logeverything import core as core_module
-from logeverything.core import get_logger
 
 # Global thread tracking for leak detection
 _initial_thread_count = None
@@ -123,14 +124,14 @@ def thread_leak_detection():
     """Automatically detect thread leaks for each test function."""
     # Record threads before test
     threads_before = set(threading.enumerate())
-    thread_count_before = len(threads_before)
+    len(threads_before)
 
     yield
 
     # Check threads after test
     time.sleep(0.1)  # Give threads time to clean up
     threads_after = set(threading.enumerate())
-    thread_count_after = len(threads_after)
+    len(threads_after)
 
     # Check for new threads
     new_threads = threads_after - threads_before

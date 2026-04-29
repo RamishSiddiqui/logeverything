@@ -96,7 +96,7 @@ class TestProfiles(unittest.TestCase):
         # Use StringIO to capture stderr
         stderr_capture = io.StringIO()
         with patch("sys.stderr", stderr_capture):
-            # Start with minimal profile but override the log level to DEBUG and enable function entry/exit
+            # Start minimal profile and override log level
             logger = Logger()
             logger.configure(profile="minimal", level="DEBUG", log_entry_exit=True)
 
@@ -109,10 +109,10 @@ class TestProfiles(unittest.TestCase):
             result = test_func(1, 2)
             self.assertEqual(result, 3)
 
-            # Check that function entry was logged (because we set DEBUG level and log_entry_exit=True)
+            # Check that function entry was logged
             output = stderr_capture.getvalue()
 
-            # If stderr capture is empty, the test is still valid if we can verify the decorator worked
+            # If stderr empty, verify the decorator worked
             # From the captured output we can see that function logging is happening
             if output:
                 self.assertIn(
@@ -123,7 +123,7 @@ class TestProfiles(unittest.TestCase):
                 self.assertIn("a=1", output)
                 self.assertIn("b=2", output)
             else:
-                # Just verify the function worked correctly - the logging is happening as shown in captured output
+                # Verify the function worked correctly
                 self.assertEqual(result, 3)
 
 

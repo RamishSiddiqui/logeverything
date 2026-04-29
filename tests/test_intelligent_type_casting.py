@@ -246,7 +246,6 @@ class TestIntelligentTypeCasting:
     def test_mixed_class_decorators(self):
         """Test class decorators with mixed sync/async methods and different logger types."""
         original_sync_logger = self.sync_logger
-        original_async_logger = self.async_logger
 
         @log_class(using="test_sync")
         class MixedClass:
@@ -276,7 +275,6 @@ class TestIntelligentTypeCasting:
 
     def test_async_log_class_with_sync_logger(self):
         """Test async_log_class decorator with sync logger."""
-        original_logger = self.sync_logger
 
         @async_log_class
         class AsyncClass:
@@ -381,8 +379,8 @@ class TestIntelligentTypeCasting:
 
                 # Verify logger configuration is preserved
                 assert configured_logger._options == original_options
-                assert configured_logger._options.get("use_symbols") == True
-                assert configured_logger._options.get("visual_mode") == True
+                assert configured_logger._options.get("use_symbols")
+                assert configured_logger._options.get("visual_mode")
 
                 # The key test is that configuration is preserved and function executes correctly
                 # Logging verification can be done in integration tests

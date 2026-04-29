@@ -107,7 +107,7 @@ class TestCoreEdgeCases(unittest.TestCase):
     def test_context_initialization_edge_cases(self):
         """Test context initialization with various edge cases."""
         # Verify current context state
-        has_context_before = hasattr(_context, "indent")
+        hasattr(_context, "indent")
         context_attrs_before = dir(_context)
         print(f"\nContext attrs before: {context_attrs_before}")
 
@@ -173,13 +173,13 @@ class TestCoreEdgeCases(unittest.TestCase):
         """Test setup_logging with invalid handler configurations."""
 
         # Test with invalid handler name
-        logger_instance = Logger()
+        Logger()
         logger = core_module.configure(handlers=["invalid_handler"])
         # Should handle invalid handlers gracefully
         self.assertIsNotNone(logger)
 
         # Test with mixed valid and invalid handlers
-        logger_instance = Logger()
+        Logger()
         logger = core_module.configure(handlers=["console", "invalid_handler"])
         self.assertIsNotNone(logger)
 
@@ -260,17 +260,17 @@ class TestCoreEdgeCases(unittest.TestCase):
         """Test Logger.configure with invalid parameters."""
 
         # Test with invalid level
-        logger_instance = Logger()
+        Logger()
         logger = core_module.configure(level="INVALID_LEVEL")
         self.assertIsNotNone(logger)
 
         # Test with invalid handlers
-        logger_instance = Logger()
+        Logger()
         logger = core_module.configure(handlers=["invalid_handler"])
         self.assertIsNotNone(logger)
 
         # Test with None handlers
-        logger_instance = Logger()
+        Logger()
         logger = core_module.configure(handlers=None)
         self.assertIsNotNone(logger)
 
@@ -311,7 +311,7 @@ class TestCoreEdgeCases(unittest.TestCase):
         invalid_path = os.path.join(temp_dir, f"nonexistent_{unique_id}", "test.log")
 
         # Now with a path that should not exist but is in a writable location
-        logger_instance = Logger()
+        Logger()
         logger = core_module.setup_logging(handlers=["file"], file_path=invalid_path)
 
         # This should succeed because Logger.configure should create the directory
@@ -322,7 +322,7 @@ class TestCoreEdgeCases(unittest.TestCase):
             parent_dir = os.path.dirname(invalid_path)
             if os.path.exists(parent_dir):
                 os.rmdir(parent_dir)
-        except:
+        except Exception:
             pass
 
     def test_threading_context_isolation(self):
@@ -384,7 +384,7 @@ class TestCoreEdgeCases(unittest.TestCase):
         # Test when logging module itself has issues
         with patch("logging.getLogger", side_effect=Exception("Logging system error")):
             try:
-                logger = get_logger("test.error")
+                get_logger("test.error")
                 # Should either handle gracefully or raise appropriate exception
             except Exception:
                 # Error handling is acceptable
@@ -455,10 +455,10 @@ class TestCoreEdgeCases(unittest.TestCase):
         self.assertEqual(debug_level, DEBUG)  # 10
 
         # Create a logger
-        logger = get_logger("test.persistence")
+        get_logger("test.persistence")
 
         # Store a copy of the original configuration, not a reference
-        original_config_copy = original_config.copy()
+        original_config.copy()
 
         # Change configuration to WARNING level (30)
         new_config = core_module.configure(level="WARNING", log_entry_exit=False)

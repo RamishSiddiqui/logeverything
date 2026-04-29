@@ -102,7 +102,7 @@ class TestLangChainIntegration(unittest.TestCase):
         prompt = PromptTemplate(input_variables=["topic"], template="Tell me about {topic}")
 
         # This will trigger some internal logging in LangChain
-        result = prompt.format(topic="Python")
+        prompt.format(topic="Python")
 
         # Check if any logs were captured
         log_content = self.log_buffer.getvalue()
@@ -378,7 +378,6 @@ class TestRequestsIntegration(unittest.TestCase):
 
         # First, the requests logger is usually set to a high level and won't show DEBUG messages
         requests_logger = get_logger("requests")
-        original_level = requests_logger.level
 
         # Set it to debug to see if it still uses the default warning level
         requests_logger.setLevel("WARNING")
@@ -427,8 +426,8 @@ class TestMultipleLibraryIntegration(unittest.TestCase):
             )
         )
 
-    def test_setup_logging_with_multiple_libraries(self):
-        """Test that setup_logging can configure multiple libraries at once."""
+    def test_configure_external_logger_with_multiple_libraries(self):
+        """Test that configure_external_logger can configure multiple libraries at once."""
         # Get loggers for different libraries
         loggers_to_test = ["langchain", "fastapi", "mlflow"]
 
@@ -448,7 +447,7 @@ class TestMultipleLibraryIntegration(unittest.TestCase):
 
         try:
             # Set up logging with external integration, using our test formatter
-            setup_logging(
+            configure_external_logger(
                 level="INFO",
                 handlers=["console"],
                 integrate_external_loggers=True,

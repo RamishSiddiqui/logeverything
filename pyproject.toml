@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "logeverything"
 
-version = "0.4.0"
+version = "0.0.1"
 
 description = "A comprehensive logging library for Python applications with minimal code changes"
 readme = "README.md"
@@ -64,6 +64,7 @@ full = [
     "rich>=10.0.0",
     "orjson>=3.5.0",
     "fastapi>=0.68.0",
+    "httpx>=0.20.0",
     "requests>=2.25.0",
     "sqlalchemy>=1.4.0",
     "pydantic>=1.8.0",
@@ -74,12 +75,14 @@ full = [
 ]
 web = [
     "fastapi>=0.68.0",
+    "httpx>=0.20.0",
     "starlette>=0.14.0",
     "flask>=2.0.0",
     "django>=3.2.0",
 ]
 fastapi = [
     "fastapi>=0.68.0",
+    "httpx>=0.20.0",
     "starlette>=0.14.0",
 ]
 flask = ["flask>=2.0.0"]

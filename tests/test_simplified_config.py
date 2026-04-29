@@ -112,7 +112,7 @@ class TestConfigurationSimplification(unittest.TestCase):
         logger.configure(auto_detect_env=False)
 
         # Auto-detection may be called during Logger init but should respect the setting
-        # The test should verify that the auto-detected config isn't applied, not that it's never called
+        # The test should verify auto-detected config isn't applied
         self.assertTrue(mock_detect.called)  # May be called during init
 
     @patch("logeverything.core._detect_environment")

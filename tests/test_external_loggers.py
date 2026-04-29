@@ -165,7 +165,7 @@ class TestExternalLoggerIntegration(unittest.TestCase):
 
     def test_configure_common_loggers(self):
         """Test automatic configuration of common loggers."""
-        # Setup mock logger dictionary with safer loggers (not mlflow which has circular import issues)
+        # Setup mock logger dictionary with safer loggers
         mock_logger_dict = {
             "langchain": MagicMock(),
             "requests": MagicMock(),
@@ -285,7 +285,7 @@ class TestSetupLoggingWithExternalLoggers(unittest.TestCase):
 
         # Verify the loggers have been set to DEBUG level as specified
         # Get fresh logger instances after configuration
-        # Use logging.getLogger to get the same logger instances that configure_external_logger works with
+        # Use logging.getLogger for configure_external_logger integration
         langchain_logger = logging.getLogger("langchain")
         mlflow_logger = logging.getLogger("mlflow")
 
@@ -485,7 +485,7 @@ class TestExternalErrorHandling(unittest.TestCase):
     def test_harmonize_logger_levels_invalid_string(self):
         """Test harmonize_logger_levels with invalid level string."""
         # Test with invalid level string
-        original_levels = harmonize_logger_levels(
+        harmonize_logger_levels(
             "INVALID_LEVEL"
         )  # Should use INFO as default when invalid level is provided
         self.assertEqual(get_logger().level, INFO)
@@ -496,7 +496,7 @@ class TestExternalErrorHandling(unittest.TestCase):
             mock_getattr.side_effect = Exception("Level parsing failed")
 
             # Should handle the exception and use INFO
-            original_levels = harmonize_logger_levels("DEBUG")
+            harmonize_logger_levels("DEBUG")
             self.assertEqual(get_logger().level, INFO)
 
     def test_harmonize_logger_levels_logger_setting_error(self):
@@ -507,7 +507,7 @@ class TestExternalErrorHandling(unittest.TestCase):
         # Mock setLevel to raise an exception
         with patch.object(test_logger, "setLevel", side_effect=Exception("SetLevel failed")):
             # Should handle the exception and continue
-            original_levels = harmonize_logger_levels("DEBUG")
+            harmonize_logger_levels("DEBUG")
             # The function should complete without crashing
 
     def test_harmonize_logger_levels_with_patterns(self):

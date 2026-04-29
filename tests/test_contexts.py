@@ -101,7 +101,8 @@ class TestSpecializedContexts:
     """Tests for specialized context manager subclasses."""
 
     def test_quiet_logging_context(self) -> None:
-        """Test QuietLoggingContext reduces verbosity."""  # Setup initial configuration with verbose settings
+        """Test QuietLoggingContext reduces verbosity."""
+        # Setup initial configuration with verbose settings
         core_module.configure(
             level=DEBUG,
             log_entry_exit=True,
@@ -125,7 +126,8 @@ class TestSpecializedContexts:
         assert _config["log_return_values"] is True
 
     def test_verbose_logging_context(self) -> None:
-        """Test VerboseLoggingContext increases verbosity."""  # Setup initial configuration with minimal verbosity
+        """Test VerboseLoggingContext increases verbosity."""
+        # Setup initial configuration with minimal verbosity
         core_module.configure(
             level=WARNING,
             log_entry_exit=False,

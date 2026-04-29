@@ -126,7 +126,7 @@ class TestVisualOutput:
         and how readable the resulting logs are.
         """
         log_path = os.path.join(TEST_OUTPUT_DIR, "hierarchical.log")
-        json_path = os.path.join(TEST_OUTPUT_DIR, "hierarchical.json")
+        os.path.join(TEST_OUTPUT_DIR, "hierarchical.json")
 
         # Setup logging
         logger = Logger()
@@ -229,7 +229,7 @@ class TestVisualOutput:
         formats = {
             "default": "%(asctime)s | %(levelname)-8s | %(name)s | %(message)s",
             "compact": "%(asctime)s [%(levelname).1s] %(message)s",
-            "detailed": "[%(asctime)s] %(levelname)s [%(name)s.%(funcName)s:%(lineno)d] - %(message)s",
+            "detailed": "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)d] %(message)s",
             "minimal": "%(levelname).1s: %(message)s",
             "aligned": "%(asctime)22s | %(levelname)-8s | %(name)-20s | %(message)s",
         }

@@ -72,8 +72,6 @@ class TestConfiguration(unittest.TestCase):
         # Configure with beautify=True (default)
         core_module.configure(beautify=True)
 
-        complex_obj = {"name": "test", "value": 123, "nested": {"key": "value"}}
-        formatted_message = f"Object: {complex_obj}"
 
         # Test with beautify=True - the actual formatting is done in the record formatter
         # We just need to ensure the right configuration is applied
@@ -190,7 +188,7 @@ class TestConcurrentLogging(unittest.TestCase):
 
         def log_from_thread(thread_id):
             # Configure a logger for this thread
-            logger = get_logger(f"thread_{thread_id}")
+            get_logger(f"thread_{thread_id}")
             # Perform a logged operation and collect result
             results.append(f"Thread {thread_id} logged")
 
@@ -229,7 +227,7 @@ class TestConcurrentLogging(unittest.TestCase):
                     process_logger = get_logger(f"simulated_process_{i}")
                     process_logger.addHandler(file_handler)
                     process_logger.setLevel("INFO")
-                    process_logger.info(f"Info from simulated process {i}")
+                    process_logger.info(f"Simulated {i}")
 
                 # Close the handler to ensure file is written
                 file_handler.close()
@@ -241,7 +239,7 @@ class TestConcurrentLogging(unittest.TestCase):
                 # Check that all simulated processes logged successfully
                 for i in range(3):
                     self.assertIn(
-                        f"logeverything.simulated_process_{i} - INFO - Info from simulated process {i}",
+                        f"logeverything.simulated_process_{i} - INFO - Simulated {i}",
                         log_content,
                     )
             finally:
