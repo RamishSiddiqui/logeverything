@@ -64,6 +64,7 @@ full = [
     "rich>=10.0.0",
     "orjson>=3.5.0",
     "fastapi>=0.68.0",
+    "httpx>=0.20.0",
     "requests>=2.25.0",
     "sqlalchemy>=1.4.0",
     "pydantic>=1.8.0",
@@ -74,12 +75,14 @@ full = [
 ]
 web = [
     "fastapi>=0.68.0",
+    "httpx>=0.20.0",
     "starlette>=0.14.0",
     "flask>=2.0.0",
     "django>=3.2.0",
 ]
 fastapi = [
     "fastapi>=0.68.0",
+    "httpx>=0.20.0",
     "starlette>=0.14.0",
 ]
 flask = ["flask>=2.0.0"]
