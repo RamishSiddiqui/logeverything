@@ -131,7 +131,6 @@ class TestMLflowIntegration(unittest.TestCase):
                 self.assertLessEqual(logger.level, 20)  # DEBUG or INFO level
         else:
             for name in self.logger_names:
-                expected_logger_name = f"logeverything.{name}"
                 self.assertIn(f"Debug message from {name}", log_content)
                 self.assertIn(f"Info message from {name}", log_content)
 

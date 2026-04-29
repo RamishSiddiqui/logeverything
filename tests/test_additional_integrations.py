@@ -233,7 +233,7 @@ class TestPandasIntegration(unittest.TestCase):
         pandas_logger.addHandler(self.handler)
 
         # Create a pandas DataFrame with a duplicate index to trigger a warning
-        df = pd.DataFrame({"A": [1, 2, 3], "B": [4, 5, 6]}, index=[1, 1, 2])
+        pd.DataFrame({"A": [1, 2, 3], "B": [4, 5, 6]}, index=[1, 1, 2])
 
         # Perform operation that might generate warnings
         # Just to ensure we're capturing pandas logs

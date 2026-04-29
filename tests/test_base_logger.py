@@ -237,7 +237,7 @@ class TestAsyncLoggerConfiguration(unittest.TestCase):
 if __name__ == "__main__":
     # Run async tests
     async def run_async_tests():
-        test_suite = unittest.TestSuite()
+        unittest.TestSuite()
 
         # Add async test methods
         async_test_class = TestAsyncLoggerConfiguration()

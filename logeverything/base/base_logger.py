@@ -158,7 +158,7 @@ class BaseLogger(ABC):
             from ..core import unregister_logger
 
             if hasattr(self, "_name") and self._name:
-                unregister_logger(self._name)
+                unregister_logger(self._name, self)
                 self._is_registered = False  # Mark as unregistered
         except (ImportError, AttributeError):
             # Ignore errors during cleanup - Python might be shutting down

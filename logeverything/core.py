@@ -1258,16 +1258,22 @@ def register_logger(name: str, logger_instance: Any) -> None:
     _active_loggers_version += 1
 
 
-def unregister_logger(name: str) -> None:
+def unregister_logger(name: str, instance: Any = None) -> None:
     """
     Unregister an active LogEverything Logger instance.
 
     Args:
         name: The logger name to unregister
+        instance: Only unregister if the current instance matches
     """
     global _active_loggers_version
-    _active_loggers.pop(name, None)
-    _active_loggers_version += 1
+    if instance is not None:
+        if _active_loggers.get(name) is instance:
+            _active_loggers.pop(name, None)
+            _active_loggers_version += 1
+    else:
+        _active_loggers.pop(name, None)
+        _active_loggers_version += 1
 
 
 def get_active_loggers() -> Dict[str, Any]:

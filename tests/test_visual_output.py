@@ -126,7 +126,7 @@ class TestVisualOutput:
         and how readable the resulting logs are.
         """
         log_path = os.path.join(TEST_OUTPUT_DIR, "hierarchical.log")
-        json_path = os.path.join(TEST_OUTPUT_DIR, "hierarchical.json")
+        os.path.join(TEST_OUTPUT_DIR, "hierarchical.json")
 
         # Setup logging
         logger = Logger()

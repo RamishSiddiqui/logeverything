@@ -40,7 +40,7 @@ class TestDecoratorLoggerIntegration:
         # Note: Decorators use the internal Python logger, so custom handlers
         # on LogEverything Logger instances may not be used directly.
         # This is by design for performance and compatibility reasons.
-        logger = Logger("console_test")
+        Logger("console_test")
 
         @log(using="console_test")
         def console_function():
@@ -81,7 +81,7 @@ class TestDecoratorLoggerIntegration:
 
     def test_decorator_with_multiple_handlers(self):
         """Test decorator with logger that has multiple handlers."""
-        logger = Logger("multi_handler_test")
+        Logger("multi_handler_test")
 
         @log(using="multi_handler_test")
         def multi_handler_function():
@@ -108,7 +108,7 @@ class TestDecoratorErrorHandling:
     def test_decorator_handles_logger_with_no_handlers(self):
         """Test decorator behavior with logger that has no handlers."""
         # Create logger but don't configure any handlers
-        logger = Logger("no_handlers_test", auto_setup=False)
+        Logger("no_handlers_test", auto_setup=False)
 
         @log(using="no_handlers_test")
         def no_handlers_function():
@@ -120,7 +120,7 @@ class TestDecoratorErrorHandling:
 
     def test_decorator_handles_function_exceptions(self):
         """Test decorator behavior when decorated function raises exception."""
-        logger = Logger("exception_test")
+        Logger("exception_test")
 
         @log(using="exception_test")
         def exception_function():
@@ -132,7 +132,7 @@ class TestDecoratorErrorHandling:
 
     def test_decorator_handles_concurrent_access(self):
         """Test decorator behavior with concurrent access to logger registry."""
-        logger = Logger("concurrent_test")
+        Logger("concurrent_test")
         results = []
 
         @log(using="concurrent_test")
@@ -201,7 +201,7 @@ class TestDecoratorPerformanceIntegration:
 
     def test_decorator_memory_usage_stable(self):
         """Test that decorator doesn't cause memory leaks."""
-        logger = Logger("memory_test")
+        Logger("memory_test")
 
         @log(using="memory_test")
         def memory_function(iteration):
@@ -230,7 +230,7 @@ class TestDecoratorEdgeCases:
 
     def test_decorator_with_logger_name_collision(self):
         """Test behavior when multiple loggers have the same name."""
-        logger1 = Logger("same_name")
+        Logger("same_name")
         logger2 = Logger("same_name")  # Overwrites the first
 
         @log(using="same_name")
@@ -246,7 +246,7 @@ class TestDecoratorEdgeCases:
     def test_decorator_with_empty_logger_name(self):
         """Test behavior with empty logger names."""
         # This should work since Logger handles empty names
-        logger = Logger("")
+        Logger("")
 
         @log(using="")
         def empty_name_function():
@@ -257,7 +257,7 @@ class TestDecoratorEdgeCases:
 
     def test_decorator_with_unicode_logger_names(self):
         """Test decorator with Unicode logger names."""
-        logger = Logger("test_中文_🎉")
+        Logger("test_中文_🎉")
 
         @log(using="test_中文_🎉")
         def unicode_function():
@@ -268,8 +268,8 @@ class TestDecoratorEdgeCases:
 
     def test_nested_decorators_with_different_loggers(self):
         """Test nested function calls with different loggers."""
-        logger1 = Logger("outer_logger")
-        logger2 = Logger("inner_logger")
+        Logger("outer_logger")
+        Logger("inner_logger")
 
         @log(using="inner_logger")
         def inner_function():
@@ -285,7 +285,7 @@ class TestDecoratorEdgeCases:
 
     def test_decorator_class_methods_with_specific_loggers(self):
         """Test class method decoration with specific loggers."""
-        method_logger = Logger("method_logger")
+        Logger("method_logger")
 
         @log_class(using="method_logger")
         class TestClass:

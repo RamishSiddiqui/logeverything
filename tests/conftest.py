@@ -123,14 +123,14 @@ def thread_leak_detection():
     """Automatically detect thread leaks for each test function."""
     # Record threads before test
     threads_before = set(threading.enumerate())
-    thread_count_before = len(threads_before)
+    len(threads_before)
 
     yield
 
     # Check threads after test
     time.sleep(0.1)  # Give threads time to clean up
     threads_after = set(threading.enumerate())
-    thread_count_after = len(threads_after)
+    len(threads_after)
 
     # Check for new threads
     new_threads = threads_after - threads_before

@@ -379,7 +379,7 @@ class TestEnhancedVisuals:
 
                     # Process refund due to shipping issue
                     if payment_result["success"]:
-                        refund_result = payment_processor.refund_payment(
+                        payment_processor.refund_payment(
                             payment_result["transaction_id"], order_result["total"]
                         )
         except Exception:

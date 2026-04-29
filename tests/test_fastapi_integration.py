@@ -271,7 +271,7 @@ class TestFastAPIIntegrationRealWorld(unittest.TestCase):
         client = TestClient(app)
 
         # Make a request
-        response = client.get("/hello")
+        client.get("/hello")
 
         # Check logs
         log_content = self.log_buffer.getvalue()
@@ -319,7 +319,7 @@ class TestFastAPIIntegrationRealWorld(unittest.TestCase):
         client = TestClient(app)
 
         # Make a request with invalid data to trigger validation error
-        response = client.post("/items/", json={"name": "Test"})  # Missing required field 'price'
+        client.post("/items/", json={"name": "Test"})  # Missing required field 'price'
 
         # Check logs - should include error about validation
         log_content = self.log_buffer.getvalue()
@@ -356,7 +356,7 @@ class TestFastAPIIntegrationRealWorld(unittest.TestCase):
             # The actual request won't be made in the test client
             # but we're testing the logging interactions
             try:
-                response = requests.get("https://example.com")
+                requests.get("https://example.com")
                 return {"status": "success"}
             except Exception as e:
                 loggers["fastapi"].error(f"Request failed: {e}")
@@ -373,6 +373,6 @@ class TestFastAPIIntegrationRealWorld(unittest.TestCase):
             mock_get.return_value = mock_response
 
             # Make the request
-            response = client.get("/make-request")  # Check logs
+            client.get("/make-request")  # Check logs
             log_content = self.log_buffer.getvalue()
             self.assertIn("About to make an HTTP request", log_content)

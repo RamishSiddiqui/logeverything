@@ -87,7 +87,6 @@ async def test_async_log_function_decorator(async_logging_setup):
 @pytest.mark.asyncio
 async def test_async_performance_comparison():
     """Compare performance between sync and async logging."""
-    results = {}
 
     # Define a workload
     @async_log_function

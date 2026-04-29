@@ -23,7 +23,6 @@ def patch_huggingface_hub():
         import huggingface_hub.utils
 
         # Create mock for file_download.hf_hub_download
-        original_hf_hub_download = huggingface_hub.file_download.hf_hub_download
 
         def mock_hf_hub_download(repo_id, filename, **kwargs):
             """Mock version that logs but doesn't actually download."""

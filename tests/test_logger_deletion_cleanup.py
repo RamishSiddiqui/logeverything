@@ -145,7 +145,7 @@ class TestLoggerDeletionCleanup(unittest.TestCase):
 
         # Create multiple loggers with different behaviors
         user_logger1 = Logger("user1")
-        user_logger2 = Logger("user2")
+        Logger("user2")
 
         with Logger("temp1") as temp_logger1:
             temp_logger1._mark_as_system_created()

@@ -226,7 +226,7 @@ class TestAsyncQueueHandler:
         )
 
         # Worker should handle the exception gracefully
-        with patch("sys.stderr", new_callable=StringIO) as mock_stderr:
+        with patch("sys.stderr", new_callable=StringIO):
             handler.emit(record)
             time.sleep(0.2)
 

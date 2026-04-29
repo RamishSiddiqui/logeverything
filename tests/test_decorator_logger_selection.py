@@ -323,7 +323,7 @@ class TestDecoratorAutoSelection:
         """Test decorator shows guidance when loggers are available."""
         import logging
 
-        logger = Logger("my_app")
+        Logger("my_app")
 
         # Capture debug log output (messages now go through logging, not stdout)
         handler = logging.StreamHandler(io.StringIO())
@@ -352,7 +352,7 @@ class TestDecoratorAutoSelection:
 
     def test_decorator_with_explicit_logger_no_guidance(self):
         """Test decorator with explicit logger doesn't show guidance."""
-        logger = Logger("explicit_logger")
+        Logger("explicit_logger")
 
         output = io.StringIO()
         with redirect_stdout(output):
@@ -385,7 +385,7 @@ class TestDecoratorCompatibility:
 
     def test_decorator_without_parameters_still_works(self):
         """Test that decorators work without any parameters."""
-        logger = Logger("compat_logger")
+        Logger("compat_logger")
 
         @log
         def simple_function():
@@ -396,7 +396,7 @@ class TestDecoratorCompatibility:
 
     def test_decorator_with_traditional_parameters_still_works(self):
         """Test that traditional decorator parameters still work."""
-        logger = Logger("trad_logger")
+        Logger("trad_logger")
 
         @log_function(log_arguments=False, log_return_values=False)
         def traditional_function():
@@ -407,7 +407,7 @@ class TestDecoratorCompatibility:
 
     def test_mixing_using_with_other_parameters(self):
         """Test mixing 'using' parameter with other decorator parameters."""
-        logger = Logger("mixed_logger")
+        Logger("mixed_logger")
 
         @log_function(using="mixed_logger", log_arguments=False)
         def mixed_function():
@@ -450,7 +450,7 @@ class TestLoggerRegistrationIntegration:
 
     def test_logger_name_collision_handling(self):
         """Test behavior when loggers have the same name."""
-        logger1 = Logger("same_name")
+        Logger("same_name")
         logger2 = Logger("same_name")
 
         # The second logger should overwrite the first in the registry
@@ -471,7 +471,7 @@ class TestDecoratorPerformance:
 
     def test_logger_discovery_caching(self):
         """Test that logger discovery doesn't cause performance issues."""
-        logger = Logger("perf_test")
+        Logger("perf_test")
 
         @log(using="perf_test")
         def performance_function():
