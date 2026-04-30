@@ -1,5 +1,5 @@
-<p align="center">
-  <h1 align="center">LogEverything</h1>
+<h1 align="center">LogEverything</h1>
+<div align="center">
   <p align="center">
     <strong>High-performance Python logging with zero configuration.</strong>
   </p>
@@ -15,9 +15,9 @@
     <a href="https://github.com/RamishSiddiqui/logeverything/issues"><img src="https://img.shields.io/github/issues/RamishSiddiqui/logeverything" alt="Issues"></a>
     <a href="https://github.com/RamishSiddiqui/logeverything/stargazers"><img src="https://img.shields.io/github/stars/RamishSiddiqui/logeverything?style=social" alt="Stars"></a>
   </p>
-</p>
+</div>
 
-Add decorators to your functions for automatic, comprehensive logging. LogEverything captures inputs, outputs, execution times, and call hierarchy — with thread safety, async isolation, and beautiful formatting out of the box.
+Add decorators to your functions for automatic, comprehensive logging. LogEverything captures inputs, outputs, execution times, and call hierarchy  with thread safety, async isolation, and beautiful formatting out of the box.
 
 <table>
 <tr>
@@ -35,7 +35,7 @@ Add decorators to your functions for automatic, comprehensive logging. LogEveryt
 Most Python logging libraries make you choose: simple but limited (`logging`), fast but
 opinionated (`loguru`), or structured but complex (`structlog`). LogEverything combines
 decorator-based function tracing, native async support, structured JSON output, file
-rotation, and a companion monitoring dashboard — all with zero-config defaults and
+rotation, and a companion monitoring dashboard  all with zero-config defaults and
 production-grade performance.
 
 | Feature | `logging` | `loguru` | `structlog` | **LogEverything** |
@@ -165,16 +165,16 @@ Platform: Windows-10-10.0.26100-SP0
 
 $ logeverything doctor
 logeverything doctor
-  [✓] Python 3.11.9
-  [✓] psutil 5.9.5
-  [✗] celery (not installed)
-  [✓] py.typed marker present
-  [✗] Dashboard at localhost:8999 (not reachable)
+  [] Python 3.11.9
+  [] psutil 5.9.5
+  [] celery (not installed)
+  [] py.typed marker present
+  [] Dashboard at localhost:8999 (not reachable)
 
 $ logeverything init
 Select environment type:
   1) web   2) script   3) notebook
-→ Creates logging_config.py with sensible defaults
+ Creates logging_config.py with sensible defaults
 ```
 
 Also available as `python -m logeverything`.
@@ -239,7 +239,7 @@ graph TD
 <td width="50%" valign="top">
 
 **Core**
-- Unified `@log` decorator — functions, classes, async
+- Unified `@log` decorator  functions, classes, async
 - Smart logger selection with `using` parameter
 - Auto-discovery and registration of logger instances
 - Structured binding: `log.bind(user_id=123)`
@@ -288,7 +288,7 @@ graph TD
 
 ## Monitoring Dashboard
 
-A companion web dashboard for exploring logs, operations, and system metrics in real time. The dashboard is **not included** in the base `pip install logeverything` — install it separately using one of the methods below.
+A companion web dashboard for exploring logs, operations, and system metrics in real time. The dashboard is **not included** in the base `pip install logeverything`  install it separately using one of the methods below.
 
 ![Dashboard](docs/source/_static/screenshots/dashboard_overview.png)
 
@@ -327,10 +327,10 @@ python run_dashboard.py          # http://localhost:3001
 <td width="50%" valign="top">
 
 **Pages**
-- **Overview** — summary cards, CPU/memory trends, log distribution, operation analytics
-- **Logs** — filterable table with multi-select level pills, pagination, flat + tree view
-- **Operations** — analytics with failure rates and duration tracking
-- **System** — detailed process/resource metrics, session info
+- **Overview**  summary cards, CPU/memory trends, log distribution, operation analytics
+- **Logs**  filterable table with multi-select level pills, pagination, flat + tree view
+- **Operations**  analytics with failure rates and duration tracking
+- **System**  detailed process/resource metrics, session info
 
 </td>
 <td width="50%" valign="top">
@@ -347,7 +347,7 @@ python run_dashboard.py          # http://localhost:3001
 </tr>
 </table>
 
-[Dashboard Guide](docs/source/user-guide/dashboard.rst) — full documentation with screenshots, API endpoints, and customisation.
+[Dashboard Guide](docs/source/user-guide/dashboard.rst)  full documentation with screenshots, API endpoints, and customisation.
 
 ---
 
@@ -381,5 +381,3 @@ make format            # auto-format
 MIT License. See [LICENSE](LICENSE) for details.
 
 <p align="center"><sub>Built for developers who believe every function call tells a story.</sub></p>
-   
- 
