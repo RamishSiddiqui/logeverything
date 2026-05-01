@@ -5,6 +5,7 @@ on: workflow_dispatch
 jobs:
   sync:
     runs-on: ubuntu-latest
+    if: github.repository == 'RamishSiddiqui/logeverything-private'
     steps:
       - uses: actions/checkout@v4
         with:

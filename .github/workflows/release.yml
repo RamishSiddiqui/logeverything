@@ -7,6 +7,7 @@ on:
 jobs:
   publish-pypi:
     runs-on: ubuntu-latest
+    if: github.repository == 'RamishSiddiqui/logeverything'
     environment:
       name: release
       url: https://pypi.org/p/logeverything
