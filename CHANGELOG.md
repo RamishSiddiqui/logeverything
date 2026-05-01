@@ -5,6 +5,15 @@ All notable changes to LogEverything will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.2](https://github.com/RamishSiddiqui/logeverything/compare/v0.0.1...v0.0.2) (2026-05-01)
+
+
+### Bug Fixes
+
+* **ci:** Lock workflows to designated repositories to trigger release ([91be0a5](https://github.com/RamishSiddiqui/logeverything/commit/91be0a55b0ada55ad22ecc3176d66537bd98b33d))
+* **ci:** Update release-please mapping for TOML project.version ([a26c9c1](https://github.com/RamishSiddiqui/logeverything/commit/a26c9c18a5a947c59ed5308272ef5e6ba25c1cea))
+* trigger release please workflow ([6974480](https://github.com/RamishSiddiqui/logeverything/commit/6974480fe4b5e1738cd09ee07212782c8e69225a))
+
 ## [0.4.0](https://github.com/RamishSiddiqui/logeverything/compare/v0.3.4...v0.4.0) (2026-04-05)
 
 
